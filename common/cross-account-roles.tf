@@ -7,6 +7,12 @@ data "aws_iam_policy_document" "zaizi_assume_role_policy" {
       type        = "AWS"
       identifiers = [ "arn:aws:iam::${data.aws_caller_identity.users.id}:root" ]
     }
+
+    condition {
+			test = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values = [ "true" ]
+    }
   }
 }
 
