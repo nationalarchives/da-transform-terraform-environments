@@ -6,7 +6,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "users"
+  alias  = "users"
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.users
@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "nonprod"
+  alias  = "nonprod"
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.nonprod
@@ -22,7 +22,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "prod"
+  alias  = "prod"
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.prod
@@ -30,6 +30,6 @@ provider "aws" {
 }
 
 terraform {
-    backend "s3" {
-    }
+  backend "s3" {
+  }
 }
