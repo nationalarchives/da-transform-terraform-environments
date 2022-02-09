@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "tf_assume_role_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = [ "arn:aws:iam::${data.aws_caller_identity.users.id}:role/terraform" ]
+      identifiers = [ aws_iam_role.terraform.arn ]
     }
   }
 }
@@ -126,3 +126,17 @@ resource "aws_iam_role_policy_attachment" "prod_cross_account_dev" {
   role = aws_iam_role.prod_cross_account_dev.name
   policy_arn = data.aws_iam_policy.managed_readonly.arn
 }
+
+resource "aws_iam_role" "prod_cross_account_terraform" {
+  provider = aws.prod
+  name = "Terraform"
+  path = "/"
+  assume_role_policy = data.aws_iam_policy_document.tf_assume_role_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "prod_cross_account_terraform" {
+  provider = aws.prod
+  role = aws_iam_role.prod_cross_account_terraform.name
+  policy_arn = data.aws_iam_policy.managed_admin.arn
+}
+
