@@ -30,3 +30,13 @@ variable "git_repository_link" {
   description = "Source repository link for the pipeline"
   type = string
 }
+
+variable "pipeline_deployment_bucket_name" {
+  description = "S3 bucket name"
+  type = string
+}
+
+variable "da_codebuild_logs" {
+  description = "CW Logs group name"
+  type = string
+}

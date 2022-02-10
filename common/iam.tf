@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "codepipeline-assume-role-policy" {
   }
 }
 
-resource "aws_iam_role" "codeipeline_role" {
+resource "aws_iam_role" "codepipeline_role" {
   name = "codepipeline_role"
   path = "/"
   assume_role_policy = data.aws_iam_policy_document.codepipeline-assume-role-policy.json
@@ -52,8 +52,8 @@ resource "aws_iam_role" "codeipeline_role" {
 
 resource "aws_iam_role_policy" "codepipeline_role_policy" {
   name = "codepipeline_role_policy"
-  role = aws_iam_role.codeipeline_role.name
-  policy = file("${path.module}/templates/codepipeline-role-policy.json.tpl", {
+  role = aws_iam_role.codepipeline_role.name
+  policy = templatefile("${path.module}/templates/codepipeline-role-policy.json.tfpl", {
     codepipeline_bucket_arn = aws_s3_bucket.codepipeline_bucket.arn
     codebuild_arn           = aws_codebuild_project.terraform-common-apply.arn
   })
