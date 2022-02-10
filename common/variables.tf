@@ -40,3 +40,8 @@ variable "da_codebuild_logs" {
   description = "CW Logs group name"
   type = string
 }
+
+variable "github_oauth_token" {
+  description = "GitHub v1 oauth token"
+  type = string
+}

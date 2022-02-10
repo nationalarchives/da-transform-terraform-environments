@@ -14,9 +14,16 @@
       "Effect": "Allow",
       "Action": [
         "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild",
+        "codebuild:StartBuild"
       ],
-      "Resource": "${codebuild_arn}/*"
+      "Resource": "${codebuild_arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codestar-connections:UseConnection"
+      ],
+      "Resource": "${codestar_connection_arn}"
     }
   ]
 }

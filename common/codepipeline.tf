@@ -6,27 +6,30 @@ resource "aws_codepipeline" "terraform-common" {
     location = aws_s3_bucket.codepipeline_bucket.bucket
     type     = "S3"
   }
+
   stage {
     name = "Source"
-
     action {
-      name             = "Source-${var.git_repository_link}"
+      name             = "Source"
       category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeStarSourceConnection"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
       version          = "1"
       run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
-        RepositoryName = var.git_repository_link
-        BranchName     = "feature/codepipeline"
+				Branch         = "feature/codepipeline"
+        Owner          = "nationalarchives"
+        PollForSourceChanges = "false"
+        Repo           = "da-transform-terraform-environments"
+        OAuthToken     = var.github_oauth_token
       }
     }
   }
 
   stage {
-    name = "Apply"
+    name = "Plan"
 
     action {
       name            = "Build"
@@ -36,9 +39,15 @@ resource "aws_codepipeline" "terraform-common" {
       version         = "1"
       run_order       = 2
       input_artifacts = ["source_output"]
-
+      configuration = {
+        ProjectName   = aws_codebuild_project.terraform-common-apply.name
+      }
     }
   }
+
+#  lifecycle {
+#    ignore_changes = [stage[0].action[0].configuration]
+#  }
 }
 
 resource "aws_codestarconnections_connection" "terraform-codepipeline" {

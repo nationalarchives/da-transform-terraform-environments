@@ -56,6 +56,7 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
   policy = templatefile("${path.module}/templates/codepipeline-role-policy.json.tfpl", {
     codepipeline_bucket_arn = aws_s3_bucket.codepipeline_bucket.arn
     codebuild_arn           = aws_codebuild_project.terraform-common-apply.arn
+    codestar_connection_arn = aws_codestarconnections_connection.terraform-codepipeline.arn
   })
 }
 
