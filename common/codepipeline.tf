@@ -1,6 +1,6 @@
 resource "aws_codepipeline" "terraform-common" {
   name     = "terraform-common"
-  role_arn = ""
+  role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
     location = aws_s3_bucket.codepipeline_bucket.bucket
@@ -20,7 +20,7 @@ resource "aws_codepipeline" "terraform-common" {
 
       configuration = {
         RepositoryName = var.git_repository_link
-        BranchName     = ""
+        BranchName     = "feature/codepipeline"
       }
     }
   }
@@ -29,7 +29,7 @@ resource "aws_codepipeline" "terraform-common" {
     name = "Apply"
 
     action {
-      name            = ""
+      name            = "Build"
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
