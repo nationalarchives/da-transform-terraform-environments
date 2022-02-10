@@ -8,12 +8,12 @@ version: 0.2
 phases:
   install:
     commands:
+      - apt-get update
+      - apt-get install -y curl jq sudo
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
       - unzip terraform_1.0.10_linux_amd64.zip
       - sudo mv terraform /bin
       - rm terraform_1.0.10_linux_amd64.zip
-      - apt-get update
-      - apt-get install -y curl jq
       - echo "Prepare terraform file"
       - cd common
       - echo 'bucket          = "da-transform-terraform-state"' > backend.conf
