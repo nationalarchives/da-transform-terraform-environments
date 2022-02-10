@@ -5,7 +5,7 @@ resource "aws_codebuild_project" "terraform-common-apply" {
   service_role  = aws_iam_role.terraform.arn
 
   artifacts {
-    type = "NO_ARTIFACTS"
+    type = "CODEPIPELINE"
   }
 
   environment {
