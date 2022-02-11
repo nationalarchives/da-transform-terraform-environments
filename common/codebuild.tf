@@ -13,6 +13,12 @@ resource "aws_codebuild_project" "terraform-common-apply" {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name = "TERRAFORM_VARS"
+      value = "codepipeline-tfvars"
+      type = "PARAMETER_STORE"
+    }
   }
 
   logs_config {
