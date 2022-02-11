@@ -24,6 +24,7 @@ phases:
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
       - echo "Terraform plan complete"
+      - terraform apply -auto-approve
   post_build:
     commands:
       - echo "Nothing to do in the post_build for now"
