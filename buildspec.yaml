@@ -1,0 +1,36 @@
+version: 0.2
+
+#env:
+#  variables:
+#    key: "value"
+#    key: "value"
+
+phases:
+  install:
+    commands:
+      - yum -qy install sudo
+      - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
+      - unzip terraform_1.0.10_linux_amd64.zip
+      - sudo mv terraform /bin
+      - rm terraform_1.0.10_linux_amd64.zip
+      - echo "Prepare terraform file"
+      - cd common
+      - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
+      - echo "${TERRAFORM_VARS}" > terraform.tfvars
+      - cat backend.conf
+      - terraform init -backend-config=backend.conf -reconfigure
+  build:
+    commands:
+      - echo "Terraform plan follows..."
+      - terraform plan -var-file="terraform.tfvars" -out plan.out
+      - echo "Terraform plan complete"
+  post_build:
+    commands:
+      - echo "Nothing to do in the post_build for now"
+artifacts:
+  files:
+    - plan.out
+  name: plan-output
+cache:
+  paths:
+    - .terraform
