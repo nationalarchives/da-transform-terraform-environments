@@ -20,13 +20,21 @@ phases:
       - echo 'region          = "eu-west-2"' >> backend.conf
       - echo 'dynamodb_table  = "da-transform-terraform-state"' >> backend.conf
       - echo 'encrypt         = true' >> backend.conf
+      - echo "${TERRAFORM_VARS}" > terraform.tfvars
       - cat backend.conf
       - terraform init -backend-config=backend.conf -reconfigure
   build:
     commands:
       - echo "Terraform plan follows..."
-      - terraform plan
+      - terraform plan -var-file="terraform.tfvars" -out plan.out
       - echo "Terraform plan complete"
   post_build:
     commands:
       - echo "Nothing to do in the post_build for now"
+artifacts:
+  files:
+    - plan.out
+  name: plan-output
+cache:
+  paths:
+    - .terraform
