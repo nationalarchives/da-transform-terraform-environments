@@ -18,6 +18,13 @@ locals {
     }
   ]
 
+  terraform_roles = [
+    aws_iam_role.mgmt_terraform.arn,
+    aws_iam_role.users_cross_account_terraform.arn,
+    aws_iam_role.nonprod_cross_account_terraform.arn,
+    aws_iam_role.prod_cross_account_terraform.arn
+  ]
+
   managed_policy_attachments = {
     developers = [
       "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess",

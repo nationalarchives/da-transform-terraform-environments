@@ -20,6 +20,11 @@
     },
     {
       "Effect": "Allow",
+      "Action": [ "sts:AssumeRole" ],
+      "Resource": ${terraform_roles}
+    }
+    {
+      "Effect": "Allow",
       "Action": [
         "codestar-connections:UseConnection"
       ],

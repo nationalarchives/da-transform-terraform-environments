@@ -15,11 +15,7 @@ phases:
       - rm terraform_1.0.10_linux_amd64.zip
       - echo "Prepare terraform file"
       - cd common
-      - echo 'bucket          = "da-transform-terraform-state"' > backend.conf
-      - echo 'key             = "environments/common/terraform.tfstate"' >> backend.conf
-      - echo 'region          = "eu-west-2"' >> backend.conf
-      - echo 'dynamodb_table  = "da-transform-terraform-state"' >> backend.conf
-      - echo 'encrypt         = true' >> backend.conf
+      - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
       - echo "${TERRAFORM_VARS}" > terraform.tfvars
       - cat backend.conf
       - terraform init -backend-config=backend.conf -reconfigure
