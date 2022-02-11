@@ -2,7 +2,7 @@ resource "aws_codebuild_project" "terraform-common-apply" {
   name          = "terraform-common-apply"
   description   = "Terraform common apply"
   build_timeout = "5"
-  service_role  = aws_iam_role.terraform.arn
+  service_role  = aws_iam_role.mgmt_terraform.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -17,6 +17,12 @@ resource "aws_codebuild_project" "terraform-common-apply" {
     environment_variable {
       name = "TERRAFORM_VARS"
       value = "codepipeline-tfvars"
+      type = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name = "TERRAFORM_BACKEND_CONF"
+      value = "codepipeline-tfbackend"
       type = "PARAMETER_STORE"
     }
   }
