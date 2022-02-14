@@ -36,3 +36,4 @@ terraform.rc
 
 # Ignore backend config files
 backend-*.conf
+backend.conf
