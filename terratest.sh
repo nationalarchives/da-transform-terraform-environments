@@ -18,5 +18,9 @@ git checkout test_branch
 
 cd test/reports
 ls
+cat hello_world_test_output.log
+cd test/reports/hello_world
+ls
+
 
 exit
