@@ -11,6 +11,8 @@ phases:
       - ./install.sh
   build:
     commands:
+      - echo "Start the unit tests for the terraform modules"
+      - ./terratest.sh
       - echo "Prepare terraform file"
       - cd common
       - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
@@ -20,7 +22,6 @@ phases:
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
       - echo "Terraform plan complete"
-      - terraform apply -auto-approve
   post_build:
     commands:
       - echo "Nothing to do in the post_build for now"
