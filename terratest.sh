@@ -7,8 +7,9 @@ pwd
 git init
 git clone https://github.com/nationalarchives/da-transform-terraform-modules.git
 pwd
-cat da-transform-terraform-modules/hello_world/test/test.sh
+ls
 cd da-transform-terraform-modules
+ls
 ./terratest.sh
 ls
 cd ../src
