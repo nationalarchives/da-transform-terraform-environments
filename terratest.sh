@@ -2,6 +2,8 @@
 
 
 set -e
+cd ../
+pwd
 git init
 git clone https://github.com/nationalarchives/da-transform-terraform-modules.git
 pwd
