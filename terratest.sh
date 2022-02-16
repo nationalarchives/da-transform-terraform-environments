@@ -16,9 +16,6 @@ git checkout test_branch
 # cd ../src
 # bash <(curl -s https://raw.githubusercontent.com/nationalarchives/da-transform-terraform-modules/test_branch/terratest.sh)
 
-cd test/reports
-ls
-cat hello_world_test_output.log
 
 
 

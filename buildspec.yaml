@@ -25,6 +25,13 @@ phases:
   post_build:
     commands:
       - echo "Nothing to do in the post_build for now"
+reports:
+  terratest-reports:
+    files:
+      - "**/*.xml"
+      - "**/*.log"
+    base-directory: "../da-transform-terraform-modules/test/reports"
+    discard-paths: no
 artifacts:
   files:
     - plan.out
