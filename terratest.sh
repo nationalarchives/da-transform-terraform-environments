@@ -12,7 +12,10 @@ cd da-transform-terraform-modules
 ls
 git branch
 git checkout test_branch
-cd ../src
-bash <(curl -s https://raw.githubusercontent.com/nationalarchives/da-transform-terraform-modules/test_branch/terratest.sh)
+./terratest.sh
+# cd ../src
+# bash <(curl -s https://raw.githubusercontent.com/nationalarchives/da-transform-terraform-modules/test_branch/terratest.sh)
 
-cat ../da-transform-terraform-modules/test/reports/hello_world_test_output.log
+cat test/reports/hello_world_test_output.log
+
+exit
