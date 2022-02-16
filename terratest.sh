@@ -7,10 +7,9 @@ pwd
 git init
 git clone https://github.com/nationalarchives/da-transform-terraform-modules.git
 pwd
-ls
+
 cd da-transform-terraform-modules
 ls
-./terratest.sh
-ls
+git branch
 cd ../src
 bash <(curl -s https://raw.githubusercontent.com/nationalarchives/da-transform-terraform-modules/test_branch/terratest.sh)
