@@ -16,8 +16,9 @@ phases:
       - echo "Prepare terraform file"
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
-      - echo "${TERRAFORM_VARS}" > terraform.tfvars
       - cat backend.conf
+      - echo "${TERRAFORM_VARS}" > terraform.tfvars
+      - cat terraform.tfvars
       - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
