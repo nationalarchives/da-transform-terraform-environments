@@ -7,8 +7,8 @@ phases:
       - cd $CODEBUILD_SRC_DIR_plan_output
       - ls -la
       - pwd
-      - cp plan.out ../$CODEBUILD_SRC_DIR_source_output/00
-      - cd ../$CODEBUILD_SRC_DIR_source_output/00/deployments
+      - cp plan.out ../$CODEBUILD_SRC_DIR_source_output/00/deployments
+      - cd ../$CODEBUILD_SRC_DIR_source_output/00
       - ls -l
       - yum -q -y install sudo
       - echo "Install Terraform"
@@ -22,6 +22,7 @@ phases:
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
       - cd deployments
+      - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
       - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
