@@ -34,11 +34,13 @@ phases:
       - ls -larth
       - pwd
       - cat plan.out
+      - cd ..
+      - ls
 artifacts:
   files:
     - "plan.out"
     - "tfsec-out.json"
-  base-directory: "../da-transform-terraform-modules"
+  base-directory: "../da-transform-terraform-environments/deployments"
   name: "plan_output"
 cache:
   paths:
