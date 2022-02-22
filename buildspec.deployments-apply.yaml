@@ -19,21 +19,17 @@ phases:
       - cat backend.conf
       - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
       - cat terraform.tfvars
-      - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
       - echo "Terraform plan follows..."
-      - terraform plan -var-file="terraform.tfvars" -out plan.out
+      - terraform apply -var-file="terraform.tfvars" -input=false plan.out | tee apply.out
       - echo "Terraform plan complete"
   post_build:
     commands:
-      - echo "Running tfsec..."
-      - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars | tee tfsec-out.json
-      - echo "Completed tfsec"
+      - echo "In PostBuild"
 artifacts:
   files:
-    - plan.out
-    - tfsec-out.json
+    - apply.out
   name: plan-output
 cache:
   paths:

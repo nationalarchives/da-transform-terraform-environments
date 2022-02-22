@@ -97,21 +97,21 @@ resource "aws_codepipeline" "terraform-deployments" {
     }
   }
 
-#  stage {
-#    name = "Apply"
-#    action {
-#      name = "Apply"
-#      category = "Build"
-#      owner = "AWS"
-#      provider = "CodeBuild"
-#      version = "1"
-#      run_order = 2
-#      input_artifacts = ["source_output"]
-#      configuration = {
-#        ProjectName = aws_codebuild_project.terraform-deployments-apply[each.key].name
-#      }
-#    }
-#  }
+  stage {
+    name = "Apply"
+    action {
+      name = "Apply"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = ["source_output"]
+      configuration = {
+        ProjectName = aws_codebuild_project.terraform-deployments-apply[each.key].name
+      }
+    }
+  }
 }
 
 resource "aws_codestarconnections_connection" "terraform-codepipeline" {
