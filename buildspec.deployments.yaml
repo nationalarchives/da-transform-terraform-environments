@@ -18,7 +18,7 @@ phases:
       - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
       - echo "${TERRAFORM_VARS}" > terraform.tfvars
       - cat backend.conf
-      - terraform init -backend-config=backend.conf -reconfigure
+      - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
       - echo "Terraform plan follows..."
