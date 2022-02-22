@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - ls $CODEBUILD_SRC_DIR_source_output
       - mv $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_source_output
       - ls
       - pwd
