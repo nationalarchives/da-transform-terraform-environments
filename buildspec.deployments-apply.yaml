@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - cd $CODEBUILD_SRC_DIR_plan_output
       - ls
       - pwd
       - yum -q -y install sudo
