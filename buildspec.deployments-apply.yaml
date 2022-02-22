@@ -3,6 +3,8 @@ version: 0.2
 phases:
   install:
     commands:
+      - ls
+      - pwd
       - yum -q -y install sudo
       - echo "Install Terraform"
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
@@ -22,6 +24,7 @@ phases:
   build:
     commands:
       - echo "Terraform plan follows..."
+      - ls -l
       - terraform apply -var-file="terraform.tfvars" -input=false plan.out | tee apply.out
       - echo "Terraform plan complete"
   post_build:
