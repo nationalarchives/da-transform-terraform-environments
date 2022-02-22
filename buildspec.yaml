@@ -27,6 +27,8 @@ phases:
     commands:
       - echo "File listing follows:"
       - ls -l
+      - pwd
+      - cat plan.out
 #reports:
 #  terratest-reports:
 #    files:
