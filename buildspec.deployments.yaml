@@ -27,7 +27,7 @@ phases:
   post_build:
     commands:
       - echo "Running tfsec..."
-      - tfsec --no-colour --format json --tfvars-file terraform.tfvars
+      - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars
       - echo "Completed tfsec"
 artifacts:
   files:
