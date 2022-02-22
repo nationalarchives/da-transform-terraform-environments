@@ -25,6 +25,12 @@ resource "aws_codebuild_project" "terraform-common-apply" {
       value = "codepipeline-tfbackend"
       type = "PARAMETER_STORE"
     }
+
+    environment_variable {
+      name = "TF_IN_AUTOMATION"
+      value = "True"
+      type = "PLAINTEXT"
+    }
   }
 
   logs_config {
@@ -67,6 +73,12 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
       value = "${each.key}-backend"
       type = "PARAMETER_STORE"
     }
+
+    environment_variable {
+      name = "TF_IN_AUTOMATION"
+      value = "True"
+      type = "PLAINTEXT"
+    }
   }
 
   logs_config {
@@ -108,6 +120,12 @@ resource "aws_codebuild_project" "terraform-deployments-apply" {
       name = "TERRAFORM_BACKEND_CONF"
       value = "${each.key}-backend"
       type = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name = "TF_IN_AUTOMATION"
+      value = "True"
+      type = "PLAINTEXT"
     }
   }
 
