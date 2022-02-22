@@ -33,7 +33,6 @@ phases:
       - echo "File listing:"
       - ls -larth
       - pwd
-      - cat plan.out
       - cd ..
       - ls
 artifacts:
