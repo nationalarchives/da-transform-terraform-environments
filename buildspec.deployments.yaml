@@ -34,9 +34,9 @@ phases:
       - ls -larth
 artifacts:
   files:
-    - plan.out
-    - tfsec-out.json
-  name: plan-output
+    - "plan.out"
+    - "tfsec-out.json"
+  name: "plan_output"
 cache:
   paths:
     - .terraform
