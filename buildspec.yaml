@@ -25,7 +25,8 @@ phases:
       - echo "Terraform plan complete"
   post_build:
     commands:
-      - echo "Nothing to do in the post_build for now"
+      - echo "File listing follows:"
+      - ls -l
 #reports:
 #  terratest-reports:
 #    files:
