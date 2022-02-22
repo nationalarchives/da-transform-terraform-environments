@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = [ "arn:aws:codebuild:eu-west-2:454286877087:build/*" ]
+    resources = [ "arn:aws:codebuild:eu-west-2:454286877087:*" ]
   }
 
   statement {
