@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Installing Terraform"
-yum -qy install sudo
+yum -q -y install sudo
 wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
 unzip terraform_1.0.10_linux_amd64.zip
 sudo mv terraform /bin
