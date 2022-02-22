@@ -32,10 +32,13 @@ phases:
       - echo "Completed tfsec"
       - echo "File listing:"
       - ls -larth
+      - pwd
+      - cat plan.out
 artifacts:
   files:
     - "plan.out"
     - "tfsec-out.json"
+  base-directory: "../da-transform-terraform-modules"
   name: "plan_output"
 cache:
   paths:
