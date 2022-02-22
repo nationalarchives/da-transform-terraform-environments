@@ -84,6 +84,12 @@ resource "aws_iam_role_policy_attachment" "nonprod_cross_account_terraform" {
   policy_arn = data.aws_iam_policy.managed_admin.arn
 }
 
+# resource "aws_iam_role_policy" "nonprod_codepipeline_role_policy" {
+#   name = "nonprod_codepipeline_role_policy"
+#   role = aws_iam_role.nonprod_cross_account_terraform.name
+#   policy = data.aws_iam_policy_document.codepipeline_role_policy.json
+# }
+
 #tfsec:ignore:aws-iam-no-policy-wildcards This policy is intentionally permissive at this point FIXME
 resource "aws_iam_policy" "nonprod_dev" {
   provider = aws.nonprod
@@ -158,3 +164,9 @@ resource "aws_iam_role_policy_attachment" "users_cross_account_terraform" {
   role = aws_iam_role.users_cross_account_terraform.name
   policy_arn = data.aws_iam_policy.managed_admin.arn
 }
+
+# resource "aws_iam_role_policy" "prod_codepipeline_role_policy" {
+#   name = "prod_codepipeline_role_policy"
+#   role = aws_iam_role.prod_cross_account_terraform.name
+#   policy = data.aws_iam_policy_document.codepipeline_role_policy.json
+# }

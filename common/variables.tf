@@ -26,22 +26,38 @@ variable "users" {
 
 # CodePipeline Variables
 
-variable "git_repository_link" {
-  description = "Source repository link for the pipeline"
-  type = string
-}
-
-variable "pipeline_deployment_bucket_name" {
-  description = "S3 bucket name"
-  type = string
-}
-
-variable "da_codebuild_logs" {
-  description = "CW Logs group name"
-  type = string
-}
 
 variable "github_oauth_token" {
   description = "GitHub v1 oauth token"
   type = string
+}
+
+variable "common_git_branch" {
+  description = "Git branch for common terraform"
+  type = string
+  default = "feature/codepipeline"
+}
+
+variable "dev_git_branch" {
+  description = "Git branch for dev terraform"
+  type = string
+  default = "develop"
+}
+
+variable "int_git_branch" {
+  description = "Git branch for int terraform"
+  type = string
+  default = "develop"
+}
+
+variable "staging_git_branch" {
+  description = "Git branch for staging terraform"
+  type = string
+  default = "master"
+}
+
+variable "prod_git_branch" {
+  description = "Git branch for production terraform"
+  type = string
+  default = "master"
 }
