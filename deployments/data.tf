@@ -1,3 +1,3 @@
-data "aws_caller_identity" "nonprod" {
+data "aws_caller_identity" "aws" {
   provider = aws
 }
