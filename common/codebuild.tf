@@ -64,7 +64,7 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
 
     environment_variable {
       name = "TERRAFORM_BACKEND_CONF"
-      value = "${each.key}-tfbackend"
+      value = "${each.key}-backend"
       type = "PARAMETER_STORE"
     }
   }
@@ -77,6 +77,6 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "./buildspec.delpoyments.yaml"
+    buildspec = "./buildspec.deployments.yaml"
   }
 }
