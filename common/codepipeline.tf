@@ -113,7 +113,7 @@ resource "aws_codepipeline" "terraform-deployments" {
       ]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-deployments-apply[each.key].name
-        PrimarySource = "Source"
+        PrimarySource = "source_output"
       }
     }
   }
