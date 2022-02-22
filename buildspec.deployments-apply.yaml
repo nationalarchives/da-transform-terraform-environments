@@ -3,7 +3,13 @@ version: 0.2
 phases:
   install:
     commands:
-      - cp ../$CODEBUILD_SRC_DIR_plan_output/plan.out .
+      - ls $CODEBUILD_SRC_DIR_source_output
+      - cd $CODEBUILD_SRC_DIR_plan_output
+      - ls -la
+      - pwd
+      - cp plan.out ../$CODEBUILD_SRC_DIR_source_output
+      - cd ../$CODEBUILD_SRC_DIR_source_output
+      - ls -l
       - yum -q -y install sudo
       - echo "Install Terraform"
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
