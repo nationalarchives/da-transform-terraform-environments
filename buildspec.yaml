@@ -21,7 +21,7 @@ phases:
       - terraform init -backend-config=backend.conf -reconfigure
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
-      - terraform apply -auto-approve
+      - terraform apply -auto-approve -intput=false plan.out
       - echo "Terraform plan complete"
   post_build:
     commands:
