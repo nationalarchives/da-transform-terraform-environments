@@ -53,7 +53,7 @@ resource "aws_codepipeline" "terraform-common" {
 resource "aws_codepipeline" "terraform-deployments" {
   for_each = local.environments
   name = "terraform-${each.key}"
-  role_arn = each.value.rolearn
+  role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
     location = aws_s3_bucket.codepipeline_bucket.bucket

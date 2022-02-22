@@ -33,3 +33,24 @@ resource "aws_s3_bucket_public_access_block" "pipeline_buckets" {
   restrict_public_buckets = true
 
 }
+# resource "aws_s3_bucket_policy" "pipeline_bucket_policy" {
+#   bucket = aws_s3_bucket.codepipeline_bucket.bucket
+#   policy = data.aws_iam_policy_document.deployment_codepipeline_role_policy.json
+# }
+
+# data "aws_iam_policy_document" "deployment_codepipeline_role_policy" {
+#   statement {
+
+#     principals {
+#       type = "AWS"
+#       identifiers = [ "882876621099", "642021068869" ]
+    
+#     }
+#     actions = [
+#       "s3:Get*",
+#       "s3:Put*",
+#       "s3:List*"
+#     ]
+#     resources = [ "${aws_s3_bucket.codepipeline_bucket.arn}/*", aws_s3_bucket.codepipeline_bucket.arn ]
+#   }
+# }
