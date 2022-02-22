@@ -30,6 +30,8 @@ phases:
       - echo "Running tfsec..."
       - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars | tee tfsec-out.json
       - echo "Completed tfsec"
+      - echo "File listing:"
+      - ls -larth
 artifacts:
   files:
     - plan.out
