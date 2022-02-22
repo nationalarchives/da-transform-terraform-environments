@@ -91,6 +91,7 @@ resource "aws_codepipeline" "terraform-deployments" {
       version = "1"
       run_order = 2
       input_artifacts = ["source_output"]
+      output_artifacts = ["plan_output"]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-deployments-plan[each.key].name
       }
@@ -106,7 +107,10 @@ resource "aws_codepipeline" "terraform-deployments" {
       provider = "CodeBuild"
       version = "1"
       run_order = 2
-      input_artifacts = ["source_output"]
+      input_artifacts = [
+        "source_output",
+        "plan_output"
+      ]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-deployments-apply[each.key].name
       }
