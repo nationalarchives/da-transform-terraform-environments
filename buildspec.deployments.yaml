@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yum -qy install sudo
+      - echo "Install Terraform"
+      - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
+      - unzip terraform_1.0.10_linux_amd64.zip
+      - sudo mv terraform /bin
+      - rm terraform_1.0.10_linux_amd64.zip
+      - echo "Install tfsec"
+      - curl -Lso tfsec https://github.com/aquasecurity/tfsec/releases/download/v1.4.2/tfsec-linux-amd64
+      - chmod +x tfsec
+      - sudo mv tfsec /usr/local/bin/tfsec
+      - echo "Prepare terraform file"
+      - cd deployments
+      - echo "${TERRAFORM_BACKEND_CONF}" > backend.conf
+      - echo "${TERRAFORM_VARS}" > terraform.tfvars
+      - cat backend.conf
+      - terraform init -backend-config=backend.conf -reconfigure
+  build:
+    commands:
+      - echo "Terraform plan follows..."
+      - terraform plan -var-file="terraform.tfvars" -out plan.out
+      - echo "Terraform plan complete"
+  post_build:
+    commands:
+      - echo "Running tfsec..."
+      - tfsec --no-colour --format json
+      - echo "Completed tfsec"
+artifacts:
+  files:
+    - plan.out
+  name: plan-output
+cache:
+  paths:
+    - .terraform

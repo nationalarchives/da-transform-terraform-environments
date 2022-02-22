@@ -1,21 +1,27 @@
 resource "aws_s3_bucket" "codepipeline_bucket" {
   bucket = var.pipeline_deployment_bucket_name
-  acl    = "private"
+  force_destroy = true
+}
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "aws:kms"
-      }
+resource "aws_s3_bucket_acl" "codepipeline_bucket" {
+  bucket = aws_s3_bucket.codepipeline_bucket.id
+  acl = "private"
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "codepipeline_bucket" {
+  bucket = aws_s3_bucket.codepipeline_bucket.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
     }
   }
+}
 
-  # Neede for CloudWatch
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "codepipeline_bucket" {
+  bucket = aws_s3_bucket.codepipeline_bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
-
-  force_destroy = true
 }
 
 resource "aws_s3_bucket_public_access_block" "pipeline_buckets" {
