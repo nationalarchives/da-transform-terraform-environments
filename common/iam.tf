@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = [ aws_codebuild_project.terraform-common-apply.arn ]
+    resources = [ "*" ]
   }
 
   statement {
