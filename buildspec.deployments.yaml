@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - yum -qy install sudo
+      - yum -q -y install sudo
       - echo "Install Terraform"
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
       - unzip terraform_1.0.10_linux_amd64.zip

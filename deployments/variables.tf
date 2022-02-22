@@ -12,3 +12,8 @@ variable "assume_role" {
   description = "role ARNs to be assumed"
   type = string
 }
+
+variable "tdr_role_arn" {
+  description = "role ARN for TDR to submit to SQS queues"
+  type = string
+}
