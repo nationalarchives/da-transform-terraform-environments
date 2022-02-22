@@ -29,7 +29,7 @@ resource "aws_codebuild_project" "terraform-common-apply" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = var.da_codebuild_logs
+      group_name = "da-transform-logs"
     }
   }
 
@@ -71,7 +71,7 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = var.da_codebuild_logs
+      group_name = "da-transform-logs"
     }
   }
 

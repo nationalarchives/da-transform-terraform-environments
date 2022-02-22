@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = var.pipeline_deployment_bucket_name
+  bucket = "da-transform-environment-pipeline-bucket"
   force_destroy = true
 }
 
