@@ -3,11 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - ls $CODEBUILD_SRC_DIR_source_output
-      - cd $CODEBUILD_SRC_DIR_plan_output
-      - ls -la
-      - pwd
-      - cp plan.out ../$CODEBUILD_SRC_DIR_source_output
+      - cp ../$CODEBUILD_SRC_DIR_plan_output/plan.out .
       - yum -q -y install sudo
       - echo "Install Terraform"
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
@@ -27,8 +23,6 @@ phases:
   build:
     commands:
       - echo "Terraform plan follows..."
-      - cd ../$CODEBUILD_SRC_DIR_source_output
-      - ls -l
       - terraform apply -var-file="terraform.tfvars" -input=false plan.out | tee apply.out
       - echo "Terraform plan complete"
   post_build:
