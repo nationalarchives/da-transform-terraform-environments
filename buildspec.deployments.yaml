@@ -39,7 +39,7 @@ artifacts:
   files:
     - "plan.out"
     - "tfsec-out.json"
-  base-directory: "../deployments"
+  base-directory: "deployments"
   name: "plan_output"
 cache:
   paths:
