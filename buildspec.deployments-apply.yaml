@@ -3,12 +3,11 @@ version: 0.2
 phases:
   install:
     commands:
-      - ls $CODEBUILD_SRC_DIR_source_output
-      - ls $CODEBUILD_SRC_DIR_plan_output
-      - cp $CODEBUILD_SRC_DIR_plan_output/plan.out deployments
+      - ls -la $CODEBUILD_SRC_DIR_source_output
+      - ls -la $CODEBUILD_SRC_DIR_plan_output
+      - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
       - ls -la
       - pwd
-      - ls -l
       - yum -q -y install sudo
       - echo "Install Terraform"
       - wget https://releases.hashicorp.com/terraform/1.0.10/terraform_1.0.10_linux_amd64.zip
@@ -21,7 +20,7 @@ phases:
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
       - cd deployments
-      - ls
+      - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
       - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
@@ -29,7 +28,7 @@ phases:
   build:
     commands:
       - echo "Terraform plan follows..."
-      - terraform init -backend-config=backend.conf -upgrade -reconfigure
+#      - terraform init -backend-config=backend.conf -upgrade -reconfigure
       - terraform apply -input=false plan.out | tee apply.out
       - echo "Terraform plan complete"
   post_build:
