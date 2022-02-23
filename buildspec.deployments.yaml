@@ -24,6 +24,7 @@ phases:
     commands:
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
+      - terraform apply -input=false plan.out | tee apply.out
       - ls -la
       - echo "Terraform plan complete"
   post_build:
