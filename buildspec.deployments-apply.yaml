@@ -4,7 +4,8 @@ phases:
   install:
     commands:
       - ls $CODEBUILD_SRC_DIR_source_output
-      - cp $CODEBUILD_SRC_DIR_plan_output/plan.out deployments
+      - ls $CODEBUILD_SRC_DIR_plan_output
+      - cp $CODEBUILD_SRC_DIR_plan_output/{plan.out, retrieve_bagit.zip, tdr_message.zip} deployments
       - ls -la
       - pwd
       - ls -l

@@ -38,6 +38,8 @@ phases:
       - ls
 artifacts:
   files:
+    - "tdr_message.zip"
+    - "retrieve_bagit.zip"
     - "plan.out"
     - "tfsec-out.json"
   base-directory: "deployments"
