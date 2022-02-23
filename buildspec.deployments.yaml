@@ -42,9 +42,7 @@ artifacts:
     - "retrieve_bagit.zip"
     - "plan.out"
     - "tfsec-out.json"
+    - ".terraform"
+    - ".terraform.lock.hcl"
   base-directory: "deployments"
   name: "plan_output"
-cache:
-  paths:
-    - .terraform
-    - .terraform.lock.hcl
