@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
 
   statement {
 		actions = [ "codestar-connections:UseConnection" ]
-		resources = [ aws_codestarconnections_connection.terraform-codepipeline.arn ]
+		resources = [ aws_codestarconnections_connection.tna_github.arn ]
   }
 }
 
