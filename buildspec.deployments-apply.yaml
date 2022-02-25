@@ -27,10 +27,9 @@ phases:
       - cat terraform.tfvars
   build:
     commands:
-      - echo "Terraform plan follows..."
-#      - terraform init -backend-config=backend.conf -upgrade -reconfigure
+      - echo "Terraform apply follows..."
       - terraform apply -input=false plan.out | tee apply.out
-      - echo "Terraform plan complete"
+      - echo "Terraform apply complete"
   post_build:
     commands:
       - echo "In PostBuild"
