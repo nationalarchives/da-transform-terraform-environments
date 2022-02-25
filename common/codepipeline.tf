@@ -12,16 +12,18 @@ resource "aws_codepipeline" "terraform-common" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "AWS"
-      provider         = "CodeStarSourceConnection"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
       version          = "1"
       run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
-        ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
-				BranchName        = var.common_git_branch
-        FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
+				Branch         = var.common_git_branch
+        Owner          = "nationalarchives"
+        PollForSourceChanges = "false"
+        Repo           = "da-transform-terraform-environments"
+        OAuthToken     = var.github_oauth_token
       }
     }
   }
@@ -63,16 +65,18 @@ resource "aws_codepipeline" "terraform-deployments" {
     action {
       name = "Source"
       category = "Source"
-      owner = "AWS"
-      provider = "CodeStarSourceConnection"
+      owner = "ThirdParty"
+      provider = "GitHub"
       version = "1"
       run_order = 1
       output_artifacts = ["source_output"]
 
       configuration = {
-        BranchName = each.value.git_branch
-        ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
-        FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
+        Branch = each.value.git_branch
+        Owner = "nationalarchives"
+        PollForSourceChanges = "false"
+        Repo = "da-transform-terraform-environments"
+        OAuthToken = var.github_oauth_token
       }
     }
   }
@@ -115,7 +119,9 @@ resource "aws_codepipeline" "terraform-deployments" {
   }
 }
 
-resource "aws_codestarconnections_connection" "tna_github" {
-  name          = "tna-github"
+
+
+resource "aws_codestarconnections_connection" "terraform-codepipeline" {
+  name          = "terraform-common-codepipeline"
   provider_type = "GitHub"
 }
