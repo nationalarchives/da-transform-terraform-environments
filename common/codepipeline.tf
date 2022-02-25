@@ -12,18 +12,16 @@ resource "aws_codepipeline" "terraform-common" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
+        ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
 				Branch         = var.common_git_branch
-        Owner          = "nationalarchives"
-        PollForSourceChanges = "false"
-        Repo           = "da-transform-terraform-environments"
-        OAuthToken     = var.github_oauth_token
+        FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
       }
     }
   }
@@ -73,10 +71,9 @@ resource "aws_codepipeline" "terraform-deployments" {
 
       configuration = {
         Branch = each.value.git_branch
-        Owner = "nationalarchives"
-        PollForSourceChanges = "false"
-        Repo = "da-transform-terraform-environments"
-        OAuthToken = var.github_oauth_token
+        ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
+				Branch         = var.common_git_branch
+        FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
       }
     }
   }
@@ -119,7 +116,7 @@ resource "aws_codepipeline" "terraform-deployments" {
   }
 }
 
-resource "aws_codestarconnections_connection" "terraform-codepipeline" {
-  name          = "terraform-common-codepipeline"
+resource "aws_codestarconnections_connection" "tna_github" {
+  name          = "tna-github"
   provider_type = "GitHub"
 }
