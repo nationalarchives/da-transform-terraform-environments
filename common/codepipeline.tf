@@ -20,7 +20,7 @@ resource "aws_codepipeline" "terraform-common" {
 
       configuration = {
         ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
-				Branch         = var.common_git_branch
+				BranchName        = var.common_git_branch
         FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
       }
     }
@@ -63,16 +63,15 @@ resource "aws_codepipeline" "terraform-deployments" {
     action {
       name = "Source"
       category = "Source"
-      owner = "ThirdParty"
-      provider = "GitHub"
+      owner = "AWS"
+      provider = "CodeStarSourceConnection"
       version = "1"
       run_order = 1
       output_artifacts = ["source_output"]
 
       configuration = {
-        Branch = each.value.git_branch
+        BranchName = each.value.git_branch
         ConnectionArn  = aws_codestarconnections_connection.tna_github.arn
-				Branch         = var.common_git_branch
         FullRepositoryId           = "nationalarchives/da-transform-terraform-environments"
       }
     }
