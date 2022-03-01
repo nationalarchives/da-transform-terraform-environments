@@ -15,7 +15,7 @@ resource "aws_codepipeline" "terraform-common" {
       category         = "Source"
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
-      version          = "2"
+      version          = "1"
       run_order        = 1
       output_artifacts = ["source_output"]
 
