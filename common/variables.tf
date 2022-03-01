@@ -35,7 +35,7 @@ variable "github_oauth_token" {
 variable "common_git_branch" {
   description = "Git branch for common terraform"
   type = string
-  default = "feature/codepipeline"
+  default = "develop"
 }
 
 variable "dev_git_branch" {
