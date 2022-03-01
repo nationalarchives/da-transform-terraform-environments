@@ -35,7 +35,7 @@ resource "aws_codebuild_project" "terraform-common-apply" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = "da-transform-terraform-${each.key}-pipeline-logs"
+      group_name = "da-transform-terraform-pipeline-logs"
     }
   }
 
@@ -83,7 +83,7 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = "da-transform-logs"
+      group_name = "da-transform-terraform-${each.key}-pipeline-logs"
     }
   }
 
@@ -131,7 +131,7 @@ resource "aws_codebuild_project" "terraform-deployments-apply" {
 
   logs_config {
     cloudwatch_logs {
-      group_name = "da-transform-terraform-pipeline-logs"
+      group_name = "da-transform-terraform-${each.key}-pipeline-logs"
     }
   }
 
