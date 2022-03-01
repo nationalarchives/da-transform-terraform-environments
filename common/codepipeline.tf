@@ -99,6 +99,19 @@ resource "aws_codepipeline" "terraform-deployments" {
   }
 
   stage {
+    name = "Approval"
+
+    action {
+      name      = "Approval"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      version   = "1"
+      run_order = 3
+    }
+  }
+
+  stage {
     name = "Apply"
     action {
       name = "Apply"
@@ -106,7 +119,7 @@ resource "aws_codepipeline" "terraform-deployments" {
       owner = "AWS"
       provider = "CodeBuild"
       version = "1"
-      run_order = 2
+      run_order = 4
       input_artifacts = [
         "source_output",
         "plan_output"
