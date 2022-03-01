@@ -21,7 +21,7 @@ resource "aws_codepipeline" "terraform-common" {
 
       configuration = {
 		  	ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
-        FullRepositoryId = "nationalarchives/da-transform-dev-documentation"
+        FullRepositoryId = "nationalarchives/da-transform-terraform-environments"
         BranchName       = "develop"
       }
     }
@@ -76,7 +76,7 @@ resource "aws_codepipeline" "terraform-deployments" {
       configuration = {
         BranchName = each.value.git_branch
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
-        FullRepositoryId = "nationalarchives/da-transform-dev-documentation"
+        FullRepositoryId = "nationalarchives/da-transform-terraform-environments"
       }
     }
   }
