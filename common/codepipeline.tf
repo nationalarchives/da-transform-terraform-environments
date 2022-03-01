@@ -77,6 +77,7 @@ resource "aws_codepipeline" "terraform-deployments" {
         BranchName = each.value.git_branch
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/da-transform-terraform-environments"
+        
       }
     }
   }
@@ -136,54 +137,52 @@ resource "aws_codepipeline" "terraform-deployments" {
 # lambda deployments pipeline
 
 
-# resource "aws_codepipeline" "lambda_deployments" {
-#   for_each = local.environments
-#   name = "lambda-deployments-${each.key}"
-#   role_arn = aws_iam_role.codepipeline_role.arn
+resource "aws_codepipeline" "lambda_deployments" {
+  for_each = local.environments
+  name = "lambda-deployments-${each.key}"
+  role_arn = aws_iam_role.codepipeline_role.arn
 
-#   artifact_store {
-#     location = aws_s3_bucket.codepipeline_bucket.bucket
-#     type = "S3"
-#   }
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_bucket.bucket
+    type = "S3"
+  }
 
-#   stage {
-#     name = "Source"
-#     action {
-#       name = "Source"
-#       category = "Source"
-#       owner = "ThirdParty"
-#       provider = "GitHub"
-#       version = "1"
-#       run_order = 1
-#       output_artifacts = ["source_output"]
+  stage {
+    name = "Source"
+    action {
+      name = "Source"
+      category = "Source"
+      owner = "AWS"
+      provider = "CodeStarSourceConnection"
+      version = "1"
+      run_order = 1
+      output_artifacts = ["source_output"]
 
-#       configuration = {
-#         Branch = "test"
-#         Owner = "nationalarchives"
-#         PollForSourceChanges = "false"
-#         Repo = "da-transform-judgments-pipeline"
-#         OAuthToken = var.github_oauth_token
-#       }
-#     }
-#   }
+      configuration = {
+        BranchName = each.value.git_branch
+        ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
+        FullRepositoryId = "nationalarchives/da-transform-judgments-pipeline"
+        OutputArtifactFormat = "CODEBUILD_CLONE_REF"
+      }
+    }
+  }
 
-#   stage {
-#     name = "Build"
-#     action {
-#       name = "Build"
-#       category = "Build"
-#       owner = "AWS"
-#       provider = "CodeBuild"
-#       version = "1"
-#       run_order = 2
-#       input_artifacts = ["source_output"]
-#       output_artifacts = ["plan_output"]
-#       configuration = {
-#         ProjectName = aws_codebuild_project.lambda-image-deploy[each.key].name
-#       }
-#     }
-#   }
-# }
+  stage {
+    name = "Build"
+    action {
+      name = "Build"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = ["source_output"]
+      configuration = {
+        ProjectName = aws_codebuild_project.lambda-image-deploy[each.key].name
+      }
+    }
+  }
+}
 
 resource "aws_codestarconnections_connection" "terraform-codepipeline" {
   name          = "terraform-common-codepipeline"
