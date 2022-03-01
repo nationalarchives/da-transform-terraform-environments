@@ -13,9 +13,9 @@ resource "aws_codepipeline" "terraform-common" {
     action {
       name             = "Source"
       category         = "Source"
-      owner            = "ThirdParty"
-      provider         = "GitHub"
-      version          = "1"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "2"
       run_order        = 1
       output_artifacts = ["source_output"]
 
@@ -67,8 +67,8 @@ resource "aws_codepipeline" "terraform-deployments" {
     action {
       name = "Source"
       category = "Source"
-      owner = "ThirdParty"
-      provider = "GitHub"
+      owner = "AWS"
+      provider = "CodeStarSourceConnection"
       version = "1"
       run_order = 1
       output_artifacts = ["source_output"]
