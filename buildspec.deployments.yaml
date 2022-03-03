@@ -22,6 +22,7 @@ phases:
       - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
+      - terraform destroy -auto-approve
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
       - ls -la
