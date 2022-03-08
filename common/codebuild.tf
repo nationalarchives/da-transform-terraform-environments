@@ -224,7 +224,7 @@ resource "aws_codebuild_project" "parser-build" {
   }
 
   secondary_sources {
-    source_identifier = "te-docker-build"
+    source_identifier = "teDockerBuild"
     type = "GITHUB"
     git_clone_depth = 0
     buildspec = "./buildspec.yaml"
@@ -233,7 +233,7 @@ resource "aws_codebuild_project" "parser-build" {
   }
 
   secondary_source_version {
-    source_identifier = "te-docker-build"
+    source_identifier = "teDockerBuild"
     source_version = "DTE-80/story/text-parser-pipeline"
   }
 }
