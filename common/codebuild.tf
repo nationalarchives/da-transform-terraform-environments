@@ -196,7 +196,6 @@ resource "aws_codebuild_project" "parser-build" {
 
   artifacts {
     type = "CODEPIPELINE"
-    git_clone_depth = 0
   }
 
   environment {
@@ -221,10 +220,11 @@ resource "aws_codebuild_project" "parser-build" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "./buildspec.yaml"
+    # buildspec = "./buildspec.yaml"
   }
 
   secondary_sources {
+    source_identifier = "te-docker-build"
     type = "Github"
     git_clone_depth = 0
     buildspec = "./buildspec.yaml"
