@@ -228,5 +228,12 @@ resource "aws_codebuild_project" "parser-build" {
     type = "GITHUB"
     git_clone_depth = 0
     buildspec = "./buildspec.yaml"
+    location = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+    
+  }
+
+  secondary_source_version {
+    source_identifier = "te-docker-build"
+    source_version = "DTE-80/story/text-parser-pipeline"
   }
 }
