@@ -225,7 +225,7 @@ resource "aws_codebuild_project" "parser-build" {
 
   secondary_sources {
     source_identifier = "te-docker-build"
-    type = "Github"
+    type = "GITHUB"
     git_clone_depth = 0
     buildspec = "./buildspec.yaml"
   }
