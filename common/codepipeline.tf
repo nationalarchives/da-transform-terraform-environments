@@ -183,6 +183,55 @@ resource "aws_codepipeline" "lambda_deployments" {
     }
   }
 }
+# ------------------------------
+# parser deployments pipeline
+
+resource "aws_codepipeline" "lambda_deployments" {
+  for_each = local.environments
+  name = "lambda-deployments-${each.key}"
+  role_arn = aws_iam_role.codepipeline_role.arn
+
+  artifact_store {
+    location = aws_s3_bucket.codepipeline_bucket.bucket
+    type = "S3"
+  }
+
+  stage {
+    name = "Source"
+    action {
+      name = "Source"
+      category = "Source"
+      owner = "AWS"
+      provider = "CodeStarSourceConnection"
+      version = "1"
+      run_order = 1
+      output_artifacts = ["source_output"]
+
+      configuration = {
+        BranchName = "master"
+        ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
+        FullRepositoryId = "nationalarchives/tna-judgments-parser"
+        OutputArtifactFormat = "CODEBUILD_CLONE_REF"
+      }
+    }
+  }
+
+  stage {
+    name = "Build"
+    action {
+      name = "Build"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = ["source_output"]
+      configuration = {
+        ProjectName = aws_codebuild_project.parser-build.name
+      }
+    }
+  }
+}
 
 resource "aws_codestarconnections_connection" "terraform-codepipeline" {
   lifecycle {
