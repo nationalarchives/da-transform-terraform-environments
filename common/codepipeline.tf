@@ -186,7 +186,7 @@ resource "aws_codepipeline" "lambda_deployments" {
 # ------------------------------
 # parser deployments pipeline
 
-resource "aws_codepipeline" "lambda_deployments" {
+resource "aws_codepipeline" "parser-deployments" {
   for_each = local.environments
   name = "lambda-deployments-${each.key}"
   role_arn = aws_iam_role.codepipeline_role.arn
