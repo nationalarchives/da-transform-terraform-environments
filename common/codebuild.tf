@@ -229,14 +229,13 @@ resource "aws_codebuild_project" "parser-build" {
 
   source {
     type      = "CODEPIPELINE"
-    # buildspec = "./buildspec.yaml"
+    buildspec = file("files/parser-buildspec.yaml")
   }
 
   secondary_sources {
     source_identifier = "teDockerBuild"
     type = "GITHUB"
     git_clone_depth = 0
-    buildspec = file("files/parser-buildspec.yaml")
     location = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
     
   }
