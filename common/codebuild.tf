@@ -205,11 +205,20 @@ resource "aws_codebuild_project" "parser-build" {
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode = true
 
-    # environment_variable {
-    #   name = "TF_IN_AUTOMATION"
-    #   value = "True"
-    #   type = "PLAINTEXT"
-    # }
+    environment_variable {
+      name = "AWS_REGION"
+      value = "eu-west-2"
+    }
+
+    environment_variable {
+      name = "AWS_ACCOUNT_ID"
+      value = data.aws_caller_identity.mgmt.account_id
+    }
+
+    environment_variable {
+      name = "ECR_REPOSITORY_URL"
+      value = aws_ecr_repository.tna_parser.repository_url
+    }
   }
 
   logs_config {
@@ -227,7 +236,7 @@ resource "aws_codebuild_project" "parser-build" {
     source_identifier = "teDockerBuild"
     type = "GITHUB"
     git_clone_depth = 0
-    buildspec = "./buildspec.yaml"
+    buildspec = file("files/parser-buildspec.yaml")
     location = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
     
   }
