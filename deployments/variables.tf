@@ -27,3 +27,13 @@ variable "tdr_sqs_queue_arn" {
   description = "ARN of the TDR SQS Queue for the retry message"
   type = string
 }
+
+variable "tdr_queue_kms_key" {
+  description = "ARN of the KMS Key for TDR SQS Queue "
+  type = string
+}
+
+variable "editorial_role_arn" {
+  description = "role ARN for editorial retry message"
+  type        = string
+}
