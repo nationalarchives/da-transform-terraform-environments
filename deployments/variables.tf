@@ -38,7 +38,7 @@ variable "editorial_role_arn" {
   type        = string
 }
 
-# variable "editorial_sns_sub_arn" {
-#   description = "ARN of the editorial SNS Subscription role"
-#   type = string
-# }
+variable "editorial_sns_sub_arn" {
+  description = "ARN of the editorial SNS Subscription role"
+  type = string
+}
