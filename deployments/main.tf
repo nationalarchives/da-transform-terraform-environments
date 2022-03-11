@@ -6,7 +6,7 @@ module "pipeline_step_function" {
   tdr_queue_kms_key = var.tdr_queue_kms_key
   tdr_trigger_queue_arn = module.tdr_sqs_in_queue.tdr_sqs_queue_arn
   editorial_retry_trigger_arn = module.tdr_sqs_in_queue.editorial_sqs_queue_arn
-  editorial_sns_sub_arn = var.editorial_sns_sub_arn
+  # editorial_sns_sub_arn = var.editorial_sns_sub_arn
 }
 
 module "tdr_sqs_in_queue" {
