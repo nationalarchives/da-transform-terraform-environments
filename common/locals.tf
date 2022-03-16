@@ -15,6 +15,13 @@ locals {
         aws_iam_role.nonprod_cross_account_dev.arn,
         aws_iam_role.prod_cross_account_dev.arn
       ]
+    },
+    {
+      name = "tna-users"
+      rolearns = [
+        aws_iam_role.nonprod_cross_account_tna_user.arn,
+        aws_iam_role.prod_cross_account_tna_user.arn
+      ]
     }
   ]
 

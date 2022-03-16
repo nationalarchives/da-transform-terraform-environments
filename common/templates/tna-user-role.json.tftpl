@@ -1,0 +1,21 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*",
+                "states:ListStateMachines",
+                "states:ListActivities",
+                "states:DescribeStateMachine",
+                "states:DescribeStateMachineForExecution",
+                "states:ListExecutions",
+                "states:DescribeExecution",
+                "states:GetExecutionHistory",
+                "states:DescribeActivity"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

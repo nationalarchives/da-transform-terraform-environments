@@ -84,12 +84,6 @@ resource "aws_iam_role_policy_attachment" "nonprod_cross_account_terraform" {
   policy_arn = data.aws_iam_policy.managed_admin.arn
 }
 
-# resource "aws_iam_role_policy" "nonprod_codepipeline_role_policy" {
-#   name = "nonprod_codepipeline_role_policy"
-#   role = aws_iam_role.nonprod_cross_account_terraform.name
-#   policy = data.aws_iam_policy_document.codepipeline_role_policy.json
-# }
-
 #tfsec:ignore:aws-iam-no-policy-wildcards This policy is intentionally permissive at this point FIXME
 resource "aws_iam_policy" "nonprod_dev" {
   provider = aws.nonprod
@@ -111,6 +105,29 @@ resource "aws_iam_role_policy_attachment" "nonprod_cross_account_dev" {
   role = aws_iam_role.nonprod_cross_account_dev.name
   policy_arn = aws_iam_policy.nonprod_dev.arn
 }
+
+resource "aws_iam_role" "nonprod_cross_account_tna_user" {
+  provider = aws.nonprod
+  name = "Tna_User_Role"
+  path = "/ziazi/"
+  assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
+}
+
+resource "aws_iam_policy" "nonprod_tna_user" {
+  provider = aws.nonprod
+  name = "tna_users"
+  path = "/zaizi/"
+  description = "ReadOnlyAccess for TNA users"
+  policy = file("${path.module}/templates/tna-user-role.json.tftpl")
+}
+
+resource "aws_iam_role_policy_attachment" "nonprod_cross_account_tna_user" {
+  provider = aws.nonprod
+  role = aws_iam_role.nonprod_cross_account_tna_user.name
+  policy_arn = aws_iam_policy.nonprod_tna_user.arn
+}
+
+
 
 ## Prod cross-account roles
 resource "aws_iam_role" "prod_cross_account_admin" {
@@ -139,6 +156,27 @@ resource "aws_iam_role_policy_attachment" "prod_cross_account_dev" {
   policy_arn = data.aws_iam_policy.managed_readonly.arn
 }
 
+resource "aws_iam_role" "prod_cross_account_tna_user" {
+  provider = aws.prod
+  name = "Tna_User_Role"
+  path = "/ziazi/"
+  assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
+}
+
+resource "aws_iam_policy" "prod_tna_user" {
+  provider = aws.prod
+  name = "tna_users"
+  path = "/zaizi/"
+  description = "ReadOnlyAccess for TNA users"
+  policy = file("${path.module}/templates/tna-user-role.json.tftpl")
+}
+
+resource "aws_iam_role_policy_attachment" "nonprod_cross_account_tna_user" {
+  provider = aws.prod
+  role = aws_iam_role.prod_cross_account_tna_user.name
+  policy_arn = aws_iam_policy.prod_tna_user.arn
+}
+
 resource "aws_iam_role" "prod_cross_account_terraform" {
   provider = aws.prod
   name = "terraform"
@@ -165,8 +203,4 @@ resource "aws_iam_role_policy_attachment" "users_cross_account_terraform" {
   policy_arn = data.aws_iam_policy.managed_admin.arn
 }
 
-# resource "aws_iam_role_policy" "prod_codepipeline_role_policy" {
-#   name = "prod_codepipeline_role_policy"
-#   role = aws_iam_role.prod_cross_account_terraform.name
-#   policy = data.aws_iam_policy_document.codepipeline_role_policy.json
-# }
+
