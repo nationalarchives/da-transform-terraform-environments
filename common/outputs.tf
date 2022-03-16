@@ -15,6 +15,13 @@ output "roles" {
         nonprod = aws_iam_role.nonprod_cross_account_dev.arn,
         prod = aws_iam_role.prod_cross_account_dev.arn
       }
+    },
+    {
+      name = "tna-users"
+      rolearns = {
+        nonprod = aws_iam_role.nonprod_cross_account_tna_user.arn,
+        prod = aws_iam_role.prod_cross_account_tna_user.arn
+      }
     }
   ] 
 }
