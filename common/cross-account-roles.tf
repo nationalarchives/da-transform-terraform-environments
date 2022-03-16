@@ -171,7 +171,7 @@ resource "aws_iam_policy" "prod_tna_user" {
   policy = file("${path.module}/templates/tna-user-role.json.tftpl")
 }
 
-resource "aws_iam_role_policy_attachment" "nonprod_cross_account_tna_user" {
+resource "aws_iam_role_policy_attachment" "prod_cross_account_tna_user" {
   provider = aws.prod
   role = aws_iam_role.prod_cross_account_tna_user.name
   policy_arn = aws_iam_policy.prod_tna_user.arn
