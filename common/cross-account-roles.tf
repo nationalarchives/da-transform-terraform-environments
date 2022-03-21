@@ -109,7 +109,7 @@ resource "aws_iam_role_policy_attachment" "nonprod_cross_account_dev" {
 resource "aws_iam_role" "nonprod_cross_account_tna_user" {
   provider = aws.nonprod
   name = "Tna_User_Role"
-  path = "/ziazi/"
+  path = "/zaizi/"
   assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
 }
 
@@ -159,7 +159,7 @@ resource "aws_iam_role_policy_attachment" "prod_cross_account_dev" {
 resource "aws_iam_role" "prod_cross_account_tna_user" {
   provider = aws.prod
   name = "Tna_User_Role"
-  path = "/ziazi/"
+  path = "/zaizi/"
   assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
 }
 

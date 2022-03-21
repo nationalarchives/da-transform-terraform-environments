@@ -7,6 +7,7 @@ module "pipeline_step_function" {
   tdr_trigger_queue_arn = module.tdr_sqs_in_queue.tdr_sqs_queue_arn
   editorial_retry_trigger_arn = module.tdr_sqs_in_queue.editorial_sqs_queue_arn
   editorial_sns_sub_arn = var.editorial_sns_sub_arn
+  api_endpoint = var.api_endpoint
 }
 
 module "tdr_sqs_in_queue" {
@@ -15,4 +16,9 @@ module "tdr_sqs_in_queue" {
   tdr_role_arn = var.tdr_role_arn
   sfn_arn = module.pipeline_step_function.sfn_state_machine_arn
   editorial_role_arn = var.editorial_role_arn
+}
+
+module "parser" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=develop//parser"
+  env = var.environment_name
 }
