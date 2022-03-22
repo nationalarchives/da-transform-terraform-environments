@@ -7,7 +7,7 @@ module "pipeline_step_function" {
   tdr_trigger_queue_arn = module.tdr_sqs_in_queue.tdr_sqs_queue_arn
   editorial_retry_trigger_arn = module.tdr_sqs_in_queue.editorial_sqs_queue_arn
   editorial_sns_sub_arn = var.editorial_sns_sub_arn
-  api_endpoint = var.api_endpoint
+  api_endpoint = "${module.parser.parser_api_endpoint}/${module.parser.lambda_name}"
 }
 
 module "tdr_sqs_in_queue" {

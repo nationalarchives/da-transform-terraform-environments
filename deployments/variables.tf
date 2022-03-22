@@ -43,7 +43,14 @@ variable "editorial_sns_sub_arn" {
   type = string
 }
 
-variable "api_endpoint" {
-  description = "Endpoint for Parser API Gateway"
-  type = string
-}
+# variable "custom_tags" {
+#   description = "Resources tags"
+#   type = object({
+#     Environment    = string
+#       Owner           = string
+#       Terraform       = bool
+#       TerraformSource = string
+#       CostCentre      = string
+#       Role            = string
+#   })
+# }
