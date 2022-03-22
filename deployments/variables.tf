@@ -37,3 +37,20 @@ variable "editorial_role_arn" {
   description = "role ARN for editorial retry message"
   type        = string
 }
+
+variable "editorial_sns_sub_arn" {
+  description = "ARN of the editorial SNS Subscription role"
+  type = string
+}
+
+# variable "custom_tags" {
+#   description = "Resources tags"
+#   type = object({
+#     Environment    = string
+#       Owner           = string
+#       Terraform       = bool
+#       TerraformSource = string
+#       CostCentre      = string
+#       Role            = string
+#   })
+# }
