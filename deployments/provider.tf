@@ -6,7 +6,7 @@ provider "aws" {
   default_tags {
     tags = {
       Environment   = var.environment_name
-      Owner         = "digital archiving"
+      Owner         = "digital-archiving"
       Terraform       = true
       TerraformSource = "https://github.com/nationalarchives/da-transform-terraform-environments"
       CostCentre     = "56"
