@@ -49,6 +49,18 @@ variable "editorial_sns_sub_arn" {
   type = string
 }
 
+variable "image_versions" {
+  description = "Latest image version for Lambda Functions"
+  type = object({
+    te_step_function_trigger = string
+    te_bagit_checksum_validation = string
+    te_files_checksum_validation = string
+    te_text_parser_step_function = string
+    te_editorial_integration = string
+    te_text_parser = string
+  })
+}
+
 # variable "custom_tags" {
 #   description = "Resources tags"
 #   type = object({
