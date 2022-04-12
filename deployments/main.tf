@@ -1,5 +1,5 @@
 module "pipeline_step_function" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=${var.env}//step_function"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_function"
   env = var.environment_name
   prefix = var.prefix
   tdr_sqs_queue_endpoint = var.tdr_sqs_queue_endpoint
@@ -13,7 +13,7 @@ module "pipeline_step_function" {
 }
 
 module "tdr_sqs_in_queue" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=${var.env}//sqs"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//sqs"
   env = var.environment_name
   prefix = var.prefix
   tdr_role_arn = var.tdr_role_arn
