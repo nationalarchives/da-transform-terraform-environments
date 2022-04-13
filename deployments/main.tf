@@ -1,5 +1,5 @@
 module "pipeline_step_function" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=develop//step_function"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//step_function"
   env = var.environment_name
   prefix = var.prefix
   tdr_sqs_queue_endpoint = var.tdr_sqs_queue_endpoint
@@ -8,13 +8,12 @@ module "pipeline_step_function" {
   tdr_trigger_queue_arn = module.tdr_sqs_in_queue.tdr_sqs_queue_arn
   editorial_retry_trigger_arn = module.tdr_sqs_in_queue.editorial_sqs_queue_arn
   editorial_sns_sub_arn = var.editorial_sns_sub_arn
-  api_endpoint = "${module.parser.parser_api_endpoint}/${module.parser.lambda_name}"
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
 }
 
 module "tdr_sqs_in_queue" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=develop//sqs"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//sqs"
   env = var.environment_name
   prefix = var.prefix
   tdr_role_arn = var.tdr_role_arn
@@ -23,12 +22,4 @@ module "tdr_sqs_in_queue" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
 
-}
-
-module "parser" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=develop//parser"
-  env = var.environment_name
-  prefix = var.prefix
-  account_id = data.aws_caller_identity.aws.account_id
-  image_versions = var.image_versions
 }
