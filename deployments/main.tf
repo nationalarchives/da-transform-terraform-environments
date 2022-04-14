@@ -10,6 +10,9 @@ module "pipeline_step_function" {
   editorial_sns_sub_arn = var.editorial_sns_sub_arn
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
+  slack_webhook_url = var.slack_webhook_url
+  slack_channel = var.slack_channel
+  slack_username = var.slack_username
 }
 
 module "tdr_sqs_in_queue" {
