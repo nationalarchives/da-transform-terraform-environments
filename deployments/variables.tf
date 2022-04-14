@@ -58,17 +58,24 @@ variable "image_versions" {
     te_text_parser_step_function = string
     te_editorial_integration = string
     te_text_parser = string
+    tre_slack_alerts = string
   })
 }
 
-# variable "custom_tags" {
-#   description = "Resources tags"
-#   type = object({
-#     Environment    = string
-#       Owner           = string
-#       Terraform       = bool
-#       TerraformSource = string
-#       CostCentre      = string
-#       Role            = string
-#   })
-# }
+# Slack Alerts
+
+
+variable "slack_webhook_url" {
+  description = "Webhook URL for tre slack alerts"
+  type = string
+}
+
+variable "slack_channel" {
+  description = "Channel name for the tre slack alerts"
+  type = string
+}
+
+variable "slack_username" {
+  description = "Username for tre slack alerts"
+  type = string
+}
