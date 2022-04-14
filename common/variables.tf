@@ -35,29 +35,24 @@ variable "github_oauth_token" {
 variable "common_git_branch" {
   description = "Git branch for common terraform"
   type = string
-  default = "develop"
 }
 
 variable "dev_git_branch" {
   description = "Git branch for dev terraform"
   type = string
-  default = "develop"
 }
 
 variable "int_git_branch" {
   description = "Git branch for int terraform"
   type = string
-  default = "develop"
 }
 
 variable "staging_git_branch" {
   description = "Git branch for staging terraform"
   type = string
-  default = "master"
 }
 
 variable "prod_git_branch" {
   description = "Git branch for production terraform"
   type = string
-  default = "master"
 }
