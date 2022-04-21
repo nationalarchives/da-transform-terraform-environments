@@ -12,7 +12,7 @@ phases:
       - |
         if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
           echo "Building version from git tag ${GIT_TAG}"
-          docker build -t da-transform-codebuild-image:latest -f ${CODEBUILD_SRC_DIR_teDockerBuild}/text-parser/Dockerfile .
+          docker build -t da-transform-codebuild-image:latest -f ${CODEBUILD_SRC_DIR_teDockerBuild}/lambda_functions/tre-run-judgment-parser/Dockerfile .
           docker tag da-transform-codebuild-image:latest $ECR_REPOSITORY_URL:$GIT_TAG
         else
           echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"

@@ -217,7 +217,7 @@ resource "aws_codebuild_project" "parser-build" {
 
     environment_variable {
       name = "ECR_REPOSITORY_URL"
-      value = aws_ecr_repository.tre_parser.repository_url
+      value = aws_ecr_repository.tre_run_judgment_parser.repository_url
     }
   }
 
@@ -242,6 +242,6 @@ resource "aws_codebuild_project" "parser-build" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version = "DTE-80/story/text-parser-pipeline"
+    source_version = "develop"
   }
 }

@@ -26,11 +26,3 @@ module "tdr_sqs_in_queue" {
   image_versions = var.image_versions
 
 }
-
-# module "parser" {
-#   source = "github.com/nationalarchives/da-transform-terraform-modules?ref=develop//parser"
-#   env = var.environment_name
-#   prefix = var.prefix
-#   account_id = data.aws_caller_identity.aws.account_id
-#   image_versions = var.image_versions
-# }
