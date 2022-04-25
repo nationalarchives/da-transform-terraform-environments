@@ -217,7 +217,7 @@ resource "aws_codebuild_project" "parser-build" {
 
     environment_variable {
       name = "ECR_REPOSITORY_URL"
-      value = aws_ecr_repository.tna_parser.repository_url
+      value = aws_ecr_repository.tre_parser.repository_url
     }
   }
 
