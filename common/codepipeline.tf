@@ -22,7 +22,7 @@ resource "aws_codepipeline" "terraform-common" {
       configuration = {
 		  	ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/da-transform-terraform-environments"
-        BranchName       = "develop"
+        BranchName       = var.common_git_branch
       }
     }
   }
@@ -208,7 +208,7 @@ resource "aws_codepipeline" "parser-deployments" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        BranchName = "master"
+        BranchName = "main"
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/tna-judgments-parser"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
