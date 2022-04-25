@@ -52,12 +52,12 @@ variable "editorial_sns_sub_arn" {
 variable "image_versions" {
   description = "Latest image version for Lambda Functions"
   type = object({
-    te_step_function_trigger = string
-    te_bagit_checksum_validation = string
-    te_files_checksum_validation = string
-    te_text_parser_step_function = string
-    te_editorial_integration = string
-    te_text_parser = string
+    tre_step_function_trigger = string
+    tre_bagit_checksum_validation = string
+    tre_files_checksum_validation = string
+    tre_prepare_parser_input = string
+    tre_editorial_integration = string
+    tre_run_judgment_parser = string
     tre_slack_alerts = string
   })
 }
