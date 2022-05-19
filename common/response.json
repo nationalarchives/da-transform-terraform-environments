@@ -1,0 +1,12 @@
+{
+    "parser-outputs": {
+        "xml": null,
+        "metadata": null,
+        "images": null,
+        "log": null,
+        "error-messages": [
+            "error reading .docx file"
+        ]
+    }
+}
+

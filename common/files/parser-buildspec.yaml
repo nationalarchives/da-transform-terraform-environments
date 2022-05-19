@@ -13,6 +13,7 @@ phases:
         if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
           echo "Building version from git tag ${GIT_TAG}"
           docker build -t da-transform-codebuild-image:latest -f ${CODEBUILD_SRC_DIR_teDockerBuild}/lambda_functions/tre-run-judgment-parser/Dockerfile .
+          docker tag da-transform-codebuild-image:latest $ECR_REPOSITORY_URL:latest
           docker tag da-transform-codebuild-image:latest $ECR_REPOSITORY_URL:$GIT_TAG
         else
           echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
@@ -20,12 +21,13 @@ phases:
   post_build:
     commands:
       - echo "Build completed on $(date --utc +%c) UTC"
-      - |
-        if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
-          echo "Pushing the Docker images..."
-          docker push $ECR_REPOSITORY_URL:latest
-          docker push $ECR_REPOSITORY_URL:$GIT_TAG
-        else
-          echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
-        fi
-
+      # - |
+      #   if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
+      #     echo "Pushing the Docker images..."
+      #     docker push $ECR_REPOSITORY_URL:latest
+      #     docker push $ECR_REPOSITORY_URL:$GIT_TAG
+      #     aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
+      #   else
+      #     echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      #   fi
+      - aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG

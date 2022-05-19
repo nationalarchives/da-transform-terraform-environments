@@ -43,8 +43,8 @@ data "aws_iam_policy_document" "codepipeline-assume-role-policy" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "codepipeline_role"
-  path = "/"
+  name               = "codepipeline_role"
+  path               = "/"
   assume_role_policy = data.aws_iam_policy_document.codepipeline-assume-role-policy.json
 }
 
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
       "s3:Put*",
       "s3:List*"
     ]
-    resources = [ "${aws_s3_bucket.codepipeline_bucket.arn}/*", aws_s3_bucket.codepipeline_bucket.arn ]
+    resources = ["${aws_s3_bucket.codepipeline_bucket.arn}/*", aws_s3_bucket.codepipeline_bucket.arn]
   }
 
   statement {
@@ -63,34 +63,96 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = [ "arn:aws:codebuild:eu-west-2:454286877087:*" ]
+    resources = ["arn:aws:codebuild:eu-west-2:454286877087:*"]
   }
 
   statement {
-    actions = [ "sts:AssumeRole" ]
+    actions = ["sts:AssumeRole"]
     resources = [
-			aws_iam_role.mgmt_terraform.arn,
-			aws_iam_role.users_cross_account_terraform.arn,
-			aws_iam_role.nonprod_cross_account_terraform.arn,
-			aws_iam_role.prod_cross_account_terraform.arn
+      aws_iam_role.mgmt_terraform.arn,
+      aws_iam_role.users_cross_account_terraform.arn,
+      aws_iam_role.nonprod_cross_account_terraform.arn,
+      aws_iam_role.prod_cross_account_terraform.arn
     ]
   }
 
   statement {
-		actions = [ "codestar-connections:UseConnection" ]
-		resources = [ aws_codestarconnections_connection.terraform-codepipeline.arn ]
+    actions   = ["codestar-connections:UseConnection"]
+    resources = [aws_codestarconnections_connection.terraform-codepipeline.arn]
+  }
+
+  statement {
+    actions = [ "sns:Publish" ]
+    resources = [ aws_sns_topic.parser_pipeline_alerts.arn ]
   }
 }
 
 resource "aws_iam_role_policy" "codepipeline_role_policy" {
-  name = "codepipeline_role_policy"
-  role = aws_iam_role.codepipeline_role.name
+  name   = "codepipeline_role_policy"
+  role   = aws_iam_role.codepipeline_role.name
   policy = data.aws_iam_policy_document.codepipeline_role_policy.json
-#  policy = templatefile("${path.module}/templates/codepipeline-role-policy.json.tfpl", {
-#    codepipeline_bucket_arn = aws_s3_bucket.codepipeline_bucket.arn
-#    codebuild_arn           = aws_codebuild_project.terraform-common-apply.arn
-#    codestar_connection_arn = aws_codestarconnections_connection.terraform-codepipeline.arn
-#    terraform_roles         = jsonencode(local.terraform_roles)
-#  })
+  #  policy = templatefile("${path.module}/templates/codepipeline-role-policy.json.tfpl", {
+  #    codepipeline_bucket_arn = aws_s3_bucket.codepipeline_bucket.arn
+  #    codebuild_arn           = aws_codebuild_project.terraform-common-apply.arn
+  #    codestar_connection_arn = aws_codestarconnections_connection.terraform-codepipeline.arn
+  #    terraform_roles         = jsonencode(local.terraform_roles)
+  #  })
 }
 
+
+# Test Lambda Policies 
+
+resource "aws_iam_role" "test_judgment_parser_lambda_role" {
+  name               = "judgment-parser-test-lambda-role"
+  assume_role_policy = data.aws_iam_policy_document.test_judgment_parser_lambda_assume_role_policy.json
+}
+
+data "aws_iam_policy_document" "test_judgment_parser_lambda_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "test_judgment_parser_lambda_role_policy" {
+  role       = aws_iam_role.test_judgment_parser_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSOpsWorksCloudWatchLogs"
+}
+
+
+
+# Test Data Bucket Policy
+
+data "aws_iam_policy_document" "dev_tre_testdata_bucket_policy" {
+  statement {
+    actions = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", ]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_lambda_function.test_judgment_parser.role]
+    }
+
+    resources = ["${aws_s3_bucket.dev_tre_test_data.arn}/*", aws_s3_bucket.dev_tre_test_data.arn]
+  }
+
+}
+
+
+# Test Parser Alerts SNS Policy
+
+data "aws_iam_policy_document" "test_parser_sns_alerts_policy" {
+  statement {
+    actions = ["sns:Publish"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+
+    resources = [aws_sns_topic.parser_pipeline_alerts.arn]
+  }
+}
