@@ -31,4 +31,5 @@ phases:
           echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
         fi
       # - aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
-      
+
+
