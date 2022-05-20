@@ -1,9 +1,0 @@
-{
-  "parser-inputs": {
-    "consignment-reference": "TDR-2022-22",
-    "s3-bucket": "prod-tre-editorial-judgment-out",
-    "document-url": "https://prod-tre-temp.s3.eu-west-2.amazonaws.com/consignments/judgment/TDR-2022-22/0/TDR-2022-22/data/Piekarski%20judgment%20%28final%29.docx?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEAaCWV1LXdlc3QtMiJGMEQCICl%2FMB5SyaiPgQsjA3VUtz0%2BsYDEvPYGULbxvht0kWa2AiAS%2BUv0oKd7I0zc8MKcy3h3vU2pBDhM%2BcIS%2FKPp6oD6gCreAggZEAAaDDY0MjAyMTA2ODg2OSIMq9lGdfj0ThWkKAQZKrsCzwtCJmePPpIhFt4iJXRkSJEQxQQiP52a%2BI95mvPPRrpzADUrvQ5awt3ydAXJ5CWaz2Dlmr05BUlTOES9GEl487AR%2FvsuzBozjePlCSNyTyzCshf8QBDazgish%2F12h5HJV5lvq%2BFaBPh7dDSFV5tucOg07ilJJ%2B3l25e9yG4veBPlIRES6YIHJwLP%2BuRUrI9h7hNZqk%2FbRacNujJQCVyTdEwd0qbbIZuUVXaM1J8%2F6QdPridRxH1fvJrLUtXXX4R63MLFNJV7koae1s4nnofyEbz2usemFVGJjNRrps5QFTjurbJhHmav6ogiZAoCLVndtG7XCITyhw9ruX8im0Fb%2Bq5M0P8WhEIKDXw9qMTIShs7P%2FlfuLjbb5hFEEkyj4eN5cw2fvtlFrUMiTLuLxvLMUvGkMGQhYJ88lHIMJiX6pMGOogCOsafihWsoAA91oliIMZDM5jJRcFJ372PE7Q5JEnOMB4I7VyMTLRk3cnZf7V2jnEWINV%2FCAsr4adD5N%2Fxi7mtOCm2RDe2nmQFyHnnI8xWJR9HSbR6too%2FPFms1Mawx36dwe5OZ%2FdEFMOKpDN0iTxOmCDrKcWRP8RNZ3RtzlZaABDEIEJ7zAic8IqqaJb9gMkHWvMGmv526ndzzRGRPVAZyooAC63uMSn%2FLFEIhtLRQOX%2BStAP2%2F6PZHB5dpd6loQYtqItdOjNy7%2FidYOrH2qlkBRC4rWqkF7xUZ7xELDY%2F4uyBAw9wdZY%2FC%2FjKHZPTdwlDRvYR3bH4LzdHGUde9ON4F7iS0FsnC2U&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220510T155901Z&X-Amz-SignedHeaders=host&X-Amz-Expires=1200&X-Amz-Credential=ASIAZK63QCBCXKM53LBX%2F20220510%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Signature=d6f1763c8f6880f0321abcb4ed2a476c4fd1ac86ef7a987224229ca1fbc8af98",
-    "attachment-urls": [],
-    "s3-output-prefix": "parsed/judgment/TDR-2022-22/0/"
-  }
-}
