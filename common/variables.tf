@@ -42,6 +42,11 @@ variable "dev_git_branch" {
   type        = string
 }
 
+variable "test_git_branch" {
+  description = "Git branch for test terraform"
+  type = string
+}
+
 variable "int_git_branch" {
   description = "Git branch for int terraform"
   type        = string
