@@ -60,3 +60,10 @@ variable "prod_git_branch" {
 variable "account_id" {
   default = "454286877087"
 }
+
+
+# to be deleted once slack notification set up 
+
+variable "endpoint" {
+
+}

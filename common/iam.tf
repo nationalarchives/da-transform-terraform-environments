@@ -82,8 +82,8 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
   }
 
   statement {
-    actions = [ "sns:Publish" ]
-    resources = [ aws_sns_topic.parser_pipeline_alerts.arn ]
+    actions   = ["sns:Publish"]
+    resources = [aws_sns_topic.parser_pipeline_alerts.arn]
   }
 }
 
