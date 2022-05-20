@@ -3,7 +3,7 @@ variable "environment_name" {
   type = string
 
   validation {
-    condition     = contains(["dev", "int", "staging", "prod"], var.environment_name)
+    condition     = contains(["dev",  "int", "staging", "prod"], var.environment_name)
     error_message = "Allowed values for environment_name are \"dev\", \"int\",, \"staging\" or \"prod\"."
   }
 }
