@@ -30,10 +30,6 @@ locals {
       rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
       git_branch = var.dev_git_branch
     },
-    test = {
-      rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
-      git_branch = var.test_git_branch
-    },
     int = {
       rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
       git_branch = var.int_git_branch

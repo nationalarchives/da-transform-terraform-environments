@@ -145,6 +145,132 @@ resource "aws_codebuild_project" "terraform-deployments-apply" {
   }
 }
 
+# TEST Stage CodeBuild Projects 
+
+resource "aws_codebuild_project" "terraform-test-plan" {
+  name          = "terraform-test-plan"
+  description   = "Terraform test plan"
+  build_timeout = "10"
+  service_role  = aws_iam_role.mgmt_terraform.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    type                        = "LINUX_CONTAINER"
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "TERRAFORM_VARS"
+      value = "test-tfvars"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TERRAFORM_BACKEND_CONF"
+      value = "test-backend"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TF_IN_AUTOMATION"
+      value = "True"
+      type  = "PLAINTEXT"
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name = "da-transform-terraform-test-pipeline-logs"
+    }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "./buildspec.deployments.yaml"
+  }
+}
+
+resource "aws_codebuild_project" "terraform-test-apply" {
+  name          = "terraform-test-apply"
+  description   = "Terraform test apply"
+  build_timeout = "20"
+  service_role  = aws_iam_role.mgmt_terraform.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    type                        = "LINUX_CONTAINER"
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "TERRAFORM_VARS"
+      value = "test-tfvars"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TERRAFORM_BACKEND_CONF"
+      value = "test-backend"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TF_IN_AUTOMATION"
+      value = "True"
+      type  = "PLAINTEXT"
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name = "da-transform-terraform-test-pipeline-logs"
+    }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "./buildspec.deployments-apply.yaml"
+  }
+}
+
+resource "aws_codebuild_project" "terraform-test-test" {
+  name          = "terraform-test-test"
+  description   = "Terraform test test"
+  build_timeout = "20"
+  service_role  = aws_iam_role.mgmt_terraform.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    type                        = "LINUX_CONTAINER"
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image_pull_credentials_type = "CODEBUILD"
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name = "da-transform-terraform-test-pipeline-logs"
+    }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "./buildspec.deployments-test.yaml"
+  }
+}
+
+
 # Lambda image deployemnts CodeBuild project
 
 resource "aws_codebuild_project" "lambda-image-deploy" {

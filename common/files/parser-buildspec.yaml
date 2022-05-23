@@ -21,13 +21,15 @@ phases:
   post_build:
     commands:
       - echo "Build completed on $(date --utc +%c) UTC"
-      # - |
-      #   if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
-      #     echo "Pushing the Docker images..."
-      #     docker push $ECR_REPOSITORY_URL:latest
-      #     docker push $ECR_REPOSITORY_URL:$GIT_TAG
-      #     aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
-      #   else
-      #     echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
-      #   fi
-      - aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
+      - |
+        if [ "$(echo $GIT_TAG | wc -l)" -eq 1 ]; then
+          echo "Pushing the Docker images..."
+          docker push $ECR_REPOSITORY_URL:latest
+          docker push $ECR_REPOSITORY_URL:$GIT_TAG
+          aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
+        else
+          echo "No tag found for commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
+        fi
+      # - aws lambda update-function-code --function-name test_judgment_parser --image-uri $ECR_REPOSITORY_URL:$GIT_TAG
+
+
