@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Running regression tests....
+      - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+      - cd testing/tre_module_test
+      - ls
+      - aws configure --profile non-prod set role_arn "${NON_PROD_ROLE_ARN}"
+      - aws configure --profile non-prod set credential_source EcsContainer
+      - aws s3 ls --profile=non-prod
+      - echo "ARN=$(aws sts get-caller-identity --query Arn --output text)"
+      - aws configure --profile managment set role_arn "${MANAGMENT_ROLE_ARN}"
+      - aws configure --profile managment set credential_source EcsContainer
+      - cat ~/.aws/config
+      - aws s3 ls --profile=managment
+      - aws s3 ls --profile=non-prod
+      - echo "${TEST_ENV_CONFIG}" | tee test_env_config.json
+      - cat test_env_config.json
+      - echo "${TEST_CONSIGNMENTS}" | tee test_consignments.json
+      - cat test_consignments.json
+      - python3 tre_module_test.py "dev-te-testdata" "test_env_config.json" "test_consignments.json" "managment" "non-prod"
