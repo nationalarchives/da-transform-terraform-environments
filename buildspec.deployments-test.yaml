@@ -11,4 +11,3 @@ phases:
        - cat test_env_config.json
        - echo "${TEST_CONSIGNMENTS}" | tee test_consignments.json
        - cat test_consignments.json
-       - echo "${TEST_ENV_CONFIG}"

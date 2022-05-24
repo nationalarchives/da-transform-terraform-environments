@@ -14,6 +14,7 @@ phases:
       - chmod +x tfsec
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
+      - which aws
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
