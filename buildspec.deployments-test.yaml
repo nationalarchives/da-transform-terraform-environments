@@ -8,6 +8,6 @@ phases:
        - cd testing/tre_module_test
        - ls
        - echo "${TEST_ENV_CONFIG}" | tee test_env_config
-       - cat config/test_env_config
+       - cat test_env_config
        - echo "${TEST_CONSIGNMENTS}" | tee test_consignments
-       - cat config/test_consignments
+       - cat test_consignments
