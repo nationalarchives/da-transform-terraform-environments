@@ -18,6 +18,7 @@ phases:
       - mkdir ~/.aws
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
+      - unset AWS_PROFILE
       - aws s3 ls --profile=nosuch
       - ls -la ~
       - ls -la ~/.pyenv/
