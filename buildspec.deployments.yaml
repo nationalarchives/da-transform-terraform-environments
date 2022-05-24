@@ -15,6 +15,11 @@ phases:
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
       - aws configure list
+      - ls -la ~
+      - ls -la ~/.aws
+      - ls -la /
+      - ls -la
+      - pwd
       - cd /root/.pyenv/shims/aws
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
