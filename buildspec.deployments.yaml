@@ -17,6 +17,7 @@ phases:
       - aws sts get-caller-identity
       - aws configure --profile s3access set role_arn arn:aws:iam::882876621099:role/terraform
       - aws configure --profile s3access set credential_source EcsContainer
+      - ls ~/.aws
       - aws s3 ls --profile=s3access
       - mkdir ~/.aws
       - printf '[nosuch]\n' > ~/.aws/config
