@@ -16,7 +16,6 @@ phases:
       - echo "Prepare terraform file"
       - aws sts get-caller-identity
       - mkdir ~/.aws
-      - aws configure list-profiles
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
       - unset AWS_PROFILE
