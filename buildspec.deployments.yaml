@@ -24,7 +24,7 @@ phases:
       - aws configure --profile mngmt set role_arn "$(aws sts get-caller-identity --query Arn --output text)"
       - aws configure --profile mngmt set credential_source EcsContainer
       - cat ~/.aws/config
-      - aws s3 ls --profile=default
+      - aws s3 ls
       - aws s3 ls --profile=non-prod
       - ls ~/.aws
       - cat ~/.aws/config
