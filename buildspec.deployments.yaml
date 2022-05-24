@@ -17,12 +17,10 @@ phases:
       - aws sts get-caller-identity
       - aws configure --profile s3access set role_arn arn:aws:iam::882876621099:role/terraform
       - aws configure --profile s3access set credential_source EcsContainer
-      - aws configure list-profiles
+      - aws s3 ls --profile=s3access
       - mkdir ~/.aws
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
-      - unset AWS_PROFILE
-      - aws s3 ls --profile=nosuch
       - ls -la ~
       - ls -la ~/.pyenv/shims/aws
       - ls -la ~/.local
