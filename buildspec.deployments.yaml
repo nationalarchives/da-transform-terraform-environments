@@ -19,7 +19,7 @@ phases:
       - aws configure --profile s3access set credential_source EcsContainer
       - ls ~/.aws
       - aws s3 ls --profile=s3access
-      - mkdir ~/.aws
+      - cat ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
       - ls -la ~
