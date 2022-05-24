@@ -7,8 +7,8 @@ phases:
        - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
        - cd testing/tre_module_test
        - ls
-       - cat "${TEST_ENV_CONFIG}"
        - echo "${TEST_ENV_CONFIG}" | tee test_env_config.json
        - cat test_env_config.json
        - echo "${TEST_CONSIGNMENTS}" | tee test_consignments.json
        - cat test_consignments.json
+       - echo "${TEST_ENV_CONFIG}"
