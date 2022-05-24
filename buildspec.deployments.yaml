@@ -15,10 +15,7 @@ phases:
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
       - aws configure list
-      - which aws
-      - ls /
-      - cd /home/codebuild-user
-      - ls
+      - ~/.aws/config
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
