@@ -14,7 +14,7 @@ phases:
       - chmod +x tfsec
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
-      - aws configure list
+      - aws sts get-caller-identity
       - ls -la ~
       - ls -la ~/.pyenv/
       - ls -la ~/.local
