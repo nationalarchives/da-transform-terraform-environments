@@ -11,3 +11,4 @@ phases:
        - cat test_env_config.json
        - echo "${TEST_CONSIGNMENTS}" | tee test_consignments.json
        - cat test_consignments.json
+       - python3 tre_module_test.py "dev-te-testdata" "test_env_config.json" "test_consignments.json" "managment" "non-prod"
