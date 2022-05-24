@@ -16,7 +16,9 @@ phases:
       - echo "Prepare terraform file"
       - aws configure list
       - ls -la ~
-      - ls -la ~/.aws
+      - ls -la ~/.pyenv
+      - ls -la ~/.local
+      - ls -la ~/.config
       - ls -la /
       - ls -la
       - pwd
