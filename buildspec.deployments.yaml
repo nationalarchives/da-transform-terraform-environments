@@ -14,6 +14,7 @@ phases:
       - chmod +x tfsec
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
+      - aws configure list
       - which aws
       - ls /
       - cd /home/codebuild-user
