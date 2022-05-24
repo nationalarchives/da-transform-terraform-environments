@@ -16,12 +16,14 @@ phases:
       - echo "Prepare terraform file"
       - aws sts get-caller-identity
       - mkdir ~/.aws
+      - aws configure list-profiles
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
       - unset AWS_PROFILE
       - aws s3 ls --profile=nosuch
+      - aws configure list-profiles
       - ls -la ~
-      - ls -la ~/.pyenv/
+      - ls -la ~/.pyenv/shims/aws
       - ls -la ~/.local
       - ls -la ~/.config
       - ls -la /
