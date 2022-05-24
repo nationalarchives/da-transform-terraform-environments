@@ -14,11 +14,18 @@ phases:
       - chmod +x tfsec
       - sudo mv tfsec /usr/local/bin/tfsec
       - echo "Prepare terraform file"
-      - aws sts get-caller-identity
-      - aws configure --profile s3access set role_arn arn:aws:iam::882876621099:role/terraform
-      - aws configure --profile s3access set credential_source EcsContainer
+      - aws sts get-caller-identity 
+      - aws configure --profile non-prod set role_arn arn:aws:iam::882876621099:role/terraform
+      - aws configure --profile non-prod set credential_source EcsContainer
+      - aws s3 ls --profile=non-prod
+      - echo "ARN=$(aws sts get-caller-identity --query Arn)"
+      - aws configure --profile mngmt set role_arn "$(aws sts get-caller-identity --query Arn)"
+      - aws configure --profile mngmt set credential_source EcsContainer
+      - aws s3 ls --profile=mngmt
+      - aws s3 ls --profile=non-prod
       - ls ~/.aws
-      - aws s3 ls --profile=s3access
+      - set
+      - env
       - cat ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/config
       - printf '[nosuch]\n' > ~/.aws/credentials
