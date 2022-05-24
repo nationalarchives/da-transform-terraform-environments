@@ -21,7 +21,6 @@ phases:
       - printf '[nosuch]\n' > ~/.aws/credentials
       - unset AWS_PROFILE
       - aws s3 ls --profile=nosuch
-      - aws configure list-profiles
       - ls -la ~
       - ls -la ~/.pyenv/shims/aws
       - ls -la ~/.local
