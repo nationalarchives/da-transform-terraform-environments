@@ -276,7 +276,7 @@ resource "aws_codebuild_project" "terraform-test-test" {
 
     environment_variable {
       name = "MANAGMENT_ROLE_ARN"
-      value = aws_iam_role_policy_attachment.mgmt_terraform.policy_arn
+      value = aws_iam_role.mgmt_terraform.arn
     }
   }
 
