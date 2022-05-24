@@ -256,6 +256,18 @@ resource "aws_codebuild_project" "terraform-test-test" {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
+    
+    environment_variable {
+      name  = "TEST_ENV_CONFIG"
+      value = "test-env-config"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TEST_CONSIGNMENTS"
+      value = "test-consignments"
+      type  = "PARAMETER_STORE"
+    }
   }
 
   logs_config {
@@ -267,6 +279,19 @@ resource "aws_codebuild_project" "terraform-test-test" {
   source {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments-test.yaml"
+  }
+
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
   }
 }
 

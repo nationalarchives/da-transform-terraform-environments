@@ -4,3 +4,10 @@ phases:
   build:
     commands:
        - echo Running regression tests....
+       - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+       - cd testing/tre_module_test
+       - ls
+       - echo "${TEST_ENV_CONFIG}" | tee config/test_env_config
+       - cat config/test_env_config
+       - echo "${TEST_CONSIGNMENTS}" | tee config/test_consignments
+       - cat config/test_consignments
