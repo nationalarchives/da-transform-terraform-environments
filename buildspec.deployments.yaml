@@ -16,6 +16,8 @@ phases:
       - echo "Prepare terraform file"
       - which aws
       - ls /
+      - cd ~
+      - ls
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
