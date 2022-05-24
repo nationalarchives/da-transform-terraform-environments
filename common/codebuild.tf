@@ -268,6 +268,16 @@ resource "aws_codebuild_project" "terraform-test-test" {
       value = "test-consignments"
       type  = "PARAMETER_STORE"
     }
+
+    environment_variable {
+      name = "NON_PROD_ROLE_ARN"
+      value = aws_iam_role.nonprod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name = "MANAGMENT_ROLE_ARN"
+      value = aws_iam_role_policy_attachment.mgmt_terraform.policy_arn
+    }
   }
 
   logs_config {
