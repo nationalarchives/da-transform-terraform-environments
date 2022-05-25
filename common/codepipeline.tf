@@ -348,19 +348,99 @@ resource "aws_codepipeline" "parser-deployments" {
   }
 
   stage {
-    name = "Approval"
+    name = "CheckAutoDeployPermitted"
     action {
-      name      = "Approval"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
-      run_order = 4
+      name            = "CheckAutoDeployPermitted"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 4
+      input_artifacts = ["source_output"]
       configuration = {
-        NotificationArn = aws_sns_topic.parser_pipeline_alerts.arn
+        ProjectName = aws_codebuild_project.check_auto_parser_deployment.name
       }
     }
   }
+
+  stage {
+    name = "DeployDev"
+    action {
+      name = "DeployDev"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 5
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.parser_deployment_dev.name
+      }
+    }
+  }
+  stage {
+    name = "DeployTest"
+    action {
+      name = "DeployTest"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 6
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.parser_deployment_test.name
+      }
+    }
+  }
+  stage {
+    name = "DeployInt"
+    action {
+      name = "DeployInt"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 7
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.parser_deployment_int.name
+      }
+    }
+  }
+  stage {
+    name = "DeployStaging"
+    action {
+      name = "DeployStaging"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 8
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.parser_deployment_staging.name
+      }
+    }
+  }
+  stage {
+    name = "DeployProd"
+    action {
+      name = "DeployProd"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 9
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.parser_deployment_prod.name
+      }
+    }
+  }
+
+
+
 }
 
 resource "aws_codestarconnections_connection" "terraform-codepipeline" {
