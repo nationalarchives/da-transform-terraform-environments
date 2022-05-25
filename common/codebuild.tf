@@ -476,6 +476,6 @@ resource "aws_codebuild_project" "parser_test" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "dev"
+    source_version    = "develop"
   }
 }
