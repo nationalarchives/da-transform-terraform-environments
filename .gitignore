@@ -41,4 +41,5 @@ terraform.rc
 backend-*.conf
 backend.conf
 
-/hello_world
+# Ignore IntelliJ Idea files
+.idea/

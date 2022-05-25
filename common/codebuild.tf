@@ -423,9 +423,35 @@ resource "aws_codebuild_project" "parser_test" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
+
     environment_variable {
-      name  = "TESTDATA_BUCKET"
+      name  = "PARSER_TEST_S3_BUCKET"
       value = aws_s3_bucket.dev_tre_test_data.bucket
+    }
+    
+    environment_variable {
+      name  = "PARSER_TEST_S3_PATH_DATA_OK"
+      value = "parser/ok/"
+    }
+    
+    environment_variable {
+      name  = "PARSER_TEST_S3_PATH_DATA_FAIL"
+      value = "parser/fail/"
+    }
+    
+    environment_variable {
+      name  = "PARSER_TEST_S3_PATH_OUTPUT"
+      value = "parser/output-tmp/"
+    }
+    
+    environment_variable {
+      name  = "PARSER_TEST_TESTDATA_SUFFIX"
+      value = ".docx"
+    }
+    
+    environment_variable {
+      name  = "PARSER_TEST_LAMBDA"
+      value = aws_lambda_function.test_judgment_parser.function_name
     }
   }
 
@@ -450,6 +476,6 @@ resource "aws_codebuild_project" "parser_test" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "DTE167-parser_test"
+    source_version    = "develop"
   }
 }
