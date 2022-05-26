@@ -480,37 +480,6 @@ resource "aws_codebuild_project" "parser_test" {
   }
 }
 
-resource "aws_codebuild_project" "check_auto_parser_deployment" {
-  name          = "check-auto-parser-deployment"
-  description   = "Codebuild for checking auto parser deployment"
-  build_timeout = "15"
-  service_role  = aws_iam_role.mgmt_terraform.arn
-
-  artifacts {
-    type = "CODEPIPELINE"
-  }
-
-  environment {
-    type                        = "LINUX_CONTAINER"
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
-    image_pull_credentials_type = "CODEBUILD"
-    privileged_mode             = true
-  
-  }
-
-  logs_config {
-    cloudwatch_logs {
-      group_name = "da-transform-parser-pipeline-logs"
-    }
-  }
-
-  source {
-    type      = "CODEPIPELINE"
-    buildspec = file("files/parser-check-auto-deployment-buildspec.yaml")
-  }
-
-}
 
 resource "aws_codebuild_project" "parser_deployment_dev" {
   name          = "parser-deployment-dev"
@@ -528,7 +497,17 @@ resource "aws_codebuild_project" "parser_deployment_dev" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+
+    environment_variable {
+      name = "NON_PROD_ROLE_ARN"
+      value = aws_iam_role.nonprod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name  = "ECR_PARSER_IMAGE_NAME"
+      value = aws_ecr_repository.tre_run_judgment_parser.name
+    }
+
   }
 
   logs_config {
@@ -540,6 +519,19 @@ resource "aws_codebuild_project" "parser_deployment_dev" {
   source {
     type      = "CODEPIPELINE"
     buildspec = file("files/parser-deployment-dev-buildspec.yaml")
+  }
+
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
   }
 
 }
@@ -574,6 +566,19 @@ resource "aws_codebuild_project" "parser_deployment_test" {
     buildspec = file("files/parser-deployment-test-buildspec.yaml")
   }
 
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
+  }
+
 }
 
 resource "aws_codebuild_project" "parser_deployment_int" {
@@ -604,6 +609,19 @@ resource "aws_codebuild_project" "parser_deployment_int" {
   source {
     type      = "CODEPIPELINE"
     buildspec = file("files/parser-deployment-int-buildspec.yaml")
+  }
+
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
   }
 
 }
@@ -638,6 +656,19 @@ resource "aws_codebuild_project" "parser_deployment_staging" {
     buildspec = file("files/parser-deployment-staging-buildspec.yaml")
   }
 
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
+  }
+
 }
 
 resource "aws_codebuild_project" "parser_deployment_prod" {
@@ -668,6 +699,19 @@ resource "aws_codebuild_project" "parser_deployment_prod" {
   source {
     type      = "CODEPIPELINE"
     buildspec = file("files/parser-deployment-prod-buildspec.yaml")
+  }
+
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
   }
 
 }

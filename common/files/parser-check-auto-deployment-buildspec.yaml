@@ -1,7 +1,0 @@
-version: 0.2
-
-phases:
-  build:
-    commands:
-       - aws --version
-       - echo "Checking if parser can be deployed automatically"

@@ -347,21 +347,6 @@ resource "aws_codepipeline" "parser-deployments" {
     }
   }
 
-  stage {
-    name = "CheckAutoDeployPermitted"
-    action {
-      name            = "CheckAutoDeployPermitted"
-      category        = "Build"
-      owner           = "AWS"
-      provider        = "CodeBuild"
-      version         = "1"
-      run_order       = 4
-      input_artifacts = ["source_output"]
-      configuration = {
-        ProjectName = aws_codebuild_project.check_auto_parser_deployment.name
-      }
-    }
-  }
 
   stage {
     name = "DeployDev"
