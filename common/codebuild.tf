@@ -496,7 +496,7 @@ resource "aws_codebuild_project" "check_auto_parser_deployment" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+    
   }
 
   logs_config {
@@ -508,6 +508,19 @@ resource "aws_codebuild_project" "check_auto_parser_deployment" {
   source {
     type      = "CODEPIPELINE"
     buildspec = file("files/parser-check-auto-deployment-buildspec.yaml")
+  }
+
+  secondary_sources {
+    source_identifier = "teDockerBuild"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-judgments-pipeline.git"
+
+  }
+
+  secondary_source_version {
+    source_identifier = "teDockerBuild"
+    source_version    = "develop"
   }
 
 }

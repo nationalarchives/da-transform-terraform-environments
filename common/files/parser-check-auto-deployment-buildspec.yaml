@@ -3,5 +3,6 @@ version: 0.2
 phases:
   build:
     commands:
-       - aws --version
-       - echo "Checking if parser can be deployed automatically"
+      - aws --version
+      - echo "Checking if parser can be deployed automatically"
+      - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
