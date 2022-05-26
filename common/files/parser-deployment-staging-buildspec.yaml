@@ -3,6 +3,16 @@ version: 0.2
 phases:
   build:
     commands:
-       - aws --version
-       - echo "Deploying new parser image to staging"
-       - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+      - aws --version
+      - NEW_TAG=$(git --no-pager tag --points-at $CODEBUILD_RESOLVED_SOURCE_VERSION)
+      - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+      - cd codepipeline/parser-pipeline/
+      - echo "Updating parser version"
+      - ./set_env_parser_version.sh staging-tfvars "$NEW_TAG"
+      - echo "Updating lambda versions"
+      - aws configure --profile prod set role_arn "${PROD_ROLE_ARN}"
+      - aws configure --profile prod set credential_source EcsContainer
+      - ACCOUNT_ID="$(aws sts get-caller-identity --profile prod --query Account --output text)"
+      - echo "ACCOUNT_ID=$ACCOUNT_ID"
+      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
+      - aws lambda update-function-code --function-name staging-tre-run-judgment-parser --image-uri $IMAGE_URI --profile prod

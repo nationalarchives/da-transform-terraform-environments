@@ -3,6 +3,15 @@ version: 0.2
 phases:
   build:
     commands:
-       - aws --version
-       - echo "Deploying new parser image to test"
-       - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+      - aws --version
+      - NEW_TAG=$(git --no-pager tag --points-at $CODEBUILD_RESOLVED_SOURCE_VERSION)
+      - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+      - cd codepipeline/parser-pipeline/
+      - echo "Updating parser version"
+      - ./set_env_parser_version.sh test-tfvars "$NEW_TAG"
+      - echo "Updating lambda versions"
+      - aws configure --profile non-prod set role_arn "${NON_PROD_ROLE_ARN}"
+      - aws configure --profile non-prod set credential_source EcsContainer
+      - ACCOUNT_ID="$(aws sts get-caller-identity --profile non-prod --query Account --output text)"
+      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
+      - aws lambda update-function-code --function-name test-tre-run-judgment-parser --image-uri $IMAGE_URI --profile non-prod

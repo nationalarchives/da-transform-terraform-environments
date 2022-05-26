@@ -552,7 +552,16 @@ resource "aws_codebuild_project" "parser_deployment_test" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+
+    environment_variable {
+      name = "NON_PROD_ROLE_ARN"
+      value = aws_iam_role.nonprod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name  = "ECR_PARSER_IMAGE_NAME"
+      value = aws_ecr_repository.tre_run_judgment_parser.name
+    }
   }
 
   logs_config {
@@ -597,7 +606,16 @@ resource "aws_codebuild_project" "parser_deployment_int" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+
+    environment_variable {
+      name = "NON_PROD_ROLE_ARN"
+      value = aws_iam_role.nonprod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name  = "ECR_PARSER_IMAGE_NAME"
+      value = aws_ecr_repository.tre_run_judgment_parser.name
+    }
   }
 
   logs_config {
@@ -642,7 +660,16 @@ resource "aws_codebuild_project" "parser_deployment_staging" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+
+    environment_variable {
+      name = "PROD_ROLE_ARN"
+      value = aws_iam_role.prod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name  = "ECR_PARSER_IMAGE_NAME"
+      value = aws_ecr_repository.tre_run_judgment_parser.name
+    }
   }
 
   logs_config {
@@ -687,7 +714,16 @@ resource "aws_codebuild_project" "parser_deployment_prod" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-  
+
+    environment_variable {
+      name = "PROD_ROLE_ARN"
+      value = aws_iam_role.prod_cross_account_terraform.arn
+    }
+
+    environment_variable {
+      name  = "ECR_PARSER_IMAGE_NAME"
+      value = aws_ecr_repository.tre_run_judgment_parser.name
+    }
   }
 
   logs_config {
