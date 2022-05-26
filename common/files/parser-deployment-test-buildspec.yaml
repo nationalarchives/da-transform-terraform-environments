@@ -13,5 +13,11 @@ phases:
       - aws configure --profile non-prod set role_arn "${NON_PROD_ROLE_ARN}"
       - aws configure --profile non-prod set credential_source EcsContainer
       - ACCOUNT_ID="$(aws sts get-caller-identity --profile non-prod --query Account --output text)"
-      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
+      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
       - aws lambda update-function-code --function-name test-tre-run-judgment-parser --image-uri $IMAGE_URI --profile non-prod
+      - echo "Running regression tests"
+      - aws configure --profile managment set role_arn "${MANAGMENT_ROLE_ARN}"
+      - aws configure --profile managment set credential_source EcsContainer
+      - echo "${TEST_ENV_CONFIG}" | tee test_env_config.json
+      - echo "${TEST_CONSIGNMENTS}" | tee test_consignments.json
+      - python3 ../../testing/parser_testing/test_parser_lambda_fn.py "${S3_TEST_DATA_BUCKET}" "test_env_config.json" "test_consignments.json" "managment" "non-prod"

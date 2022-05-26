@@ -562,6 +562,28 @@ resource "aws_codebuild_project" "parser_deployment_test" {
       name  = "ECR_PARSER_IMAGE_NAME"
       value = aws_ecr_repository.tre_run_judgment_parser.name
     }
+
+    environment_variable {
+      name  = "TEST_ENV_CONFIG"
+      value = "test-env-config"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TEST_CONSIGNMENTS"
+      value = "test-consignments"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name = "MANAGMENT_ROLE_ARN"
+      value = aws_iam_role.mgmt_terraform.arn
+    }
+
+    environment_variable {
+      name = "S3_TEST_DATA_BUCKET"
+      value = aws_s3_bucket.dev_tre_test_data.bucket
+    }
   }
 
   logs_config {
