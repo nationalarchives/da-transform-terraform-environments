@@ -13,5 +13,5 @@ phases:
       - aws configure --profile non-prod set role_arn "${NON_PROD_ROLE_ARN}"
       - aws configure --profile non-prod set credential_source EcsContainer
       - ACCOUNT_ID="$(aws sts get-caller-identity --profile non-prod --query Account --output text)"
-      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
+      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
       - aws lambda update-function-code --function-name int-tre-run-judgment-parser --image-uri $IMAGE_URI --profile non-prod

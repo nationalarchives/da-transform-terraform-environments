@@ -13,6 +13,5 @@ phases:
       - aws configure --profile prod set role_arn "${PROD_ROLE_ARN}"
       - aws configure --profile prod set credential_source EcsContainer
       - ACCOUNT_ID="$(aws sts get-caller-identity --profile prod --query Account --output text)"
-      - echo "ACCOUNT_ID=$ACCOUNT_ID"
-      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.eu-west-2.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
+      - IMAGE_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_PARSER_IMAGE_NAME:$NEW_TAG
       - aws lambda update-function-code --function-name staging-tre-run-judgment-parser --image-uri $IMAGE_URI --profile prod
