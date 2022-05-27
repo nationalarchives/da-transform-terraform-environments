@@ -18,11 +18,17 @@ def lambda_handler(event, context):
     paginator = client.get_paginator('describe_images')
     
     iterator = paginator.paginate(repositoryName=repo_name)
-    filter_iterator = iterator.search(sort_by)
-    latest_version = list(filter_iterator)[1]
+    filter_iterator_1 = iterator.search(sort_by)
+    filter_iterator_2 = iterator.search(sort_by)
+    latest_version_1 = list(filter_iterator_1)[0]
+    latest_version_2 = list(filter_iterator_2)[1]
+    latest_version = latest_version_1 + " " + latest_version_2
+    latest_version = latest_version.strip('latest')
+    print(latest_version)
     
 
     message = event["Records"][0]["Sns"]["Message"].replace('"', '')
+    print(message)
     url = os.environ['SLACK_WEBHOOK_URL']
     if "STARTED" in message:
         icon = ":mega:"
