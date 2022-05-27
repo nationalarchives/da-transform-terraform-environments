@@ -53,6 +53,38 @@ resource "aws_ecr_repository" "tre_run_judgment_parser" {
   }
 }
 
+resource "aws_ecr_repository_policy" "tre_run_judgment_parser_policy" {
+  repository = aws_ecr_repository.tre_run_judgment_parser.name
+  policy = jsonencode(
+    {
+      "Version": "2008-10-17",
+      "Statement": [
+        {
+          "Sid": "LambdaECRImageRetrievalPolicy",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "${aws_iam_role.parser_pipeline_alerts_role.arn}",
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": [
+            "ecr:BatchGetImage",
+            "ecr:DeleteRepositoryPolicy",
+            "ecr:DescribeImages",
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:GetRepositoryPolicy",
+            "ecr:SetRepositoryPolicy"
+          ],
+          "Condition": {
+            "StringLike": {
+              "aws:sourceArn": "arn:aws:sts::454286877087:assumed-role/*/*"
+            }
+          }
+        }
+      ]
+    }
+  )
+}
+
 resource "aws_ecr_repository" "tre_editorial_integration" {
   name                 = "lambda_functions/tre-editorial-integration"
   image_tag_mutability = "MUTABLE"
