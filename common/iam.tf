@@ -104,10 +104,10 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
 
 resource "aws_iam_role" "test_judgment_parser_lambda_role" {
   name               = "judgment-parser-test-lambda-role"
-  assume_role_policy = data.aws_iam_policy_document.test_judgment_parser_lambda_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 
-data "aws_iam_policy_document" "test_judgment_parser_lambda_assume_role_policy" {
+data "aws_iam_policy_document" "lambda_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -142,7 +142,7 @@ data "aws_iam_policy_document" "dev_tre_testdata_bucket_policy" {
 }
 
 
-# Test Parser Alerts SNS Policy
+# Test Parser Alerts Policy
 
 data "aws_iam_policy_document" "test_parser_sns_alerts_policy" {
   statement {
@@ -155,4 +155,15 @@ data "aws_iam_policy_document" "test_parser_sns_alerts_policy" {
 
     resources = [aws_sns_topic.parser_pipeline_alerts.arn]
   }
+}
+
+
+resource "aws_iam_role" "parser_pipeline_alerts_role" {
+  name = "parser-pipeline-alerts-role"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "parser_pipeline_alerts_lambda_role_policy" {
+  role       = aws_iam_role.parser_pipeline_alerts_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSOpsWorksCloudWatchLogs"
 }

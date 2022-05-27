@@ -43,3 +43,6 @@ backend.conf
 
 # Ignore IntelliJ Idea files
 .idea/
+
+# lambda zip files 
+*.zip

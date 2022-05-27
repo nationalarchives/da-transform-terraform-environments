@@ -62,7 +62,18 @@ variable "prod_git_branch" {
   type        = string
 }
 
-# to be deleted once slack notification set up 
-
-variable "endpoint" {
+variable "slack_webhook_url" {
+  description = "Webhook URL for tre slack alerts"
+  type = string
 }
+
+variable "slack_channel" {
+  description = "Channel name for the tre slack alerts"
+  type = string
+}
+
+variable "slack_username" {
+  description = "Username for tre slack alerts"
+  type = string
+}
+

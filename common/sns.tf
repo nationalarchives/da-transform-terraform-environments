@@ -9,6 +9,6 @@ resource "aws_sns_topic_policy" "parser_pipeline_alerts" {
 
 resource "aws_sns_topic_subscription" "parser_pipeline_alerts" {
   topic_arn = aws_sns_topic.parser_pipeline_alerts.arn
-  protocol  = "email"
-  endpoint  = var.endpoint
+  protocol  = "lambda"
+  endpoint  = aws_lambda_function.parser_pipeline_slack_alerts.arn
 }

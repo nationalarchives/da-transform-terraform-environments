@@ -7,10 +7,10 @@ resource "aws_cloudwatch_event_rule" "parser_pipeline_test_stage" {
           "parser-pipeline",
         ]
         stage = [
-          "Test",
+          "Build", "Test", "DeployDev", "DeployTest", "DeployInt", "DeployStaging", "DeployProd", 
         ]
         state = [
-          "FAILED",
+          "FAILED", "CANCELED"
         ]
       }
       detail-type = [
@@ -23,6 +23,19 @@ resource "aws_cloudwatch_event_rule" "parser_pipeline_test_stage" {
   )
 }
 
+resource "aws_cloudwatch_event_target" "parser_pipeline_test_stage" {
+  rule = aws_cloudwatch_event_rule.parser_pipeline_test_stage.name
+  arn  = aws_sns_topic.parser_pipeline_alerts.arn
+  input_transformer {
+    input_paths = {
+      "pipeline" = "$.detail.pipeline"
+      "stage"    = "$.detail.stage"
+      "state"    = "$.detail.state"
+    }
+    input_template = "\" `<pipeline>` <state> at `<stage>` Stage \""
+  }
+}
+
 resource "aws_cloudwatch_event_rule" "parser_pipeline_started" {
   name = "parser-pipeline-started"
   event_pattern = jsonencode(
@@ -32,7 +45,7 @@ resource "aws_cloudwatch_event_rule" "parser_pipeline_started" {
           "parser-pipeline",
         ]
         state = [
-          "STARTED",
+          "STARTED", "SUCCEEDED"
         ]
       }
       detail-type = [
@@ -44,18 +57,6 @@ resource "aws_cloudwatch_event_rule" "parser_pipeline_started" {
     }
   )
 }
-resource "aws_cloudwatch_event_target" "parser_pipeline_test_stage" {
-  rule = aws_cloudwatch_event_rule.parser_pipeline_test_stage.name
-  arn  = aws_sns_topic.parser_pipeline_alerts.arn
-  input_transformer {
-    input_paths = {
-      "pipeline" = "$.detail.pipeline"
-      "stage"    = "$.detail.stage"
-      "state"    = "$.detail.state"
-    }
-    input_template = "\"<stage> Stage <state> In <pipeline>\""
-  }
-}
 
 resource "aws_cloudwatch_event_target" "parser_pipeline_started" {
   rule = aws_cloudwatch_event_rule.parser_pipeline_started.name
@@ -66,7 +67,7 @@ resource "aws_cloudwatch_event_target" "parser_pipeline_started" {
       "stage"    = "$.detail.stage"
       "state"    = "$.detail.state"
     }
-    input_template = "\"A New Version Of Parser Is Available And The `<pipeline>` <state>\""
+    input_template = "\" `<pipeline>` <state>\""
   }
 }
 
