@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+       - aws --version
+       - echo TESTING PARSER
+       - cd ${CODEBUILD_SRC_DIR_teDockerBuild}
+       - cd parser_testing
+       - python3 test_parser_input.py
+
+
