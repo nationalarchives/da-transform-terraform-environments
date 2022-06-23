@@ -49,6 +49,11 @@ variable "editorial_sns_sub_arn" {
   type = string
 }
 
+variable "tre_version" {
+  description = "TRE Step Function version (update if Step Function flow or called Lambda function versions change)"
+  type = string
+}
+
 variable "image_versions" {
   description = "Latest image version for Lambda Functions"
   type = object({

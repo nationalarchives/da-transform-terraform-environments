@@ -9,6 +9,7 @@ module "pipeline_step_function" {
   editorial_retry_trigger_arn = module.tdr_sqs_in_queue.editorial_sqs_queue_arn
   editorial_sns_sub_arn = var.editorial_sns_sub_arn
   account_id = data.aws_caller_identity.aws.account_id
+  tre_version = var.tre_version
   image_versions = var.image_versions
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
@@ -24,5 +25,4 @@ module "tdr_sqs_in_queue" {
   editorial_role_arn = var.editorial_role_arn
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
-
 }
