@@ -27,19 +27,19 @@ locals {
 
   environments = {
     dev = {
-      rolearn = aws_iam_role.nonprod_cross_account_terraform.arn,
+      rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
       git_branch = var.dev_git_branch
     },
     int = {
-      rolearn = aws_iam_role.nonprod_cross_account_terraform.arn,
+      rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
       git_branch = var.int_git_branch
     },
     staging = {
-      rolearn = aws_iam_role.prod_cross_account_terraform.arn,
+      rolearn    = aws_iam_role.prod_cross_account_terraform.arn,
       git_branch = var.staging_git_branch
     },
     prod = {
-      rolearn = aws_iam_role.prod_cross_account_terraform.arn,
+      rolearn    = aws_iam_role.prod_cross_account_terraform.arn,
       git_branch = var.prod_git_branch
     }
   }

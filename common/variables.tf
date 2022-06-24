@@ -29,30 +29,40 @@ variable "users" {
 
 variable "github_oauth_token" {
   description = "GitHub v1 oauth token"
-  type = string
+  type        = string
 }
 
 variable "common_git_branch" {
   description = "Git branch for common terraform"
-  type = string
+  type        = string
 }
 
 variable "dev_git_branch" {
   description = "Git branch for dev terraform"
+  type        = string
+}
+
+variable "test_git_branch" {
+  description = "Git branch for test terraform"
   type = string
 }
 
 variable "int_git_branch" {
   description = "Git branch for int terraform"
-  type = string
+  type        = string
 }
 
 variable "staging_git_branch" {
   description = "Git branch for staging terraform"
-  type = string
+  type        = string
 }
 
 variable "prod_git_branch" {
   description = "Git branch for production terraform"
-  type = string
+  type        = string
+}
+
+# to be deleted once slack notification set up 
+
+variable "endpoint" {
 }
