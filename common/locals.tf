@@ -22,6 +22,14 @@ locals {
         aws_iam_role.nonprod_cross_account_tna_user.arn,
         aws_iam_role.prod_cross_account_tna_user.arn
       ]
+    },
+    {
+      name = "security-assessors"
+      rolearns = [
+        aws_iam_role.mgmt_cross_account_security_assessor.arn,
+        aws_iam_role.nonprod_cross_account_security_assessor.arn,
+        aws_iam_role.prod_cross_account_security_assessor.arn
+      ]
     }
   ]
 
