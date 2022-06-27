@@ -79,6 +79,25 @@ resource "aws_ecr_repository_policy" "tre_run_judgment_parser_policy" {
               "aws:sourceArn": "arn:aws:sts::454286877087:assumed-role/*/*"
             }
           }
+        },
+        {
+          "Action": [
+            "ecr:BatchGetImage",
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:SetRepositoryPolicy",
+            "ecr:DeleteRepositoryPolicy",
+            "ecr:GetRepositoryPolicy",
+          ]
+          "Condition": {
+            "StringLike": {
+              "aws:sourceArn": "arn:aws:lambda:eu-west-2:454286877087:function:*"
+            }
+          }
+          "Effect": "Allow"
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          }
+          "Sid": "LambdaECRImageRetrievalPolicy"
         }
       ]
     }
