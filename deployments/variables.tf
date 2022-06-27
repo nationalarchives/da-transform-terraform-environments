@@ -3,7 +3,7 @@ variable "environment_name" {
   type = string
 
   validation {
-    condition     = contains(["dev", "int", "staging", "prod"], var.environment_name)
+    condition     = contains(["dev", "test", "int", "staging", "prod"], var.environment_name)
     error_message = "Allowed values for environment_name are \"dev\", \"int\",, \"staging\" or \"prod\"."
   }
 }
@@ -46,6 +46,11 @@ variable "editorial_role_arn" {
 
 variable "editorial_sns_sub_arn" {
   description = "ARN of the editorial SNS Subscription role"
+  type = string
+}
+
+variable "tre_version" {
+  description = "TRE Step Function version (update if Step Function flow or called Lambda function versions change)"
   type = string
 }
 
