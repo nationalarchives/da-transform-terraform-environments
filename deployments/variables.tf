@@ -67,6 +67,18 @@ variable "image_versions" {
   })
 }
 
+variable "rapb_version" {
+  description = "Receive and Process bag Step Function version (update if Step Function flow or called Lambda function versions change)"
+  type = string
+}
+
+variable "rapb_image_versions" {
+  description = "Latest image version for Lambda Functions"
+  type = object({
+    tre_files_checksum_validation= string
+    tre_bagit_checksum_validation = string
+  })
+}
 # Slack Alerts
 
 
