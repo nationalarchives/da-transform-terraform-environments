@@ -26,3 +26,13 @@ module "tdr_sqs_in_queue" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
 }
+
+module "receive_and_process_bag" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/receive_and_process_bag"
+  env = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  tre_temp_bucket = module.pipeline_step_function.tre_temp_bucket
+  rapb_image_versions = var.rapb_image_versions
+  rapb_version = var.rapb_version
+}
