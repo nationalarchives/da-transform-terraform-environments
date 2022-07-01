@@ -14,6 +14,7 @@ module "pipeline_step_function" {
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
   slack_username = var.slack_username
+  receive_process_bag_lambda_access_role = module.receive_and_process_bag.receive_process_bag_lambda_invoke_role
 }
 
 module "tdr_sqs_in_queue" {
@@ -26,6 +27,8 @@ module "tdr_sqs_in_queue" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
 }
+
+# Receive and process bag
 
 module "receive_and_process_bag" {
   source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/receive_and_process_bag"
