@@ -28,6 +28,20 @@ module "tdr_sqs_in_queue" {
   image_versions = var.image_versions
 }
 
+# Common
+
+module "common" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//common"
+  env    = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  image_versions = var.image_versions
+  sfn_arn = module.pipeline_step_function.sfn_state_machine_arn
+  slack_webhook_url = var.slack_webhook_url
+  slack_channel = var.slack_channel
+  slack_username = var.slack_username
+}
+
 # Receive and process bag
 
 module "receive_and_process_bag" {
@@ -38,4 +52,5 @@ module "receive_and_process_bag" {
   tre_temp_bucket = module.pipeline_step_function.tre_temp_bucket
   rapb_image_versions = var.rapb_image_versions
   rapb_version = var.rapb_version
+  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
 }
