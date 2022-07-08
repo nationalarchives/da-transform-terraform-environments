@@ -36,8 +36,8 @@ module "common" {
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
-  sfn_arns = [
-    module.receive_and_process_bag.receive_and_process_bag_arn
+  sfn_role_arns = [
+    module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
