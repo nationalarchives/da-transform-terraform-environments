@@ -36,7 +36,9 @@ module "common" {
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
-  sfn_arn = module.pipeline_step_function.sfn_state_machine_arn
+  sfn_arns = [
+    module.receive_and_process_bag.receive_and_process_bag_arn
+  ]
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
   slack_username = var.slack_username
@@ -53,4 +55,5 @@ module "receive_and_process_bag" {
   rapb_image_versions = var.rapb_image_versions
   rapb_version = var.rapb_version
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
+  common_tre_in_sns_topic_arn = module.common.common_tre_in_sns_topic_arn
 }
