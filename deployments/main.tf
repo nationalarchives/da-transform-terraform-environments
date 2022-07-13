@@ -30,7 +30,7 @@ module "tdr_sqs_in_queue" {
 # Common
 
 module "common" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//common"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=test//common"
   env    = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
@@ -49,7 +49,7 @@ module "common" {
 # Receive and process bag
 
 module "receive_and_process_bag" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/receive_and_process_bag"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=test//step_functions/receive_and_process_bag"
   env = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
