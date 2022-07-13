@@ -1,0 +1,71 @@
+policies:
+  - name: ec2-tag
+    description: |
+      Adds a tag to EC2 instances
+    resource: aws.ec2
+    filters:
+      - "tag:custodian-status": absent
+    actions:
+      - type: tag
+        tags:
+          custodian-status: 'discovered'
+  - name: iam-instance-profiles-not-in-use
+    resource: iam-profile
+    mode:
+      type: periodic
+      schedule: "rate(1 day)"
+      role: arn:aws:iam::{account_id}:role/terraform
+    filters:
+      - type: unused
+  - name: iam-policy-unused
+    resource: iam-policy
+    filters:
+      - type: unused
+  - name: iam-expired-access-keys
+    resource: iam-user
+    filters:
+      - type: access-key
+        key: Status
+        value: Active
+      - type: access-key
+        match-operator: and
+        key: CreateDate
+        value_type: age
+        value: 90
+    actions:
+      - type: tag
+        tags:
+          custodian-lifecycle: 'expired'
+  - name: user-without-mfa
+    resource: iam-user
+    filters:
+      - type: credential
+        key: mfa_active
+        value: false
+  - name: dormant-users
+    resource: iam-user
+    filters:
+      - type: credential
+        key: password_last_used
+        value_type: age
+        value: 30
+        op: greater-than
+      - type: credential
+        key: user_creation_time
+        value_type: age
+        value: 30
+        op: greater-than
+  - name: active-users
+    resource: iam-user
+    filters:
+      - type: credential
+        key: mfa_active
+        value: true
+      - type: credential
+        key: password_enabled
+        value: true
+      - type: credential
+        key: password_last_used
+        value_type: age
+        value: 30
+        op: le
