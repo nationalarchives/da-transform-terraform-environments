@@ -58,6 +58,6 @@ module "receive_and_process_bag" {
   rapb_version = var.rapb_version
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
   common_tre_in_sns_topic_arn = module.common.common_tre_in_sns_topic_arn
-  tdr_sqs_retry_url = var.tdr_sqs_queue_endpoint
-  tdr_sqs_retry_arn = var.tdr_sqs_queue_arn
+  tdr_sqs_retry_url = var.tdr_sqs_retry_url
+  tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
 }
