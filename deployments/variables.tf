@@ -34,6 +34,16 @@ variable "tdr_sqs_queue_arn" {
   type = string
 }
 
+variable "tdr_sqs_retry_url" {
+  description = "The TDR retry SQS Queue URL"
+  type = string
+}
+
+variable "tdr_sqs_retry_arn" {
+  description = "The TDR retry SQS Queue ARN"
+  type = string
+}
+
 variable "tdr_queue_kms_key" {
   description = "ARN of the KMS Key for TDR SQS Queue "
   type = string
@@ -67,6 +77,18 @@ variable "image_versions" {
   })
 }
 
+variable "rapb_version" {
+  description = "Receive and Process bag Step Function version (update if Step Function flow or called Lambda function versions change)"
+  type = string
+}
+
+variable "rapb_image_versions" {
+  description = "Latest image version for Lambda Functions"
+  type = object({
+    tre_files_checksum_validation= string
+    tre_bagit_checksum_validation = string
+  })
+}
 # Slack Alerts
 
 

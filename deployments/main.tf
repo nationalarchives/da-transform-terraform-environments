@@ -26,3 +26,38 @@ module "tdr_sqs_in_queue" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
 }
+
+# Common
+
+module "common" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//common"
+  env    = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  image_versions = var.image_versions
+  sfn_role_arns = [
+    module.receive_and_process_bag.receive_and_process_bag_role_arn
+  ]
+  sfn_lambda_roles = [
+    module.receive_and_process_bag.receive_process_bag_lambda_invoke_role
+  ]
+  slack_webhook_url = var.slack_webhook_url
+  slack_channel = var.slack_channel
+  slack_username = var.slack_username
+}
+
+# Receive and process bag
+
+module "receive_and_process_bag" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//step_functions/receive_and_process_bag"
+  env = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  tre_data_bucket = module.common.common_tre_data_bucket
+  rapb_image_versions = var.rapb_image_versions
+  rapb_version = var.rapb_version
+  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
+  common_tre_in_sns_topic_arn = module.common.common_tre_in_sns_topic_arn
+  tdr_sqs_retry_url = var.tdr_sqs_retry_url
+  tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
+}
