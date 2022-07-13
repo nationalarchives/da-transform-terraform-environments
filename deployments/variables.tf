@@ -34,6 +34,16 @@ variable "tdr_sqs_queue_arn" {
   type = string
 }
 
+variable "tdr_sqs_retry_url" {
+  description = "The TDR retry SQS Queue URL"
+  type = string
+}
+
+variable "tdr_sqs_retry_arn" {
+  description = "The TDR retry SQS Queue ARN"
+  type = string
+}
+
 variable "tdr_queue_kms_key" {
   description = "ARN of the KMS Key for TDR SQS Queue "
   type = string
