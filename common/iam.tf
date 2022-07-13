@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "terraform-assume-role-policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["codebuild.amazonaws.com", "codepipeline.amazonaws.com"]
+      identifiers = ["codebuild.amazonaws.com", "codepipeline.amazonaws.com", "lambda.amazonaws.com"]
     }
   }
 }
