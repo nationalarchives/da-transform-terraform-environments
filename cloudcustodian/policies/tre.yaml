@@ -13,8 +13,8 @@ policies:
     resource: iam-profile
     mode:
       type: periodic
-      schedule: "rate(1 day)"
-      role: arn:aws:iam::{account_id}:role/terraform
+      schedule: "rate(5 day)"
+      role: terraform
     filters:
       - type: unused
   - name: iam-policy-unused
@@ -69,3 +69,24 @@ policies:
         value_type: age
         value: 30
         op: le
+  - name: s3-check-for-public-access-block
+    mode:
+      type: periodic
+      schedule: "rate(5 day)"
+      role: terraform
+    resource: aws.s3
+    description: |
+      Scans all S3 buckets for public access block and sets block if not present
+    filters:
+      - type: check-public-block
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "S3 bucket missing public access block"
+        action_desc: "Public access block added to S3 bucket permissions"
+        to:
+          - rahmed@zaizi.com
+
+        transport:
+          type: sns
+          topic: test
