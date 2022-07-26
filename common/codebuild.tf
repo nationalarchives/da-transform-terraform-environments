@@ -1,5 +1,52 @@
 # Common CodeBuild projects
 
+resource "aws_codebuild_project" "terraform-common-plan" {
+  name          = "terraform-common-plan"
+  description   = "Terraform common plan"
+  build_timeout = "20"
+  service_role  = aws_iam_role.mgmt_terraform.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    type                        = "LINUX_CONTAINER"
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "TERRAFORM_VARS"
+      value = "codepipeline-tfvars"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TERRAFORM_BACKEND_CONF"
+      value = "codepipeline-tfbackend"
+      type  = "PARAMETER_STORE"
+    }
+
+    environment_variable {
+      name  = "TF_IN_AUTOMATION"
+      value = "True"
+      type  = "PLAINTEXT"
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name = "da-transform-terraform-pipeline-logs"
+    }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "./buildspec-common-plan.yaml"
+  }
+}
+
 resource "aws_codebuild_project" "terraform-common-apply" {
   name          = "terraform-common-apply"
   description   = "Terraform common apply"
@@ -43,9 +90,10 @@ resource "aws_codebuild_project" "terraform-common-apply" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "./buildspec.yaml"
+    buildspec = "./buildspec-common-apply.yaml"
   }
 }
+
 
 # terraform deployments CodeBuild projetcs
 
