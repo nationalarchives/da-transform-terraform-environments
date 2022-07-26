@@ -38,8 +38,42 @@ resource "aws_codepipeline" "terraform-common" {
       version         = "1"
       run_order       = 2
       input_artifacts = ["source_output"]
+      output_artifacts = ["plan_output"]
       configuration = {
-        ProjectName = aws_codebuild_project.terraform-common-apply.name
+        ProjectName = aws_codebuild_project.terraform-common-plan.name
+      }
+    }
+  }
+
+  stage {
+    name = "Approval"
+
+    action {
+      name      = "Approval"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      version   = "1"
+      run_order = 3
+    }
+  }
+
+  stage {
+    name = "Apply"
+    action {
+      name      = "Apply"
+      category  = "Build"
+      owner     = "AWS"
+      provider  = "CodeBuild"
+      version   = "1"
+      run_order = 4
+      input_artifacts = [
+        "source_output",
+        "plan_output"
+      ]
+      configuration = {
+        ProjectName   = aws_codebuild_project.terraform-common-apply.name
+        PrimarySource = "source_output"
       }
     }
   }

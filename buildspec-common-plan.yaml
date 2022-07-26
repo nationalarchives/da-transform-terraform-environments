@@ -1,10 +1,5 @@
 version: 0.2
 
-#env:
-#  variables:
-#    key: "value"
-#    key: "value"
-
 phases:
   install:
     commands:
@@ -20,23 +15,22 @@ phases:
       - terraform init -backend-config=backend.conf -reconfigure
       - echo "Terraform plan follows..."
       - terraform plan -var-file="terraform.tfvars" -out plan.out
-      - terraform apply -auto-approve -input=false plan.out
       - echo "Terraform plan complete"
   post_build:
     commands:
-      - echo "File listing follows:"
-      - ls -l
-#reports:
-#  terratest-reports:
-#    files:
-#      - "**/*.xml"
-#      - "**/*.log"
-#    base-directory: "../da-transform-terraform-modules/test/reports"
-#    discard-paths: no
+      - echo "Running tfsec..."
+      - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars | tee tfsec-out.json
+      - echo "Completed tfsec"
+      - echo "File listing:"
+      - ls -larth
+      - pwd
+      - cd ..
+      - ls
 artifacts:
   files:
     - plan.out
-  name: plan-output
-cache:
-  paths:
-    - .terraform
+    - "tfsec-out.json"
+    - ".terraform/**/*"
+    - ".terraform.lock.hcl"
+  base-directory: "common"
+  name: "plan_output"

@@ -5,12 +5,12 @@ phases:
     commands:
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
-      - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
+      - cp -vr -t common $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
       - ls -la
       - pwd
       - ./install.sh
       - echo "Prepare terraform file"
-      - cd deployments
+      - cd common
       - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
