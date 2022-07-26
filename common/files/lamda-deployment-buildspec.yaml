@@ -1,0 +1,10 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+       - aws --version
+  build:
+    commands:
+       - cd codepipeline/lambda-deploy
+       - ./deploy_images_to_ecr.sh "$AWS_REGION"
