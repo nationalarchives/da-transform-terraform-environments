@@ -7,4 +7,5 @@ phases:
   build:
     commands:
        - cd codepipeline/lambda-deploy
+       - pip install -r requirements.txt
        - ./deploy_images_to_ecr.sh "$AWS_REGION"
