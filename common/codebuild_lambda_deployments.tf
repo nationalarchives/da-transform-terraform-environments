@@ -65,7 +65,7 @@ resource "aws_codebuild_project" "tre_update_dev_tfvars" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = file("files/tre_update_dev_env.yaml")
+    buildspec = file("files/tre_update_dev_tfvars.yaml")
   }
 }
 
