@@ -46,15 +46,28 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateDevEnv"
     action {
-      name = "UpdateDevEnv"
+      name = "UpdateDevTFVARS"
       category = "Build"
       owner = "AWS"
       provider = "CodeBuild"
       version = "1"
-      run_order = 3
+      run_order = 1
       input_artifacts = ["source_output"]
       configuration = {
-        "ProjectName" = aws_codebuild_project.tre_update_dev_env.name
+        "ProjectName" = aws_codebuild_project.tre_update_dev_tfvars.name
+      }
+    }
+
+    action {
+      name = "RunPipeline"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.run_pipeline.name
       }
     }
   }
