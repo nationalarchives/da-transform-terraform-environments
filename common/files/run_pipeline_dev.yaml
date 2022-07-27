@@ -4,6 +4,8 @@ phases:
   pre_build:
     commands:
       - aws --version
+      - aws configure --profile temp set credential_source EcsContainer
+      - export AWS_PROFILE=temp
       - aws sts get-caller-identity
 
   build:
@@ -18,5 +20,6 @@ phases:
               --region eu-west-2 \
               --output text
           )"; then
+            sleep 30
             ./codepipeline_await.py "${pipeline_name}" "${exec_id}" --attempt_count 180 --wait_seconds 5
           fi
