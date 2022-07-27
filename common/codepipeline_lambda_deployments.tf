@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "tre_lambda_deployment" {
-  name = "tre_lambda_deployment"
+  name = "tre_lambda_deployment_v2"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -28,9 +28,9 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   }
 
   stage {
-    name = "Build"
+    name = "DeployToECR"
     action {
-      name            = "Build"
+      name            = "DeployToECR"
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
@@ -38,7 +38,23 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       run_order       = 2
       input_artifacts = ["source_output"]
       configuration = {
-        ProjectName = aws_codebuild_project.tre_lambda_image_build.name
+        ProjectName = aws_codebuild_project.tre_deploy_to_ecr.name
+      }
+    }
+  }
+
+  stage {
+    name = "UpdateDevEnv"
+    action {
+      name = "UpdateDevEnv"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 3
+      input_artifacts = ["source_output"]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.tre_update_dev_env.name
       }
     }
   }
