@@ -12,13 +12,12 @@ phases:
     commands:
       - cd codepipeline/lambda-deploy
       - pip install -r requirements.txt
-      - pipeline_name=terraform-dev
       - |
           if exec_id="$(
             aws codepipeline start-pipeline-execution \
-              --name "${pipeline_name}" \
+              --name "${PIPELINE_NAME}" \
               --region eu-west-2 \
               --output text
           )"; then
-            ./codepipeline_await.py "${pipeline_name}" "${exec_id}" --attempt_count 180 --wait_seconds 5
+            ./codepipeline_await.py "${PIPELINE_NAME}" "${exec_id}" --attempt_count 180 --wait_seconds 5
           fi

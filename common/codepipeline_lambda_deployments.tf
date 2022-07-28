@@ -59,7 +59,7 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
     }
 
     action {
-      name = "RunPipeline"
+      name = "RunDevPipeline"
       category = "Build"
       owner = "AWS"
       provider = "CodeBuild"
@@ -67,7 +67,149 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       run_order = 2
       input_artifacts = [ "source_output" ]
       configuration = {
-        "ProjectName" = aws_codebuild_project.run_pipeline.name
+        "ProjectName" = aws_codebuild_project.run_pipeline_dev.name
+      }
+    }
+  }
+
+  stage {
+    name = "DeployToTestCheckPoint"
+
+    action {
+      name      = "DeployToTestCheckPoint"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      version   = "1"
+      run_order = 1
+    }
+  }
+
+  stage {
+    name = "UpdateTestEnv"
+    action {
+      name = "UpdateTestTFVARS"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 1
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.tre_update_test_tfvars.name
+      }
+    }
+
+    action {
+      name = "RunTestPipeline"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.run_pipeline_test.name
+      }
+    }
+  }
+
+  stage {
+    name = "UpdateIntEnv"
+    action {
+      name = "UpdateIntTFVARS"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 1
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.tre_update_int_tfvars.name
+      }
+    }
+
+    action {
+      name = "RunIntPipeline"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.run_pipeline_int.name
+      }
+    }
+  }
+
+  stage {
+    name = "UpdateStagingtEnv"
+    action {
+      name = "UpdateStagingTFVARS"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 1
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.tre_update_staging_tfvars.name
+      }
+    }
+
+    action {
+      name = "RunStagingPipeline"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.run_pipeline_staging.name
+      }
+    }
+  }
+
+  stage {
+    name = "DeployToProdCheckPoint"
+
+    action {
+      name      = "DeployToProdCheckpoint"
+      category  = "Approval"
+      owner     = "AWS"
+      provider  = "Manual"
+      version   = "1"
+      run_order = 1
+    }
+  }
+
+  stage {
+    name = "UpdateProdEnv"
+    action {
+      name = "UpdateProdTFVARS"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 1
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.tre_update_prod_tfvars.name
+      }
+    }
+
+    action {
+      name = "RunProdPipeline"
+      category = "Build"
+      owner = "AWS"
+      provider = "CodeBuild"
+      version = "1"
+      run_order = 2
+      input_artifacts = [ "source_output" ]
+      configuration = {
+        "ProjectName" = aws_codebuild_project.run_pipeline_prod.name
       }
     }
   }
