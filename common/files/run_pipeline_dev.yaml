@@ -4,6 +4,8 @@ phases:
   pre_build:
     commands:
       - aws --version
+      - aws configure --profile temp set credential_source EcsContainer
+      - export AWS_PROFILE=temp
       - aws sts get-caller-identity
 
   build:
