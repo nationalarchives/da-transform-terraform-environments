@@ -20,12 +20,10 @@ phases:
   build:
     commands:
       - echo "Terraform apply follows..."
-      - set -o pipefail
-      - terraform apply -input=false plan.out | tee apply.out
+      - terraform apply -input=false plan.out > apply.out
+      - echo $?
+      - cat apply.out
       - echo "Terraform apply complete"
-  post_build:
-    commands:
-      - echo "In PostBuild"
 artifacts:
   files:
     - apply.out
