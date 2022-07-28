@@ -13,7 +13,11 @@ phases:
       - cd codepipeline/lambda-deploy
       - pip install -r requirements.txt
       - |
-        ./update_step_functions.sh \
-          "${SF_TF_VAR_KEY_LIST}" \
-          "dte-96-tfvars" \
-          "../../lambda_functions"
+          if exec_id="$(
+            aws codepipeline start-pipeline-execution \
+              --name "${PIPELINE_NAME}" \
+              --region eu-west-2 \
+              --output text
+          )"; then
+            ./codepipeline_await.py "${PIPELINE_NAME}" "${exec_id}" --attempt_count 180 --wait_seconds 5
+          fi
