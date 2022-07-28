@@ -12,7 +12,6 @@ phases:
     commands:
       - cd codepipeline/lambda-deploy
       - pip install -r requirements.txt
-      - $ENV_TF_VARS=dte-96-tfvars
       - |
         ./update_step_functions.sh \
           "${SF_TF_VAR_KEY_LIST}" \
