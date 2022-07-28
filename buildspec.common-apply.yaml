@@ -3,7 +3,6 @@ version: 0.2
 phases:
   install:
     commands:
-      - ps -p $$
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
       - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
@@ -12,7 +11,7 @@ phases:
       - set -o pipefail
       - ./install.sh
       - echo "Prepare terraform file"
-      - cd deployments
+      - cd common
       - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
@@ -21,10 +20,11 @@ phases:
   build:
     commands:
       - echo "Terraform apply follows..."
-      - terraform apply -input=false plan.out > apply.out
-      - echo $?
-      - cat apply.out
+      - terraform apply -input=false plan.out | tee apply.out
       - echo "Terraform apply complete"
+  post_build:
+    commands:
+      - echo "In PostBuild"
 artifacts:
   files:
     - apply.out
