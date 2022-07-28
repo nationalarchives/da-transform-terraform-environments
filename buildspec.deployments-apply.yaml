@@ -20,6 +20,7 @@ phases:
   build:
     commands:
       - echo "Terraform apply follows..."
+      - set -o pipefail
       - terraform apply -input=false plan.out | tee apply.out
       - echo "Terraform apply complete"
   post_build:
