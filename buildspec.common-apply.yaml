@@ -11,7 +11,7 @@ phases:
       - set -o pipefail
       - ./install.sh
       - echo "Prepare terraform file"
-      - cd deployments
+      - cd common
       - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
@@ -20,7 +20,6 @@ phases:
   build:
     commands:
       - echo "Terraform apply follows..."
-      - set -o pipefail
       - terraform apply -input=false plan.out | tee apply.out
       - echo "Terraform apply complete"
   post_build:

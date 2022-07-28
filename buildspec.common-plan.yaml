@@ -7,7 +7,7 @@ phases:
       - ./install.sh
       - echo "Prepare terraform file"
       - pwd
-      - cd deployments
+      - cd common
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
       - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
@@ -22,7 +22,6 @@ phases:
   post_build:
     commands:
       - echo "Running tfsec..."
-      - set -o pipefail
       - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars | tee tfsec-out.json
       - echo "Completed tfsec"
       - echo "File listing:"
@@ -33,5 +32,5 @@ artifacts:
     - "tfsec-out.json"
     - ".terraform/**/*"
     - ".terraform.lock.hcl"
-  base-directory: "deployments"
+  base-directory: "common"
   name: "plan_output"
