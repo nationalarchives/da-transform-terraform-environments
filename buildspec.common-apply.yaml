@@ -5,7 +5,7 @@ phases:
     commands:
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
-      - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
+      - cp -vr -t common $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
       - ls -la
       - pwd
       - set -o pipefail
@@ -20,11 +20,9 @@ phases:
   build:
     commands:
       - echo "Terraform apply follows..."
-      - terraform apply -input=false plan.out | tee apply.out
+      - terraform apply -input=false plan.out > apply.out
+      - cat apply.out
       - echo "Terraform apply complete"
-  post_build:
-    commands:
-      - echo "In PostBuild"
 artifacts:
   files:
     - apply.out
