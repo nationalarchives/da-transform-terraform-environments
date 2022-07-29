@@ -52,7 +52,7 @@ resource "aws_codebuild_project" "parser-build" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 }
 
@@ -125,7 +125,7 @@ resource "aws_codebuild_project" "parser_test" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 }
 
@@ -180,7 +180,7 @@ resource "aws_codebuild_project" "parser_deployment_dev" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 
 }
@@ -256,7 +256,7 @@ resource "aws_codebuild_project" "parser_deployment_test" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 
 }
@@ -310,7 +310,7 @@ resource "aws_codebuild_project" "parser_deployment_int" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 
 }
@@ -364,7 +364,7 @@ resource "aws_codebuild_project" "parser_deployment_staging" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 
 }
@@ -418,7 +418,7 @@ resource "aws_codebuild_project" "parser_deployment_prod" {
 
   secondary_source_version {
     source_identifier = "teDockerBuild"
-    source_version    = "develop"
+    source_version    = "main"
   }
 
 }
