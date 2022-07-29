@@ -19,7 +19,7 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        BranchName           = "master"
+        BranchName           = "main"
         ConnectionArn        = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId     = "nationalarchives/da-transform-judgments-pipeline"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
