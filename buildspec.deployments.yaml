@@ -10,8 +10,8 @@ phases:
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
-      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
-      - cat terraform.tfvars
+      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars.json
+      - cat terraform.tfvars.json
       - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
