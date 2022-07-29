@@ -5,7 +5,7 @@ phases:
     commands:
       - ls -la
       - ls -la "$CODEBUILD_SRC_DIR_plan_output"
-      - cp -vr -t common "$CODEBUILD_SRC_DIR_plan_output/plan.out" "$CODEBUILD_SRC_DIR_plan_output/.terraform" "$CODEBUILD_SRC_DIR_plan_output/*.zip" 
+      - cp -vr -t common "$CODEBUILD_SRC_DIR_plan_output/plan.out" "$CODEBUILD_SRC_DIR_plan_output/.terraform" "$CODEBUILD_SRC_DIR_plan_output/parser_pipeline_slack_alerts.zip" 
       - pwd
       - set -o pipefail
       - ./install.sh
