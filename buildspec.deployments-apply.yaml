@@ -3,7 +3,6 @@ version: 0.2
 phases:
   install:
     commands:
-      - ps -p $$
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
       - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
@@ -16,8 +15,8 @@ phases:
       - ls -la
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
-      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
-      - cat terraform.tfvars
+      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars.json
+      - cat terraform.tfvars.json
   build:
     commands:
       - echo "Terraform apply follows..."
