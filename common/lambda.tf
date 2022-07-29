@@ -46,5 +46,5 @@ resource "aws_lambda_permission" "parser_pipeline_slack_alerts" {
 data "archive_file" "log_lambda_zip" {
   type        = "zip"
   source_file = "${path.module}/parser_pipeline_slack_alerts.py"
-  output_path = "${path.cwd}/parser_pipeline_slack_alerts.zip"
+  output_path = "${path.module}/parser_pipeline_slack_alerts.zip"
 }
