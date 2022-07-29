@@ -58,7 +58,7 @@ resource "aws_codebuild_project" "tre_update_dev_tfvars" {
 
     environment_variable {
       name = "ENV_TF_VARS"
-      value = "dte-96-tfvars"
+      value = "dev-tfvars"
     }
   }
 
@@ -99,7 +99,7 @@ resource "aws_codebuild_project" "tre_update_test_tfvars" {
 
     environment_variable {
       name = "ENV_TF_VARS"
-      value = "dte-96-tfvars"
+      value = "test-tfvars"
     }
   }
 
@@ -140,7 +140,7 @@ resource "aws_codebuild_project" "tre_update_int_tfvars" {
 
     environment_variable {
       name = "ENV_TF_VARS"
-      value = "dte-96-tfvars"
+      value = "int-tfvars"
     }
   }
 
@@ -181,7 +181,7 @@ resource "aws_codebuild_project" "tre_update_staging_tfvars" {
 
     environment_variable {
       name = "ENV_TF_VARS"
-      value = "dte-96-tfvars"
+      value = "staging-tfvars"
     }
   }
 
@@ -222,7 +222,7 @@ resource "aws_codebuild_project" "tre_update_prod_tfvars" {
 
     environment_variable {
       name = "ENV_TF_VARS"
-      value = "dte-96-tfvars"
+      value = "prod-tfvars"
     }
   }
 
@@ -327,7 +327,7 @@ resource "aws_codebuild_project" "run_pipeline_int" {
 
     environment_variable {
       name = "PIPELINE_NAME"
-      value = "terraform-dev"
+      value = "terraform-int"
     }
   }
 
@@ -362,7 +362,7 @@ resource "aws_codebuild_project" "run_pipeline_staging" {
 
     environment_variable {
       name = "PIPELINE_NAME"
-      value = "terraform-dev"
+      value = "terraform-staging"
     }
   }
 
@@ -397,7 +397,7 @@ resource "aws_codebuild_project" "run_pipeline_prod" {
 
     environment_variable {
       name = "PIPELINE_NAME"
-      value = "terraform-dev"
+      value = "terraform-prod"
     }
   }
 

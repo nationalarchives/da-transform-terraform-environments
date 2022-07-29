@@ -19,7 +19,7 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        BranchName           = "develop"
+        BranchName           = "master"
         ConnectionArn        = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId     = "nationalarchives/da-transform-judgments-pipeline"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
@@ -144,7 +144,7 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   }
 
   stage {
-    name = "UpdateStagingtEnv"
+    name = "UpdateStagingEnv"
     action {
       name = "UpdateStagingTFVARS"
       category = "Build"
