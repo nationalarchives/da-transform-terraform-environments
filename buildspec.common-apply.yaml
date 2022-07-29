@@ -3,9 +3,9 @@ version: 0.2
 phases:
   install:
     commands:
-      - ls -la $CODEBUILD_SRC_DIR_source_output
-      - ls -la $CODEBUILD_SRC_DIR_plan_output
-      - cp -vr -t common $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
+      - ls -la "${CODEBUILD_SRC_DIR_source_output}"
+      - ls -la "${CODEBUILD_SRC_DIR_plan_output}"
+      - cp -vr -t common "${CODEBUILD_SRC_DIR_plan_output}/plan.out" "${CODEBUILD_SRC_DIR_plan_output}"/.terraform*
       - ls -la
       - pwd
       - set -o pipefail

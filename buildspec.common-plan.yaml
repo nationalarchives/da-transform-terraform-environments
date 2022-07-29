@@ -29,6 +29,7 @@ phases:
       - ls -larth
 artifacts:
   files:
+    - "*.zip"
     - "plan.out"
     - "tfsec-out.json"
     - ".terraform/**/*"
