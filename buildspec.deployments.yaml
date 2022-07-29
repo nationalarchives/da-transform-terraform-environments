@@ -10,20 +10,20 @@ phases:
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
       - cat backend.conf
-      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars
-      - cat terraform.tfvars
+      - echo "${TERRAFORM_VARS}" | tee terraform.tfvars.json
+      - cat terraform.tfvars.json
       - terraform init -backend-config=backend.conf -upgrade -reconfigure
   build:
     commands:
       - echo "Terraform plan follows..."
-      - terraform plan -var-file="terraform.tfvars" -out plan.out
+      - terraform plan -var-file="terraform.tfvars.json" -out plan.out
       - ls -la
       - echo "Terraform plan complete"
   post_build:
     commands:
       - echo "Running tfsec..."
-      - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars > tfsec-out.json
-      - cat tfsec-out.json
+      - set -o pipefail
+      - tfsec --soft-fail --no-colour --format json --tfvars-file terraform.tfvars.json | tee tfsec-out.json
       - echo "Completed tfsec"
       - echo "File listing:"
       - ls -larth
