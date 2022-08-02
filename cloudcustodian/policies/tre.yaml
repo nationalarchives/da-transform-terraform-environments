@@ -1,20 +1,6 @@
 policies:
-  - name: ec2-tag
-    description: |
-      Adds a tag to EC2 instances
-    resource: aws.ec2
-    filters:
-      - "tag:custodian-status": absent
-    actions:
-      - type: tag
-        tags:
-          custodian-status: 'discovered'
   - name: iam-instance-profiles-not-in-use
     resource: iam-profile
-    mode:
-      type: periodic
-      schedule: "rate(5 day)"
-      role: terraform
     filters:
       - type: unused
   - name: iam-policy-unused
@@ -43,6 +29,10 @@ policies:
         key: mfa_active
         value: false
   - name: dormant-users
+    mode:
+        type: periodic
+        schedule: "rate(1 day)"
+        role: cloud-custodian-admin-access
     resource: iam-user
     filters:
       - type: credential
@@ -55,38 +45,39 @@ policies:
         value_type: age
         value: 30
         op: greater-than
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "Inactive users for more than 30 days"
+        to:
+          {slack_webhook_url}
+
+        transport:
+          type: sqs
+          queue: { sqs_queu_url}
+
   - name: active-users
     resource: iam-user
     filters:
       - type: credential
         key: mfa_active
-        value: true
+        value: false
       - type: credential
         key: password_enabled
-        value: true
+        value: false
       - type: credential
         key: password_last_used
         value_type: age
         value: 30
         op: le
-  - name: s3-check-for-public-access-block
-    mode:
-      type: periodic
-      schedule: "rate(5 day)"
-      role: terraform
-    resource: aws.s3
-    description: |
-      Scans all S3 buckets for public access block and sets block if not present
-    filters:
-      - type: check-public-block
     actions:
       - type: notify
         slack_template: slack_default
         violation_desc: "S3 bucket missing public access block"
         action_desc: "Public access block added to S3 bucket permissions"
         to:
-          - rahmed@zaizi.com
+          {slack_webhook_url}
 
         transport:
-          type: sns
-          topic: test
+          type: sqs
+          queue: { sqs_queu_url}

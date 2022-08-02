@@ -1,0 +1,23 @@
+policies:
+  - name: ecr-vulnerability-scanning-enabled
+    mode:
+      type: periodic
+      schedule: "rate(1 day)"
+      role: cloud-custodian-admin-access
+    resource: ecr
+    filters:
+      - type: value
+        key: imageScanningConfiguration.scanOnPush
+        value: false
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "Repository configured without scan on push"
+        action_desc: "Repository has had scan on push enabled"
+        to:
+          {slack_webhook_url}
+        transport:
+          type: sqs
+          queue: { sqs_queu_url}
+      - type: set-scanning
+        state: true
