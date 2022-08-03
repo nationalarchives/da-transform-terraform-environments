@@ -87,6 +87,7 @@ variable "rapb_image_versions" {
   type = object({
     tre_files_checksum_validation= string
     tre_bagit_checksum_validation = string
+    tre_rapb_trigger = string
   })
 }
 # Slack Alerts
