@@ -1,3 +1,3 @@
-queue_url: https://sqs.eu-west-2.amazonaws.com/454286877087/cloud-custodian-mailer-queue
-role: arn:aws:iam::454286877087:role/cloud-custodian-admin-access
+queue_url: { sqs_queu_url}
+role: arn:aws:iam::{account_id}:role/cloud-custodian-admin-access
 region: eu-west-2

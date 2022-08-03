@@ -1,0 +1,19 @@
+policies:
+  - name: remediate
+    resource: aws.ecr
+    mode:
+      type: hub-action
+      role: cloud-custodian-admin-access
+    actions:
+      - type: post-finding
+        types:
+          - "Software and Configuration Checks/Industry and Regulatory Standards/NIST CSF Controls (USA)"
+      - type: notify
+        slack_template: slack_default
+        violation_desc: 'User without MFA'
+        action_desc: 'Assign a MFA to this account now!'
+        to: 
+          - {slack_webhook_url}
+        transport:
+          type: sqs
+          queue: { sqs_queu_url}

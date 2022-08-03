@@ -76,7 +76,7 @@ policies:
         violation_desc: "S3 bucket missing public access block"
         action_desc: "Public access block added to S3 bucket permissions"
         to:
-          {slack_webhook_url}
+          { sqs_queu_url}
 
         transport:
           type: sqs
