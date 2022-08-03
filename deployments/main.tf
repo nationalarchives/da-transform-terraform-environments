@@ -44,6 +44,7 @@ module "common" {
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
   slack_username = var.slack_username
+  tre_rapb_in_queue_arn = module.receive_and_process_bag.tre_rapb_in_queue_arn
 }
 
 # Receive and process bag
