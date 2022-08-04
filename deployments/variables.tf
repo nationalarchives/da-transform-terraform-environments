@@ -87,6 +87,7 @@ variable "rapb_image_versions" {
   type = object({
     tre_files_checksum_validation= string
     tre_bagit_checksum_validation = string
+    tre_rapb_trigger = string
   })
 }
 # Slack Alerts
@@ -106,3 +107,14 @@ variable "slack_username" {
   description = "Username for tre slack alerts"
   type = string
 }
+
+variable "tre_in_publishers" {
+  description = "Roles that have permission to publish messages to tre-in topic"
+  type = list(string)
+}
+
+variable "tre_in_subscribers" {
+  description = "Roles that have permission to subscribe to tre-in topic"
+  type = list(string)
+}
+
