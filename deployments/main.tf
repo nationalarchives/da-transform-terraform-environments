@@ -45,6 +45,8 @@ module "common" {
   slack_channel = var.slack_channel
   slack_username = var.slack_username
   tre_rapb_in_queue_arn = module.receive_and_process_bag.tre_rapb_in_queue_arn
+  tre_in_publishers = var.tre_in_publishers
+  tre_in_subscribers = var.tre_in_subscribers
 }
 
 # Receive and process bag
