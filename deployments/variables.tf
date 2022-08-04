@@ -107,3 +107,13 @@ variable "slack_username" {
   description = "Username for tre slack alerts"
   type = string
 }
+
+variable "tre_in_publishers" {
+  description = "Roles that have permission to publish messages to tre-in topic"
+  type = string  
+}
+
+variable "tre_in_subscribers" {
+  description = "Roles that have permission to subscribe to tre-in topic"
+  type = string
+}
