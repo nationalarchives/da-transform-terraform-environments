@@ -44,6 +44,9 @@ module "common" {
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
   slack_username = var.slack_username
+  tre_rapb_in_queue_arn = module.receive_and_process_bag.tre_rapb_in_queue_arn
+  tre_in_publishers = var.tre_in_publishers
+  tre_in_subscribers = var.tre_in_subscribers   
 }
 
 # Receive and process bag
@@ -57,7 +60,6 @@ module "receive_and_process_bag" {
   rapb_image_versions = var.rapb_image_versions
   rapb_version = var.rapb_version
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
-  common_tre_in_sns_topic_arn = module.common.common_tre_in_sns_topic_arn
   tdr_sqs_retry_url = var.tdr_sqs_retry_url
   tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
 }
