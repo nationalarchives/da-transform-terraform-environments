@@ -110,10 +110,10 @@ variable "slack_username" {
 
 variable "tre_in_publishers" {
   description = "Roles that have permission to publish messages to tre-in topic"
-  type = string  
+  type = list(string)
 }
 
 variable "tre_in_subscribers" {
   description = "Roles that have permission to subscribe to tre-in topic"
-  type = string
+  type = list(string)
 }
