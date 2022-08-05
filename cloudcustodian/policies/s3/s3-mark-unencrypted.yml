@@ -1,0 +1,27 @@
+policies:
+  - name: s3-mark-unencrypted
+    mode:
+      type: periodic
+      schedule: "rate(1 hour)"
+      role: cloud-custodian-admin-access
+    resource: aws.s3
+    description: |
+      Scans all S3 buckets and marks unencrypted buckets for deletion
+    filters:
+      - type: bucket-encryption
+        state: False
+      - "tag:custodian_s3_not_encrypted": absent
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "S3 bucket missing public access block"
+        action_desc: "Public access block added to S3 bucket permissions"
+        to:
+          -  {slack_webhook_url}
+        transport:
+          type: sqs
+          queue: {sqs_queue_url}
+      - type: mark-for-op
+        tag: custodian_s3_not_encrypted
+        op: delete
+        days: 3

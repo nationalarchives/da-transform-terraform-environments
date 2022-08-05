@@ -1,5 +1,5 @@
 policies:
-  - name: ecr-vulnerability-scanning-enabled
+  - name: ecr-scan-on-push
     mode:
       type: periodic
       schedule: "rate(1 day)"
@@ -15,9 +15,9 @@ policies:
         violation_desc: "Repository configured without scan on push"
         action_desc: "Repository has had scan on push enabled"
         to:
-          {slack_webhook_url}
+          -  {slack_webhook_url}
         transport:
           type: sqs
-          queue: { sqs_queu_url}
+          queue: {sqs_queue_url}
       - type: set-scanning
         state: true

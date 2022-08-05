@@ -1,0 +1,35 @@
+policies:
+  - name: s3-unmark-public-policy
+    mode:
+      type: periodic
+      schedule: "rate(1 hour)"
+      role: cloud-custodian-admin-access
+    resource: aws.s3
+    description: |
+      Scans all S3 buckets and unmarks those whose public access policy has been removed
+    filters:
+      - not:
+        - type: has-statement
+          statements:
+            - Effect: Allow
+              Action: 's3:*'
+              Principal: '*'
+      - not:
+        - type: has-statement
+          statements:
+            - Effect: Allow
+              Action: 's3:GetObject'
+              Principal: '*'
+      - "tag:custodian_s3_public_access": present
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "S3 bucket missing public access block"
+        action_desc: "Public access block added to S3 bucket permissions"
+        to:
+          -  {slack_webhook_url}
+        transport:
+          type: sqs
+          queue: {sqs_queue_url}
+      - type: unmark
+        tags: ["custodian_s3_public_access"]

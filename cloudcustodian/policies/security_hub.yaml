@@ -1,19 +1,18 @@
 policies:
-  - name: remediate
+  - name: inspector-ecr-findings
     resource: aws.ecr
     mode:
-      type: hub-action
+      type: hub-finding
       role: cloud-custodian-admin-access
+    filters:
+      - type: event
+        key: detail.findings[].ProductFields.aws/securityhub/ProductName
+        value: Inspector
     actions:
-      - type: post-finding
-        types:
-          - "Software and Configuration Checks/Industry and Regulatory Standards/NIST CSF Controls (USA)"
       - type: notify
         slack_template: slack_default
-        violation_desc: 'User without MFA'
-        action_desc: 'Assign a MFA to this account now!'
-        to: 
-          - {slack_webhook_url}
+        to:
+          -  {slack_webhook_url}
         transport:
           type: sqs
-          queue: { sqs_queu_url}
+          queue: {sqs_queue_url}

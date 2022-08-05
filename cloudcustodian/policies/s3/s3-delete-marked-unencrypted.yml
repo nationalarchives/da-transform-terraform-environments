@@ -1,23 +1,25 @@
 policies:
-  - name: s3-check-for-public-access-block
+  - name: s3-delete-marked-unencrypted-policy
     mode:
       type: periodic
       schedule: "rate(1 day)"
       role: cloud-custodian-admin-access
     resource: aws.s3
     description: |
-      Scans all S3 buckets for public access block and sets block if not present
+      Delete unencrypted S3 buckets scheduled for deletion
     filters:
-      - type: check-public-block
+      - type: marked-for-op
+        tag: custodian_s3_not_encrypted
+        op: delete
     actions:
       - type: notify
         slack_template: slack_default
         violation_desc: "S3 bucket missing public access block"
         action_desc: "Public access block added to S3 bucket permissions"
         to:
-          {slack_webhook_url}
+          -  {slack_webhook_url}
         transport:
           type: sqs
-          queue: { sqs_queu_url}
-      - type: set-public-block
-        state: true
+          queue: {sqs_queue_url}
+      - type: delete
+        remove-contents: true

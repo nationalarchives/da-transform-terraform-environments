@@ -1,0 +1,24 @@
+policies:
+  - name: s3-remove-public-acls
+    mode:
+      type: periodic
+      schedule: "rate(1 hour)"
+      role: cloud-custodian-admin-access
+    resource: aws.s3
+    description: |
+      Scans all S3 buckets and removes public acls
+    filters:
+      - type: global-grants
+    actions:
+      - type: notify
+        slack_template: slack_default
+        violation_desc: "S3 bucket missing public access block"
+        action_desc: "Public access block added to S3 bucket permissions"
+        to:
+          -  {slack_webhook_url}
+        transport:
+          type: sqs
+          queue: {sqs_queue_url}
+      - type: tag
+        key: cn7_status
+        value: "Removed public ACLs at bucket level"
