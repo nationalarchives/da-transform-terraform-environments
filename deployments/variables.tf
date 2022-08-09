@@ -118,3 +118,12 @@ variable "tre_in_subscribers" {
   type = list(string)
 }
 
+variable "tre_internal_subscribers" {
+  description = "Roles that have permission to subscribe to tre-internal topic"
+  type = list(string)  
+}
+
+variable "tre_out_subscribers" {
+  description = "Roles that have permission to subscribe to tre-out topic"
+  type = list(string)
+}
