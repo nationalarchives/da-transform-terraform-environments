@@ -46,7 +46,7 @@ module "common" {
   slack_username = var.slack_username
   tre_rapb_in_queue_arn = module.receive_and_process_bag.tre_rapb_in_queue_arn
   tre_in_publishers = var.tre_in_publishers
-  tre_in_subscribers = var.tre_in_subscribers  
+  tre_in_subscribers = var.tre_in_subscribers
   tre_internal_publishers = [
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
@@ -54,7 +54,7 @@ module "common" {
   tre_out_publishers = [
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
-  tre_out_subscribers = var.tre_out_subscribers 
+  tre_out_subscribers = var.tre_out_subscribers
 }
 
 # Receive and process bag
