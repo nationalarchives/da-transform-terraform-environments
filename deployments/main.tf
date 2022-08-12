@@ -55,6 +55,9 @@ module "common" {
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
   tre_out_subscribers = var.tre_out_subscribers
+  tre_internal_sqs_ubscribers = [
+    module.dri_preingest_sip_generation.dpsg_in_queue_arn
+  ]
 }
 
 # Receive and process bag
@@ -71,4 +74,16 @@ module "receive_and_process_bag" {
   tdr_sqs_retry_url = var.tdr_sqs_retry_url
   tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
   common_tre_internal_topic_arn = module.common.common_tre_internal_topic_arn
+}
+
+# DRI Preigest SIP Generation
+
+module "dri_preingest_sip_generation" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/dri_preingest_sip_generation"
+  env = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
+  dpsg_image_versions = var.dpsg_image_versions
+  dpsg_version = var.dpsg_version
 }
