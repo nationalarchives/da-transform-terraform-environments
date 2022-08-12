@@ -55,7 +55,7 @@ module "common" {
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
   tre_out_subscribers = var.tre_out_subscribers
-  tre_internal_sqs_ubscribers = [
+  tre_internal_sqs_subscribers = [
     module.dri_preingest_sip_generation.dpsg_in_queue_arn
   ]
 }
