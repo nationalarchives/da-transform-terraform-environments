@@ -2,6 +2,7 @@ provider "aws" {
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.root
+    # external_id = var.assume_role_external_id
   }
 }
 
@@ -10,6 +11,7 @@ provider "aws" {
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.users
+    # external_id = var.assume_role_external_id
   }
 }
 
@@ -18,6 +20,7 @@ provider "aws" {
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.nonprod
+    # external_id = var.assume_role_external_id
   }
 }
 
@@ -26,6 +29,7 @@ provider "aws" {
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_roles.prod
+    # external_id = var.assume_role_external_id
   }
 }
 

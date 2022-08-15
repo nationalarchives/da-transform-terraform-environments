@@ -26,12 +26,6 @@ variable "users" {
 
 # CodePipeline Variables
 
-
-variable "github_oauth_token" {
-  description = "GitHub v1 oauth token"
-  type        = string
-}
-
 variable "common_git_branch" {
   description = "Git branch for common terraform"
   type        = string
@@ -76,4 +70,9 @@ variable "slack_username" {
   description = "Username for tre slack alerts"
   type = string
 }
+
+# variable "assume_role_external_id" {
+#   description = "External_id for cross-account assume role"
+#   type = string
+# }
 
