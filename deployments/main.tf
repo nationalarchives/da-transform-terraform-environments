@@ -39,7 +39,8 @@ module "common" {
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
   sfn_lambda_roles = [
-    module.receive_and_process_bag.receive_process_bag_lambda_invoke_role
+    module.receive_and_process_bag.receive_process_bag_lambda_invoke_role,
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
   ]
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
