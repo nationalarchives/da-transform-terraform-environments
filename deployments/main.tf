@@ -36,7 +36,8 @@ module "common" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
   sfn_role_arns = [
-    module.receive_and_process_bag.receive_and_process_bag_role_arn
+    module.receive_and_process_bag.receive_and_process_bag_role_arn,
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn
   ]
   sfn_lambda_roles = [
     module.receive_and_process_bag.receive_process_bag_lambda_invoke_role,
