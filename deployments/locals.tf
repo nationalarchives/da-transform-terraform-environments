@@ -18,7 +18,7 @@ locals {
       type = "AWS"
       role_arn = module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
       name = "dpsg-in-sqs-queue-2"
-      protocol = "sqs"
+      protocol = "lambda"
       endpoint = module.dri_preingest_sip_generation.lambda
       filter_policy = jsonencode({
             "name": ["TRE"],
