@@ -77,21 +77,21 @@ variable "image_versions" {
   })
 }
 
-variable "rapb_version" {
-  description = "Receive and Process bag Step Function version (update if Step Function flow or called Lambda function versions change)"
+variable "vb_version" {
+  description = "Validate BagIt Step Function version (update if Step Function flow or called Lambda function versions change)"
   type = string
 }
 
-variable "rapb_image_versions" {
+variable "vb_image_versions" {
   description = "Latest image version for Lambda Functions"
   type = object({
-    tre_rapb_trigger = string
-    tre_validate_bagit = string
-    tre_validate_bagit_files = string
+    tre_vb_trigger = string
+    tre_vb_validate_bagit = string
+    tre_vb_validate_bagit_files = string
   })
 }
-# Slack Alerts
 
+# Slack Alerts
 
 variable "slack_webhook_url" {
   description = "Webhook URL for tre slack alerts"
