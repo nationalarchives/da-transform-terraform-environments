@@ -30,46 +30,47 @@ module "tdr_sqs_in_queue" {
 # Common
 
 module "common" {
-  # source = "../../da-transform-terraform-modules/common/"
+  # source = "../../da-transform-terraform-modules/common"
   source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//common"
   env    = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
   sfn_role_arns = [
-    module.receive_and_process_bag.receive_and_process_bag_role_arn,
     module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn
+    module.validate_bagit.validate_bagit_role_arn
   ]
   sfn_lambda_roles = [
-    module.receive_and_process_bag.receive_process_bag_lambda_invoke_role,
     module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
+    module.validate_bagit.validate_bagit_lambda_invoke_role
   ]
   slack_webhook_url = var.slack_webhook_url
   slack_channel = var.slack_channel
   slack_username = var.slack_username
-  tre_rapb_in_queue_arn = module.receive_and_process_bag.tre_rapb_in_queue_arn
+  tre_vb_in_queue_arn = module.validate_bagit.tre_vb_in_queue_arn
   tre_in_publishers = var.tre_in_publishers
   tre_in_subscribers = var.tre_in_subscribers
   tre_internal_publishers = [
-    module.receive_and_process_bag.receive_and_process_bag_role_arn
+    module.validate_bagit.validate_bagit_role_arn
   ]
   tre_internal_subscriptions = local.tre_internal_subscriptions
   tre_out_publishers = [
-    module.receive_and_process_bag.receive_and_process_bag_role_arn
+    module.validate_bagit.validate_bagit_role_arn
   ]
   tre_out_subscribers = var.tre_out_subscribers
 }
 
-# Receive and process bag
+# Validate BagIt
 
-module "receive_and_process_bag" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/receive_and_process_bag"
+module "validate_bagit" {
+  # source = "../../da-transform-terraform-modules/step_functions/validate_bagit"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/validate_bagit"
   env = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
   tre_data_bucket = module.common.common_tre_data_bucket
-  rapb_image_versions = var.rapb_image_versions
-  rapb_version = var.rapb_version
+  vb_image_versions = var.vb_image_versions
+  vb_version = var.vb_version
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
   tdr_sqs_retry_url = var.tdr_sqs_retry_url
   tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
