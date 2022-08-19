@@ -1,0 +1,31 @@
+locals {
+  tre_internal_subscriptions = [
+    {
+      type = "AWS"
+      role_arn = "arn:aws:iam::${data.aws_caller_identity.aws.account_id}:root"
+      name = "dpsg-in-sqs-queue"
+      protocol = "sqs"
+      endpoint = module.dri_preingest_sip_generation.dpsg_in_queue_arn
+      filter_policy = jsonencode({
+            "name": ["TRE"],
+            "process": ["dev-tre-receive-and-process-bag"],
+            "event-name": ["bagit-validated"],
+            "type": ["standard"]
+      })
+    },
+
+    {
+      type = "AWS"
+      role_arn = module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
+      name = "dpsg-in-sqs-queue-2"
+      protocol = "lambda"
+      endpoint = module.dri_preingest_sip_generation.lambda
+      filter_policy = jsonencode({
+            "name": ["TRE"],
+            "process": ["dev-tre-receive-and-process-bag"],
+            "event-name": ["bagit-validated"],
+            "type": ["standard"]
+      })
+    },
+  ]
+}
