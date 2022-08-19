@@ -11,17 +11,5 @@ locals {
             "type": ["standard"]
       })
     },
-
-    {
-      name = "dpsg-in-sqs-queue-two"
-      protocol = "lambda"
-      endpoint =  module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
-      filter_policy = jsonencode({
-            "name": ["TRE"],
-            "process": ["dev-tre-receive-and-process-bag"],
-            "event-name": ["bagit-validated"],
-            "type": ["standard"]
-      })
-    },
   ]
 }
