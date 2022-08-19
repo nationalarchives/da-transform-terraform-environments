@@ -80,7 +80,7 @@ module "validate_bagit" {
 # DRI Preigest SIP Generation
 
 module "dri_preingest_sip_generation" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=test//step_functions/dri_preingest_sip_generation"
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=int//step_functions/dri_preingest_sip_generation"
   env = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
