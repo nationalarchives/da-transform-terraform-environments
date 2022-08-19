@@ -37,9 +37,11 @@ module "common" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
   sfn_role_arns = [
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn
     module.validate_bagit.validate_bagit_role_arn
   ]
   sfn_lambda_roles = [
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
     module.validate_bagit.validate_bagit_lambda_invoke_role
   ]
   slack_webhook_url = var.slack_webhook_url
@@ -51,7 +53,7 @@ module "common" {
   tre_internal_publishers = [
     module.validate_bagit.validate_bagit_role_arn
   ]
-  tre_internal_subscribers = var.tre_internal_subscribers
+  tre_internal_subscriptions = local.tre_internal_subscriptions
   tre_out_publishers = [
     module.validate_bagit.validate_bagit_role_arn
   ]
@@ -73,4 +75,16 @@ module "validate_bagit" {
   tdr_sqs_retry_url = var.tdr_sqs_retry_url
   tdr_sqs_retry_arn = var.tdr_sqs_retry_arn
   common_tre_internal_topic_arn = module.common.common_tre_internal_topic_arn
+}
+
+# DRI Preigest SIP Generation
+
+module "dri_preingest_sip_generation" {
+  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//step_functions/dri_preingest_sip_generation"
+  env = var.environment_name
+  prefix = var.prefix
+  account_id = data.aws_caller_identity.aws.account_id
+  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
+  dpsg_image_versions = var.dpsg_image_versions
+  dpsg_version = var.dpsg_version
 }

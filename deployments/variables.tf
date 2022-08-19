@@ -91,6 +91,21 @@ variable "vb_image_versions" {
   })
 }
 
+
+variable "dpsg_version" {
+  description = "DRI Preingest SIP Generation Step Function version (update if Step Function flow or called Lambda function versions change)"
+  type = string
+
+}
+
+variable "dpsg_image_versions" {
+  description = "Latest version of Images for Lambda Functions"
+  type = object({
+    tre_bagit_to_dri_sip = string
+    tre_sqs_sf_trigger = string
+  })
+}
+
 # Slack Alerts
 
 variable "slack_webhook_url" {
@@ -116,11 +131,6 @@ variable "tre_in_publishers" {
 variable "tre_in_subscribers" {
   description = "Roles that have permission to subscribe to tre-in topic"
   type = list(string)
-}
-
-variable "tre_internal_subscribers" {
-  description = "Roles that have permission to subscribe to tre-internal topic"
-  type = list(string)  
 }
 
 variable "tre_out_subscribers" {
