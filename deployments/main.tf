@@ -37,11 +37,11 @@ module "common" {
   account_id = data.aws_caller_identity.aws.account_id
   image_versions = var.image_versions
   sfn_role_arns = [
-    module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn,
     module.validate_bagit.validate_bagit_role_arn
   ]
   sfn_lambda_roles = [
-    module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role,
     module.validate_bagit.validate_bagit_lambda_invoke_role
   ]
   slack_webhook_url = var.slack_webhook_url
