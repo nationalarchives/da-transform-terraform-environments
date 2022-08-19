@@ -30,6 +30,7 @@ module "tdr_sqs_in_queue" {
 # Common
 
 module "common" {
+  # source = "../../da-transform-terraform-modules/common/"
   source = "github.com/nationalarchives/da-transform-terraform-modules?ref=dev//common"
   env    = var.environment_name
   prefix = var.prefix
@@ -52,14 +53,11 @@ module "common" {
   tre_internal_publishers = [
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
-  tre_internal_subscribers = var.tre_internal_subscribers
+  tre_internal_subscriptions = local.tre_internal_subscriptions
   tre_out_publishers = [
     module.receive_and_process_bag.receive_and_process_bag_role_arn
   ]
   tre_out_subscribers = var.tre_out_subscribers
-  tre_internal_sqs_subscribers = [
-    module.dri_preingest_sip_generation.dpsg_in_queue_arn
-  ]
 }
 
 # Receive and process bag
