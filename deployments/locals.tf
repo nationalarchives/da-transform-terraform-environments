@@ -15,8 +15,8 @@ locals {
     },
 
     {
-      type = "AWS"
-      role_arn = module.dri_preingest_sip_generation.dri_preingest_sip_generation_lambda_role
+      type = ""
+      role_arn = ""
       name = "dpsg-in-sqs-queue-2"
       protocol = "lambda"
       endpoint = module.dri_preingest_sip_generation.lambda
