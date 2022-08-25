@@ -1,7 +1,6 @@
 resource "aws_s3_bucket" "log_bucket" {
   acl           = "log-delivery-write"
   bucket        = "${local.bucket_name}-logs"
-  force_destroy = var.force_destroy
 
   server_side_encryption_configuration {
     rule {
