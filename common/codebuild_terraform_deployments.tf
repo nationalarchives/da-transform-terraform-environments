@@ -141,6 +141,18 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments.yaml"
   }
+  
+  secondary_source_version {
+    source_identifier = "Terraform${title(each.key)}"
+    source_version = "${each.key}"
+  }
+
+  secondary_sources {
+    source_identifier = "Terraform${title(each.key)}"
+    type = "GITHUB"
+    git_clone_depth = 0
+    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
+  }
 }
 
 resource "aws_codebuild_project" "terraform-deployments-apply" {
@@ -237,6 +249,18 @@ resource "aws_codebuild_project" "terraform-test-plan" {
   source {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments.yaml"
+  }
+
+  secondary_source_version {
+    source_identifier = "TerraformTest"
+    source_version = "test"
+  }
+
+  secondary_sources {
+    source_identifier = "TerraformTest"
+    type = "GITHUB"
+    git_clone_depth = 0
+    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
   }
 }
 
