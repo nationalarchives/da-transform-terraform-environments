@@ -1,5 +1,5 @@
 module "pipeline_step_function" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//step_function"
+  source = "../../da-transform-terraform-modules/step_function"
   env = var.environment_name
   prefix = var.prefix
   tdr_sqs_queue_endpoint = var.tdr_sqs_queue_endpoint
@@ -17,7 +17,7 @@ module "pipeline_step_function" {
 }
 
 module "tdr_sqs_in_queue" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//sqs"
+  source = "../../da-transform-terraform-modules/sqs"
   env = var.environment_name
   prefix = var.prefix
   tdr_role_arn = var.tdr_role_arn
@@ -30,8 +30,7 @@ module "tdr_sqs_in_queue" {
 # Common
 
 module "common" {
-  # source = "../../da-transform-terraform-modules/common"
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//common"
+  source = "../../da-transform-terraform-modules/common"
   env    = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
@@ -63,8 +62,7 @@ module "common" {
 # Validate BagIt
 
 module "validate_bagit" {
-  # source = "../../da-transform-terraform-modules/step_functions/validate_bagit"
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//step_functions/validate_bagit"
+  source = "../../da-transform-terraform-modules/step_functions/validate_bagit"
   env = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
@@ -80,7 +78,7 @@ module "validate_bagit" {
 # DRI Preigest SIP Generation
 
 module "dri_preingest_sip_generation" {
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=staging//step_functions/dri_preingest_sip_generation"
+  source = "../../da-transform-terraform-modules/step_functions/dri_preingest_sip_generation"
   env = var.environment_name
   prefix = var.prefix
   account_id = data.aws_caller_identity.aws.account_id
