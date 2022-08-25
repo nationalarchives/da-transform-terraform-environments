@@ -26,6 +26,15 @@ resource "aws_s3_bucket_versioning" "log_bucket" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "log_bucket" {
+
+  bucket                  = aws_s3_bucket.log_bucket.bucket
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "${local.bucket_name}-logs"
 }
@@ -72,7 +81,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   is_multi_region_trail         = false
   #cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_role.arn
   #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}${var.log_stream_wildcard}"
-  enable_log_file_validation = true
+  enable_log_file_validation = false
   kms_key_id                 = aws_kms_key.mykey.arn
 
   event_selector {
