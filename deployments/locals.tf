@@ -8,7 +8,7 @@ locals {
       endpoint = module.dri_preingest_sip_generation.dpsg_in_queue_arn
       filter_policy = jsonencode({
             "name": ["TRE"],
-            "process": ["dev-tre-receive-and-process-bag"],
+            "process": ["dev-tre-validate-bagit"],
             "event-name": ["bagit-validated"],
             "type": ["standard"]
       })
