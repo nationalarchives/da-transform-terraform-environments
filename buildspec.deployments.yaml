@@ -6,11 +6,7 @@ phases:
       - set -o pipefail
       - ./install.sh
       - echo "Prepare terraform file"
-      - echo ${CODEBUILD_SRC_DIR}
-      - echo ${CODEBUILD_SRC_DIR_TerraformDev}
-      - ls -la ${CODEBUILD_SRC_DIR}
-      - ls -la ${CODEBUILD_SRC_DIR_TerraformDev}
-      - cp -R ${CODEBUILD_SRC_DIR_TerraformDev} ../da-transform-terraform-modules
+      - cp -R ../../github.com/nationalarchives/da-transform-terraform-modules ../da-transform-terraform-modules
       - pwd
       - cd deployments
       - echo "${TERRAFORM_BACKEND_CONF}" | tee backend.conf
