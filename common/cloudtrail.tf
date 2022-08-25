@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "log_bucket" {
-  acl           = "log-delivery-write"
-  bucket        = "${local.bucket_name}-logs"
+  acl    = "log-delivery-write"
+  bucket = "${local.bucket_name}-logs"
 
   server_side_encryption_configuration {
     rule {
@@ -13,8 +13,6 @@ resource "aws_s3_bucket" "log_bucket" {
   versioning {
     enabled = true
   }
-
-  tags = ""
 }
 
 resource "aws_cloudtrail" "cloudtrail" {
@@ -27,7 +25,6 @@ resource "aws_cloudtrail" "cloudtrail" {
   #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}${var.log_stream_wildcard}"
   enable_log_file_validation = true
   kms_key_id                 = aws_s3_bucket.log_bucket.server_side_encryption_configuration.kms_key_id
-  tags                       = ""
 
   event_selector {
     read_write_type           = "All"
