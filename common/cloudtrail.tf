@@ -61,7 +61,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "${aws_s3_bucket.log_bucket.arn}/prefix/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
+            "Resource": "${aws_s3_bucket.log_bucket.arn}/*",
             "Condition": {
                 "StringEquals": {
                     "s3:x-amz-acl": "bucket-owner-full-control"
