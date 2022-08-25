@@ -39,7 +39,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   #cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_role.arn
   #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}${var.log_stream_wildcard}"
   enable_log_file_validation = true
-  kms_key_id                 = aws_kms_key.mykey.key_id
+  kms_key_id                 = aws_kms_key.mykey.arn
 
   event_selector {
     read_write_type           = "All"
@@ -61,3 +61,10 @@ resource "aws_cloudtrail" "cloudtrail" {
     }
   }
 }
+
+/*
+resource "aws_iam_role" "cloudtrail_role" {
+  name               = "${upper(var.project)}CloudTrail${title(local.environment)}"
+  assume_role_policy = data.template_file.cloudtrail_assume_role_policy.rendered
+}
+*/
