@@ -77,6 +77,6 @@ locals {
   bucket_name = "test-gmalanga"
 
   cloudtrail_name   = "test-gmalanga"
-  cloudtrail_prefix = "test-prefix"
+  cloudtrail_prefix = "prefix"
 
 }
