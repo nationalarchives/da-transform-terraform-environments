@@ -55,7 +55,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/prefix/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/${local.cloudtrail_prefix}/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
             "Condition": {
                 "StringEquals": {
                     "s3:x-amz-acl": "bucket-owner-full-control"
@@ -74,7 +74,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   include_global_service_events = true
   enable_log_file_validation    = true
   is_multi_region_trail         = true
-  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
+  #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
 
   event_selector {
     read_write_type           = "All"
@@ -97,9 +97,11 @@ resource "aws_cloudtrail" "cloudtrail" {
   }
 }
 
+/*
 resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
   name = "CloudTrail_Logs"
 }
+*/
 
 /*
 resource "aws_iam_role" "cloudtrail_role" {
