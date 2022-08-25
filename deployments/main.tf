@@ -17,10 +17,7 @@ module "pipeline_step_function" {
 }
 
 module "tdr_sqs_in_queue" {
-
   source = "../../da-transform-terraform-modules/sqs"
-  source = "github.com/nationalarchives/da-transform-terraform-modules?ref=test//sqs"
-
   env = var.environment_name
   prefix = var.prefix
   tdr_role_arn = var.tdr_role_arn
