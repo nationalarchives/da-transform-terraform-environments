@@ -1,14 +1,15 @@
+/*
 resource "aws_kms_key" "mykey" {
   description             = "This key is used to encrypt bucket objects"
   deletion_window_in_days = 10
 }
+*/
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket" {
   bucket = aws_s3_bucket.log_bucket.bucket
 
   rule {
     apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.mykey.arn
       sse_algorithm     = "aws:kms"
     }
   }
@@ -82,7 +83,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   #cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_role.arn
   #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}${var.log_stream_wildcard}"
   enable_log_file_validation = false
-  kms_key_id                 = aws_kms_key.mykey.arn
+  kms_key_id                 = aws_s3_bucket_server_side_encryption_configuration.log_bucket.arn
 
   event_selector {
     read_write_type           = "All"
