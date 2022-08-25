@@ -3,7 +3,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket" {
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = "aws:kms"
+      sse_algorithm = "aws:kms"
     }
   }
 }
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:GetBucketAcl",
-            "Resource": "${aws_s3_bucket.log_bucket.arn}"
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}"
         },
         {
             "Sid": "AWSCloudTrailWrite",
@@ -55,7 +55,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "${aws_s3_bucket.log_bucket.arn}/*",
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/prefix/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
             "Condition": {
                 "StringEquals": {
                     "s3:x-amz-acl": "bucket-owner-full-control"
@@ -71,12 +71,10 @@ resource "aws_cloudtrail" "cloudtrail" {
   name                          = local.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
   s3_key_prefix                 = local.cloudtrail_prefix
-  include_global_service_events = false
-  is_multi_region_trail         = false
-  #cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_role.arn
-  #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail.arn}${var.log_stream_wildcard}"
-  enable_log_file_validation = false
-  #kms_key_id                 = aws_s3_bucket_server_side_encryption_configuration.log_bucket.arn
+  include_global_service_events = true
+  enable_log_file_validation    = true
+  is_multi_region_trail         = true
+  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
 
   event_selector {
     read_write_type           = "All"
@@ -97,6 +95,10 @@ resource "aws_cloudtrail" "cloudtrail" {
       values = ["arn:aws:lambda"]
     }
   }
+}
+
+resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
+  name = "CloudTrail_Logs"
 }
 
 /*
