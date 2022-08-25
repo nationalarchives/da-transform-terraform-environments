@@ -33,12 +33,12 @@ data "aws_iam_policy" "security_assessor" {
 }
 
 resource "aws_iam_role" "mgmt_cross_account_security_assessor" {
-  name = "security_assessor"
+  name               = "security_assessor"
   assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "mgmt_security_assessor" {
-  role = aws_iam_role.mgmt_cross_account_security_assessor.id
+  role       = aws_iam_role.mgmt_cross_account_security_assessor.id
   policy_arn = data.aws_iam_policy.security_assessor.arn
 }
 
@@ -87,14 +87,14 @@ resource "aws_iam_role_policy_attachment" "nonprod_cross_account_admin" {
 }
 
 resource "aws_iam_role" "nonprod_cross_account_security_assessor" {
-  provider   = aws.nonprod
-  name = "security_assessor"
+  provider           = aws.nonprod
+  name               = "security_assessor"
   assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "nonprod_security_assessor" {
   provider   = aws.nonprod
-  role = aws_iam_role.nonprod_cross_account_security_assessor.id
+  role       = aws_iam_role.nonprod_cross_account_security_assessor.id
   policy_arn = data.aws_iam_policy.security_assessor.arn
 }
 
@@ -171,14 +171,14 @@ resource "aws_iam_role_policy_attachment" "prod_cross_account_admin" {
 }
 
 resource "aws_iam_role" "prod_cross_account_security_assessor" {
-  provider   = aws.prod
-  name = "security_assessor"
+  provider           = aws.prod
+  name               = "security_assessor"
   assume_role_policy = data.aws_iam_policy_document.zaizi_assume_role_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "prod_security_assessor" {
   provider   = aws.prod
-  role = aws_iam_role.prod_cross_account_security_assessor.id
+  role       = aws_iam_role.prod_cross_account_security_assessor.id
   policy_arn = data.aws_iam_policy.security_assessor.arn
 }
 

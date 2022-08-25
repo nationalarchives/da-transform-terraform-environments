@@ -7,7 +7,7 @@ resource "aws_cloudwatch_event_rule" "parser_pipeline_test_stage" {
           "parser-pipeline",
         ]
         stage = [
-          "Build", "Test", "DeployDev", "DeployTest", "DeployInt", "DeployStaging", "DeployProd", 
+          "Build", "Test", "DeployDev", "DeployTest", "DeployInt", "DeployStaging", "DeployProd",
         ]
         state = [
           "FAILED", "CANCELED"

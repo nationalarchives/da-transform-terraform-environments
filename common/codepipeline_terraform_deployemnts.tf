@@ -247,13 +247,13 @@ resource "aws_codepipeline" "terraform-test-test" {
   stage {
     name = "Test"
     action {
-      name = "Test"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 5
-      input_artifacts = [ "source_output" ]
+      name            = "Test"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 5
+      input_artifacts = ["source_output"]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-test-test.name
       }

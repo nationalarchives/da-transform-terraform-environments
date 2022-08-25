@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "tre_lambda_deployment" {
-  name = "tre_lambda_deployment_v2"
+  name     = "tre_lambda_deployment_v2"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -46,12 +46,12 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateDevEnv"
     action {
-      name = "UpdateDevTFVARS"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 1
+      name            = "UpdateDevTFVARS"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 1
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.tre_update_dev_tfvars.name
@@ -59,13 +59,13 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
     }
 
     action {
-      name = "RunDevPipeline"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 2
-      input_artifacts = [ "source_output" ]
+      name            = "RunDevPipeline"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 2
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.run_pipeline_dev.name
       }
@@ -88,26 +88,26 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateTestEnv"
     action {
-      name = "UpdateTestTFVARS"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 1
-      input_artifacts = [ "source_output" ]
+      name            = "UpdateTestTFVARS"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 1
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.tre_update_test_tfvars.name
       }
     }
 
     action {
-      name = "RunTestPipeline"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 2
-      input_artifacts = [ "source_output" ]
+      name            = "RunTestPipeline"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 2
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.run_pipeline_test.name
       }
@@ -117,26 +117,26 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateIntEnv"
     action {
-      name = "UpdateIntTFVARS"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 1
-      input_artifacts = [ "source_output" ]
+      name            = "UpdateIntTFVARS"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 1
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.tre_update_int_tfvars.name
       }
     }
 
     action {
-      name = "RunIntPipeline"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 2
-      input_artifacts = [ "source_output" ]
+      name            = "RunIntPipeline"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 2
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.run_pipeline_int.name
       }
@@ -146,26 +146,26 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateStagingEnv"
     action {
-      name = "UpdateStagingTFVARS"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 1
-      input_artifacts = [ "source_output" ]
+      name            = "UpdateStagingTFVARS"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 1
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.tre_update_staging_tfvars.name
       }
     }
 
     action {
-      name = "RunStagingPipeline"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 2
-      input_artifacts = [ "source_output" ]
+      name            = "RunStagingPipeline"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 2
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.run_pipeline_staging.name
       }
@@ -188,26 +188,26 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
   stage {
     name = "UpdateProdEnv"
     action {
-      name = "UpdateProdTFVARS"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 1
-      input_artifacts = [ "source_output" ]
+      name            = "UpdateProdTFVARS"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 1
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.tre_update_prod_tfvars.name
       }
     }
 
     action {
-      name = "RunProdPipeline"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 2
-      input_artifacts = [ "source_output" ]
+      name            = "RunProdPipeline"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 2
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.run_pipeline_prod.name
       }

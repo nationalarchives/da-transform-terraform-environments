@@ -12,20 +12,20 @@ resource "aws_lambda_function" "test_judgment_parser" {
 }
 
 resource "aws_lambda_function" "parser_pipeline_slack_alerts" {
-  function_name = "parser_pipeline_slack_alerts"
-  role = aws_iam_role.parser_pipeline_alerts_role.arn
-  filename = data.archive_file.log_lambda_zip.output_path
+  function_name    = "parser_pipeline_slack_alerts"
+  role             = aws_iam_role.parser_pipeline_alerts_role.arn
+  filename         = data.archive_file.log_lambda_zip.output_path
   source_code_hash = data.archive_file.log_lambda_zip.output_base64sha256
-  handler = "parser_pipeline_slack_alerts.lambda_handler"
-  runtime = "python3.8"
-  timeout = 30
-  memory_size = 128
+  handler          = "parser_pipeline_slack_alerts.lambda_handler"
+  runtime          = "python3.8"
+  timeout          = 30
+  memory_size      = 128
 
   environment {
     variables = {
       SLACK_WEBHOOK_URL = var.slack_webhook_url
-      SLACK_USERNAME = var.slack_username
-      SLACK_CHANNEL = var.slack_channel
+      SLACK_USERNAME    = var.slack_username
+      SLACK_CHANNEL     = var.slack_channel
     }
   }
 

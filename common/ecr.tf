@@ -57,16 +57,16 @@ resource "aws_ecr_repository_policy" "tre_run_judgment_parser_policy" {
   repository = aws_ecr_repository.tre_run_judgment_parser.name
   policy = jsonencode(
     {
-      "Version": "2008-10-17",
-      "Statement": [
+      "Version" : "2008-10-17",
+      "Statement" : [
         {
-          "Sid": "LambdaECRImageRetrievalPolicy",
-          "Effect": "Allow",
-          "Principal": {
-            "AWS": "${aws_iam_role.parser_pipeline_alerts_role.arn}",
-            "Service": "lambda.amazonaws.com"
+          "Sid" : "LambdaECRImageRetrievalPolicy",
+          "Effect" : "Allow",
+          "Principal" : {
+            "AWS" : "${aws_iam_role.parser_pipeline_alerts_role.arn}",
+            "Service" : "lambda.amazonaws.com"
           },
-          "Action": [
+          "Action" : [
             "ecr:BatchGetImage",
             "ecr:DeleteRepositoryPolicy",
             "ecr:DescribeImages",
@@ -74,30 +74,30 @@ resource "aws_ecr_repository_policy" "tre_run_judgment_parser_policy" {
             "ecr:GetRepositoryPolicy",
             "ecr:SetRepositoryPolicy"
           ],
-          "Condition": {
-            "StringLike": {
-              "aws:sourceArn": "arn:aws:sts::454286877087:assumed-role/*/*"
+          "Condition" : {
+            "StringLike" : {
+              "aws:sourceArn" : "arn:aws:sts::454286877087:assumed-role/*/*"
             }
           }
         },
         {
-          "Action": [
+          "Action" : [
             "ecr:BatchGetImage",
             "ecr:GetDownloadUrlForLayer",
             "ecr:SetRepositoryPolicy",
             "ecr:DeleteRepositoryPolicy",
             "ecr:GetRepositoryPolicy",
           ]
-          "Condition": {
-            "StringLike": {
-              "aws:sourceArn": "arn:aws:lambda:eu-west-2:454286877087:function:*"
+          "Condition" : {
+            "StringLike" : {
+              "aws:sourceArn" : "arn:aws:lambda:eu-west-2:454286877087:function:*"
             }
           }
-          "Effect": "Allow"
-          "Principal": {
-            "Service": "lambda.amazonaws.com"
+          "Effect" : "Allow"
+          "Principal" : {
+            "Service" : "lambda.amazonaws.com"
           }
-          "Sid": "LambdaECRImageRetrievalPolicy"
+          "Sid" : "LambdaECRImageRetrievalPolicy"
         }
       ]
     }

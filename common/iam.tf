@@ -159,7 +159,7 @@ data "aws_iam_policy_document" "test_parser_sns_alerts_policy" {
 
 
 resource "aws_iam_role" "parser_pipeline_alerts_role" {
-  name = "parser-pipeline-alerts-role"
+  name               = "parser-pipeline-alerts-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 

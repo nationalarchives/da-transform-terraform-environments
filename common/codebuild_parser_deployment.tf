@@ -77,27 +77,27 @@ resource "aws_codebuild_project" "parser_test" {
       name  = "PARSER_TEST_S3_BUCKET"
       value = aws_s3_bucket.dev_tre_test_data.bucket
     }
-    
+
     environment_variable {
       name  = "PARSER_TEST_S3_PATH_DATA_OK"
       value = "parser/ok/"
     }
-    
+
     environment_variable {
       name  = "PARSER_TEST_S3_PATH_DATA_FAIL"
       value = "parser/fail/"
     }
-    
+
     environment_variable {
       name  = "PARSER_TEST_S3_PATH_OUTPUT"
       value = "parser/output-tmp/"
     }
-    
+
     environment_variable {
       name  = "PARSER_TEST_TESTDATA_SUFFIX"
       value = ".docx"
     }
-    
+
     environment_variable {
       name  = "PARSER_TEST_LAMBDA"
       value = aws_lambda_function.test_judgment_parser.function_name
@@ -148,7 +148,7 @@ resource "aws_codebuild_project" "parser_deployment_dev" {
     privileged_mode             = true
 
     environment_variable {
-      name = "NON_PROD_ROLE_ARN"
+      name  = "NON_PROD_ROLE_ARN"
       value = aws_iam_role.nonprod_cross_account_terraform.arn
     }
 
@@ -203,7 +203,7 @@ resource "aws_codebuild_project" "parser_deployment_test" {
     privileged_mode             = true
 
     environment_variable {
-      name = "NON_PROD_ROLE_ARN"
+      name  = "NON_PROD_ROLE_ARN"
       value = aws_iam_role.nonprod_cross_account_terraform.arn
     }
 
@@ -225,12 +225,12 @@ resource "aws_codebuild_project" "parser_deployment_test" {
     }
 
     environment_variable {
-      name = "MANAGMENT_ROLE_ARN"
+      name  = "MANAGMENT_ROLE_ARN"
       value = aws_iam_role.mgmt_terraform.arn
     }
 
     environment_variable {
-      name = "S3_TEST_DATA_BUCKET"
+      name  = "S3_TEST_DATA_BUCKET"
       value = aws_s3_bucket.dev_tre_test_data.bucket
     }
   }
@@ -279,7 +279,7 @@ resource "aws_codebuild_project" "parser_deployment_int" {
     privileged_mode             = true
 
     environment_variable {
-      name = "NON_PROD_ROLE_ARN"
+      name  = "NON_PROD_ROLE_ARN"
       value = aws_iam_role.nonprod_cross_account_terraform.arn
     }
 
@@ -333,7 +333,7 @@ resource "aws_codebuild_project" "parser_deployment_staging" {
     privileged_mode             = true
 
     environment_variable {
-      name = "PROD_ROLE_ARN"
+      name  = "PROD_ROLE_ARN"
       value = aws_iam_role.prod_cross_account_terraform.arn
     }
 
@@ -387,7 +387,7 @@ resource "aws_codebuild_project" "parser_deployment_prod" {
     privileged_mode             = true
 
     environment_variable {
-      name = "PROD_ROLE_ARN"
+      name  = "PROD_ROLE_ARN"
       value = aws_iam_role.prod_cross_account_terraform.arn
     }
 

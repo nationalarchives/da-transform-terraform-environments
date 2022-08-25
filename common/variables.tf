@@ -38,7 +38,7 @@ variable "dev_git_branch" {
 
 variable "test_git_branch" {
   description = "Git branch for test terraform"
-  type = string
+  type        = string
 }
 
 variable "int_git_branch" {
@@ -58,17 +58,17 @@ variable "prod_git_branch" {
 
 variable "slack_webhook_url" {
   description = "Webhook URL for tre slack alerts"
-  type = string
+  type        = string
 }
 
 variable "slack_channel" {
   description = "Channel name for the tre slack alerts"
-  type = string
+  type        = string
 }
 
 variable "slack_username" {
   description = "Username for tre slack alerts"
-  type = string
+  type        = string
 }
 
 # variable "assume_role_external_id" {

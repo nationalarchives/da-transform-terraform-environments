@@ -62,13 +62,13 @@ resource "aws_codepipeline" "parser-deployments" {
   stage {
     name = "DeployDev"
     action {
-      name = "DeployDev"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 5
-      input_artifacts = [ "source_output" ]
+      name            = "DeployDev"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 5
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_dev.name
       }
@@ -78,13 +78,13 @@ resource "aws_codepipeline" "parser-deployments" {
   stage {
     name = "DeployTest"
     action {
-      name = "DeployTest"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 6
-      input_artifacts = [ "source_output" ]
+      name            = "DeployTest"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 6
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_test.name
       }
@@ -94,13 +94,13 @@ resource "aws_codepipeline" "parser-deployments" {
   stage {
     name = "DeployInt"
     action {
-      name = "DeployInt"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 7
-      input_artifacts = [ "source_output" ]
+      name            = "DeployInt"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 7
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_int.name
       }
@@ -110,13 +110,13 @@ resource "aws_codepipeline" "parser-deployments" {
   stage {
     name = "DeployStaging"
     action {
-      name = "DeployStaging"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 8
-      input_artifacts = [ "source_output" ]
+      name            = "DeployStaging"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 8
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_staging.name
       }
@@ -126,13 +126,13 @@ resource "aws_codepipeline" "parser-deployments" {
   stage {
     name = "DeployProd"
     action {
-      name = "DeployProd"
-      category = "Build"
-      owner = "AWS"
-      provider = "CodeBuild"
-      version = "1"
-      run_order = 9
-      input_artifacts = [ "source_output" ]
+      name            = "DeployProd"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      version         = "1"
+      run_order       = 9
+      input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_prod.name
       }

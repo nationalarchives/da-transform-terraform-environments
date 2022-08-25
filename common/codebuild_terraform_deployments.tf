@@ -141,17 +141,17 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments.yaml"
   }
-  
+
   secondary_source_version {
     source_identifier = "Terraform${title(each.key)}"
-    source_version = "${each.key}"
+    source_version    = each.key
   }
 
   secondary_sources {
     source_identifier = "Terraform${title(each.key)}"
-    type = "GITHUB"
-    git_clone_depth = 0
-    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
   }
 }
 
@@ -253,14 +253,14 @@ resource "aws_codebuild_project" "terraform-test-plan" {
 
   secondary_source_version {
     source_identifier = "TerraformTest"
-    source_version = "test"
+    source_version    = "test"
   }
 
   secondary_sources {
     source_identifier = "TerraformTest"
-    type = "GITHUB"
-    git_clone_depth = 0
-    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
+    type              = "GITHUB"
+    git_clone_depth   = 0
+    location          = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
   }
 }
 
@@ -326,7 +326,7 @@ resource "aws_codebuild_project" "terraform-test-test" {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     image_pull_credentials_type = "CODEBUILD"
-    
+
     environment_variable {
       name  = "TEST_ENV_CONFIG"
       value = "test-env-config"
@@ -340,12 +340,12 @@ resource "aws_codebuild_project" "terraform-test-test" {
     }
 
     environment_variable {
-      name = "NON_PROD_ROLE_ARN"
+      name  = "NON_PROD_ROLE_ARN"
       value = aws_iam_role.nonprod_cross_account_terraform.arn
     }
 
     environment_variable {
-      name = "MANAGMENT_ROLE_ARN"
+      name  = "MANAGMENT_ROLE_ARN"
       value = aws_iam_role.mgmt_terraform.arn
     }
   }
