@@ -74,9 +74,9 @@ locals {
     ]
   }
 
-  bucket_name = "test-gmalanga"
+  bucket_name = "tre-cloudtrail"
 
-  cloudtrail_name   = "test-gmalanga"
-  cloudtrail_prefix = "prefix"
+  cloudtrail_name   = "tre-cloudtrail"
+  cloudtrail_prefix = "cloudtrail"
 
 }
