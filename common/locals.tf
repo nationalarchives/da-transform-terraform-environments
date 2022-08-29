@@ -74,7 +74,8 @@ locals {
     ]
   }
 
-  bucket_name = "tre-cloudtrail"
+  bucket_name   = "tre-cloudtrail"
+  bucket_prefix = "cloudtrail_logs"
 
   cloudtrail_name = "tre-cloudtrail"
 

@@ -59,7 +59,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/prefix/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/${local.bucket_prefix}/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
             "Condition": {
                 "StringEquals": {
                     "s3:x-amz-acl": "bucket-owner-full-control"
@@ -86,7 +86,7 @@ resource "aws_kms_alias" "cloudtrail_key" {
 resource "aws_cloudtrail" "cloudtrail" {
   name                          = local.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
-  s3_key_prefix                 = "prefix"
+  s3_key_prefix                 = local.bucket_prefix
   include_global_service_events = true
   enable_log_file_validation    = true
   is_multi_region_trail         = true
