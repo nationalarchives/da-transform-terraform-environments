@@ -74,7 +74,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   include_global_service_events = true
   enable_log_file_validation    = true
   is_multi_region_trail         = true
-  #cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
+  kms_key_id                    = aws_s3_bucket_server_side_encryption_configuration.log_bucket.arn
 
   event_selector {
     read_write_type           = "All"
@@ -96,16 +96,3 @@ resource "aws_cloudtrail" "cloudtrail" {
     }
   }
 }
-
-/*
-resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
-  name = "CloudTrail_Logs"
-}
-*/
-
-/*
-resource "aws_iam_role" "cloudtrail_role" {
-  name               = "${upper(var.project)}CloudTrail${title(local.environment)}"
-  assume_role_policy = data.template_file.cloudtrail_assume_role_policy.rendered
-}
-*/
