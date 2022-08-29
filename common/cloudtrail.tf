@@ -67,6 +67,15 @@ resource "aws_s3_bucket_policy" "log_bucket" {
 POLICY
 }
 
+resource "aws_kms_key" "cloudtrail_key" {
+  description = "This key is used to encrypt cloudtrail data"
+}
+
+resource "aws_kms_alias" "cloudtrail_key" {
+  name          = "alias/cloudtrail_key-alias"
+  target_key_id = aws_kms_key.cloudtrail_key.key_id
+}
+
 resource "aws_cloudtrail" "cloudtrail" {
   name                          = local.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
@@ -74,7 +83,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   include_global_service_events = true
   enable_log_file_validation    = true
   is_multi_region_trail         = true
-  kms_key_id                    = aws_s3_bucket_server_side_encryption_configuration.log_bucket.arn
+  kms_key_id                    = aws_kms_alias.cloudtrail_key.arn
 
   event_selector {
     read_write_type           = "All"
