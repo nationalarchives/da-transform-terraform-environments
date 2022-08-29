@@ -3,7 +3,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket" {
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "aws:kms"
+      kms_master_key_id = aws_kms_key.cloudtrail_key.id
+      sse_algorithm     = "aws:kms"
     }
   }
 }
@@ -31,6 +32,9 @@ resource "aws_s3_bucket_public_access_block" "log_bucket" {
 
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "${local.bucket_name}-logs"
+  depends_on = [
+    aws_kms_key.cloudtrail_key
+  ]
 }
 
 resource "aws_s3_bucket_policy" "log_bucket" {
@@ -68,7 +72,10 @@ POLICY
 }
 
 resource "aws_kms_key" "cloudtrail_key" {
-  description = "This key is used to encrypt cloudtrail data"
+  description         = "This key is used to encrypt cloudtrail data and S3 objetcs"
+  enable_key_rotation = true
+  policy              = data.aws_iam_policy_document.kms.json
+  multi_region        = true
 }
 
 resource "aws_kms_alias" "cloudtrail_key" {
@@ -83,7 +90,12 @@ resource "aws_cloudtrail" "cloudtrail" {
   include_global_service_events = true
   enable_log_file_validation    = true
   is_multi_region_trail         = true
-  kms_key_id                    = aws_kms_alias.cloudtrail_key.target_key_arn
+  kms_key_id                    = aws_kms_key.cloudtrail_key.arn
+
+  depends_on = [
+    aws_s3_bucket.log_bucket,
+    aws_kms_key.cloudtrail_key
+  ]
 
   event_selector {
     read_write_type           = "All"
