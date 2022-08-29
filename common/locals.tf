@@ -74,7 +74,7 @@ locals {
     ]
   }
 
-  bucket_name   = "da-transform-audit-logs"
+  bucket_name   = "da-transform-audit"
   bucket_prefix = "cloudtrail_logs"
 
   cloudtrail_name = "da-transform-cloudtrail"
