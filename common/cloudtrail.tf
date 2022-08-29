@@ -119,7 +119,7 @@ resource "aws_cloudtrail" "cloudtrail" {
   kms_key_id                    = aws_kms_key.cloudtrail_key.arn
 
   depends_on = [
-    aws_s3_bucket.log_bucket,
+    aws_s3_bucket_policy.log_bucket,
     aws_kms_key.cloudtrail_key
   ]
 
