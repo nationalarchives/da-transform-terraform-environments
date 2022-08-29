@@ -31,6 +31,7 @@ resource "aws_s3_bucket_public_access_block" "log_bucket" {
 
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "${local.bucket_name}-logs"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_policy" "log_bucket" {
