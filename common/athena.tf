@@ -25,7 +25,7 @@ resource "aws_athena_workgroup" "workgroup" {
 }
 
 resource "aws_athena_named_query" "query" {
-  name      = element(var.queries[*], count.index)
+  name      = "test_query"
   workgroup = aws_athena_workgroup.workgroup.*.id[0]
   database  = aws_athena_database.data.*.name[0]
   query     = "SELECT * FROM ${aws_athena_database.data.name} limit 10;"
