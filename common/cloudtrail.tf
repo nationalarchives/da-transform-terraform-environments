@@ -21,6 +21,32 @@ resource "aws_s3_bucket_versioning" "log_bucket" {
   }
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "log_bucket-config" {
+  # Must have bucket versioning enabled first
+  depends_on = [aws_s3_bucket_versioning.log_bucket]
+
+  bucket = aws_s3_bucket.log_bucket.bucket
+
+  rule {
+    id = "config"
+
+    filter {
+      prefix = local.bucket_prefix
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 90
+    }
+
+    noncurrent_version_transition {
+      noncurrent_days = 60
+      storage_class   = "GLACIER"
+    }
+
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "log_bucket" {
 
   bucket                  = aws_s3_bucket.log_bucket.bucket
