@@ -74,9 +74,9 @@ locals {
     ]
   }
 
-  bucket_name   = "tre-cloudtrail"
+  bucket_name   = "da-transform-audit-logs"
   bucket_prefix = "cloudtrail_logs"
 
-  cloudtrail_name = "tre-cloudtrail"
+  cloudtrail_name = "da-transform-cloudtrail"
 
 }

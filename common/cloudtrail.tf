@@ -105,7 +105,7 @@ resource "aws_kms_key" "cloudtrail_key" {
 }
 
 resource "aws_kms_alias" "cloudtrail_key" {
-  name          = "alias/cloudtrail_key-alias"
+  name          = "alias/da-transform-key-alias"
   target_key_id = aws_kms_key.cloudtrail_key.key_id
 }
 
