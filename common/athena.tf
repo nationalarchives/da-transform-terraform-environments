@@ -25,6 +25,7 @@ resource "aws_athena_workgroup" "workgroup" {
 }
 
 resource "aws_athena_named_query" "query" {
+  count     = length(var.queries)
   name      = element(var.queries[*], count.index)
   workgroup = aws_athena_workgroup.workgroup.*.id[0]
   database  = aws_athena_database.data.*.name[0]
