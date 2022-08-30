@@ -89,6 +89,7 @@ resource "aws_s3_bucket_policy" "log_bucket" {
             "Condition": {
                 "StringEquals": {
                     "s3:x-amz-acl": "bucket-owner-full-control",
+                    "AWS:SourceArn" : "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.mgmt.account_id}:trail/${local.cloudtrail_name}",
                     "AWS:SourceArn" : "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.nonprod.account_id}:trail/${local.cloudtrail_name}"
                 }
             }
