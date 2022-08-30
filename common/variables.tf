@@ -82,4 +82,7 @@ variable "queries" {
   default     = ["tre_cloudtrail_logs_mgmt", "create_table_tre_cloudtrail_logs_mgmt"]
 }
 
-variable "environment" {}
+variable "environment" {
+  description = "Environment variable"
+  default     = "management"
+}
