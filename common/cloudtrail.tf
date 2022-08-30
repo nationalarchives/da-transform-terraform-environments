@@ -186,7 +186,7 @@ resource "aws_cloudtrail" "cloudtrail_non-prod" {
 }
 
 # AWS Cloudtrail for AWS prod account
-resource "aws_cloudtrail" "cloudtrail_non-prod" {
+resource "aws_cloudtrail" "cloudtrail_prod" {
   provider                      = aws.prod
   name                          = local.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
