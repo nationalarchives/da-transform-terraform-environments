@@ -76,3 +76,10 @@ variable "slack_username" {
 #   type = string
 # }
 
+# AWS Athena
+variable "queries" {
+  description = "comma separated list of queries"
+  default     = ["tre_cloudtrail_logs_mgmt", "create_table_tre_cloudtrail_logs_mgmt"]
+}
+
+variable "environment" {}

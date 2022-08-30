@@ -25,8 +25,8 @@ resource "aws_athena_workgroup" "workgroup" {
 }
 
 resource "aws_athena_named_query" "query" {
-  name      = "test_query"
+  name      = element(var.queries[*], count.index)
   workgroup = aws_athena_workgroup.workgroup.*.id[0]
   database  = aws_athena_database.data.*.name[0]
-  query     = "SELECT * FROM ${aws_athena_database.data.name} limit 10;"
+  query     = templatefile("./templates/athena/${element(var.queries[*], count.index)}.sql.tpl", { account_id = data.aws_caller_identity.mgmt.account_id, database_name = aws_athena_database.data.*.name[0], environment = var.environment })
 }
