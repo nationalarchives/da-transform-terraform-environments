@@ -85,10 +85,11 @@ resource "aws_s3_bucket_policy" "log_bucket" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/${local.bucket_prefix}/AWSLogs/${data.aws_caller_identity.mgmt.account_id}/*",
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.log_bucket.bucket}/${local.bucket_prefix}/AWSLogs/*",
             "Condition": {
                 "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control"
+                    "s3:x-amz-acl": "bucket-owner-full-control",
+                    "AWS:SourceArn" : "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.nonprod.account_id}:trail/${local.cloudtrail_name}"
                 }
             }
         }
@@ -109,7 +110,45 @@ resource "aws_kms_alias" "cloudtrail_key" {
   target_key_id = aws_kms_key.cloudtrail_key.key_id
 }
 
+# AWS Cloudtrail for AWS management account
 resource "aws_cloudtrail" "cloudtrail" {
+  name                          = local.cloudtrail_name
+  s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
+  s3_key_prefix                 = local.bucket_prefix
+  include_global_service_events = true
+  enable_log_file_validation    = true
+  is_multi_region_trail         = true
+  kms_key_id                    = aws_kms_key.cloudtrail_key.arn
+
+  depends_on = [
+    aws_s3_bucket_policy.log_bucket,
+    aws_kms_key.cloudtrail_key
+  ]
+
+  event_selector {
+    read_write_type           = "All"
+    include_management_events = true
+
+    data_resource {
+      type   = "AWS::S3::Object"
+      values = ["arn:aws:s3:::"]
+    }
+  }
+
+  event_selector {
+    read_write_type           = "All"
+    include_management_events = true
+
+    data_resource {
+      type   = "AWS::Lambda::Function"
+      values = ["arn:aws:lambda"]
+    }
+  }
+}
+
+# AWS Cloudtrail for AWS non-prod account
+resource "aws_cloudtrail" "cloudtrail_non-prod" {
+  provider                      = aws.nonprod
   name                          = local.cloudtrail_name
   s3_bucket_name                = aws_s3_bucket.log_bucket.bucket
   s3_key_prefix                 = local.bucket_prefix

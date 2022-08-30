@@ -44,12 +44,18 @@ data "aws_iam_policy_document" "kms" {
     condition {
       test     = "StringLike"
       variable = "kms:EncryptionContext:aws:cloudtrail:arn"
-      values   = ["arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.mgmt.account_id}:trail/${local.cloudtrail_name}"]
+      values = [
+        "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.mgmt.account_id}:trail/${local.cloudtrail_name}",
+        "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.nonprod.account_id}:trail/${local.cloudtrail_name}"
+      ]
     }
     condition {
       test     = "StringEquals"
       variable = "aws:SourceArn"
-      values   = ["arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.mgmt.account_id}:trail/${local.cloudtrail_name}"]
+      values = [
+        "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.mgmt.account_id}:trail/${local.cloudtrail_name}",
+        "arn:aws:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.nonprod.account_id}:trail/${local.cloudtrail_name}"
+      ]
     }
   }
 }
