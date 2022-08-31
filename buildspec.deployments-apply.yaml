@@ -5,12 +5,12 @@ phases:
     commands:
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
-      - cat {$CODEBUILD_SRC_DIR_TerraformDev}
       - ls -la ../../../
       - ls -la ../../s3
       - ls -la ../../github.com
       - ls -la ../../github.com/nationalarchives
       - ls -la ../../github.com/nationalarchives/da-transform-terraform-modules
+      - cat {$CODEBUILD_SRC_DIR}
       - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
       - cp -R ../../github.com/nationalarchives/da-transform-terraform-modules ../da-transform-terraform-modules
       - pwd
