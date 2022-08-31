@@ -6,6 +6,7 @@ phases:
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
       - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
+      - cp -R ../../github.com/nationalarchives/da-transform-terraform-modules ../da-transform-terraform-modules
       - ls -la
       - pwd
       - set -o pipefail
