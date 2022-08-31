@@ -9,6 +9,7 @@ phases:
       - cat $CODEBUILD_SRC_DIR_source_output
       - cat $CODEBUILD_SRC_DIR
       - cat {$CODEBUILD_SRC_DIR_TerraformDev}
+      - ls -la ../../../
       - ls -la ../../
       - ls -la ../../github.com
       - ls -la ../../github.com/nationalarchives
