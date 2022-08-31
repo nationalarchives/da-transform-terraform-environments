@@ -94,7 +94,7 @@ resource "aws_codepipeline" "terraform-deployments" {
   stage {
     name = "Source"
     action {
-      name             = "Source"
+      name             = "TerraformEnvs"
       category         = "Source"
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
@@ -109,6 +109,22 @@ resource "aws_codepipeline" "terraform-deployments" {
 
       }
     }
+    action {
+      name             = "TerraformModules"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
+      run_order        = 1
+      output_artifacts = ["source_output_2"]
+
+      configuration = {
+        BranchName       = each.value.git_branch
+        ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
+        FullRepositoryId = "nationalarchives/da-transform-terraform-modules"
+
+      }
+    }
   }
 
   stage {
@@ -120,10 +136,14 @@ resource "aws_codepipeline" "terraform-deployments" {
       provider         = "CodeBuild"
       version          = "1"
       run_order        = 2
-      input_artifacts  = ["source_output"]
+      input_artifacts  = [
+        "source_output",
+        "source_output_2"
+        ]
       output_artifacts = ["plan_output"]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-deployments-plan[each.key].name
+        PrimarySource = "source_output"
       }
     }
   }
@@ -152,6 +172,7 @@ resource "aws_codepipeline" "terraform-deployments" {
       run_order = 4
       input_artifacts = [
         "source_output",
+        "source_output_2",
         "plan_output"
       ]
       configuration = {
@@ -177,7 +198,7 @@ resource "aws_codepipeline" "terraform-test-test" {
   stage {
     name = "Source"
     action {
-      name             = "Source"
+      name             = "TerraformEnvs"
       category         = "Source"
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
@@ -189,7 +210,22 @@ resource "aws_codepipeline" "terraform-test-test" {
         BranchName       = var.test_git_branch
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/da-transform-terraform-environments"
+      }
+    }
 
+    action {
+      name             = "TerraformModules"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
+      run_order        = 1
+      output_artifacts = ["source_output_2"]
+
+      configuration = {
+        BranchName       = var.test_git_branch
+        ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
+        FullRepositoryId = "nationalarchives/da-transform-terraform-modules"
       }
     }
   }
@@ -203,10 +239,14 @@ resource "aws_codepipeline" "terraform-test-test" {
       provider         = "CodeBuild"
       version          = "1"
       run_order        = 2
-      input_artifacts  = ["source_output"]
+      input_artifacts  = [
+        "source_output",
+        "source_output_2"
+      ]
       output_artifacts = ["plan_output"]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-test-plan.name
+        PrimarySource = "source_output"
       }
     }
   }
@@ -235,6 +275,7 @@ resource "aws_codepipeline" "terraform-test-test" {
       run_order = 4
       input_artifacts = [
         "source_output",
+        "source_output_2",
         "plan_output"
       ]
       configuration = {

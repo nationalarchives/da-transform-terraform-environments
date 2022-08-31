@@ -139,19 +139,7 @@ resource "aws_codebuild_project" "terraform-deployments-plan" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "./buildspec.deployments.yaml"
-  }
-
-  secondary_source_version {
-    source_identifier = "Terraform${title(each.key)}"
-    source_version    = each.key
-  }
-
-  secondary_sources {
-    source_identifier = "Terraform${title(each.key)}"
-    type              = "GITHUB"
-    git_clone_depth   = 0
-    location          = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
+    buildspec = "./buildspec.deployments-plan.yaml"
   }
 }
 
@@ -202,17 +190,6 @@ resource "aws_codebuild_project" "terraform-deployments-apply" {
     buildspec = "./buildspec.deployments-apply.yaml"
   }
 
-  secondary_source_version {
-    source_identifier = "Terraform${title(each.key)}"
-    source_version = "${each.key}"
-  }
-
-  secondary_sources {
-    source_identifier = "Terraform${title(each.key)}"
-    type = "GITHUB"
-    git_clone_depth = 0
-    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
-  }
 }
 
 # TEST Stage CodeBuild Projects 
@@ -262,18 +239,6 @@ resource "aws_codebuild_project" "terraform-test-plan" {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments.yaml"
   }
-
-  secondary_source_version {
-    source_identifier = "TerraformTest"
-    source_version    = "test"
-  }
-
-  secondary_sources {
-    source_identifier = "TerraformTest"
-    type              = "GITHUB"
-    git_clone_depth   = 0
-    location          = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
-  }
 }
 
 resource "aws_codebuild_project" "terraform-test-apply" {
@@ -320,18 +285,6 @@ resource "aws_codebuild_project" "terraform-test-apply" {
   source {
     type      = "CODEPIPELINE"
     buildspec = "./buildspec.deployments-apply.yaml"
-  }
-
-  secondary_source_version {
-    source_identifier = "TerraformTest"
-    source_version = "test"
-  }
-
-  secondary_sources {
-    source_identifier = "TerraformTest"
-    type = "GITHUB"
-    git_clone_depth = 0
-    location = "https://github.com/nationalarchives/da-transform-terraform-modules.git"
   }
 }
 
