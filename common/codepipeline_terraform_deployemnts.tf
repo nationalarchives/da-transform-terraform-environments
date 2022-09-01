@@ -118,6 +118,7 @@ resource "aws_codepipeline" "terraform-deployments" {
         BranchName       = each.value.git_branch
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/da-transform-terraform-modules"
+        DetectChanges    = false
 
       }
     }
@@ -219,6 +220,7 @@ resource "aws_codepipeline" "terraform-test-test" {
         BranchName       = var.test_git_branch
         ConnectionArn    = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId = "nationalarchives/da-transform-terraform-modules"
+        DetectChanges    = false
       }
     }
   }
