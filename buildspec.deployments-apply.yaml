@@ -5,14 +5,10 @@ phases:
     commands:
       - ls -la $CODEBUILD_SRC_DIR_source_output
       - ls -la $CODEBUILD_SRC_DIR_plan_output
-      - ls -la ../../../
-      - ls -la ../../s3
-      - cat {$CODEBUILD_SRC_DIR}
-      - ls -la ../../github.com
-      - ls -la ../../github.com/nationalarchives
-      - ls -la ../../github.com/nationalarchives/da-transform-terraform-modules
-      - cp -vr -t deployments $CODEBUILD_SRC_DIR_plan_output/plan.out $CODEBUILD_SRC_DIR_plan_output/.terraform*
-      - cp -R ../../github.com/nationalarchives/da-transform-terraform-modules ../da-transform-terraform-modules
+      - ls -la $CODEBUILD_SRC_DIR_source_output_2
+      - echo ${CODEBUILD_SRC_DIR}
+      - echo ${CODEBUILD_SRC_DIR_source_output_2}
+      - cp -R $CODEBUILD_SRC_DIR_source_output_2 ../da-transform-terraform-modules
       - pwd
       - set -o pipefail
       - ./install.sh
