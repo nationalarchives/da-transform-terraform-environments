@@ -237,7 +237,7 @@ resource "aws_codebuild_project" "terraform-test-plan" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "./buildspec.deployments.yaml"
+    buildspec = "./buildspec.deployments-plan.yaml"
   }
 }
 
