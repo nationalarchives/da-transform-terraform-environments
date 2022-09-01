@@ -16,7 +16,6 @@ resource "aws_codepipeline" "terraform-common" {
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
-      run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
@@ -35,7 +34,6 @@ resource "aws_codepipeline" "terraform-common" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      run_order        = 2
       input_artifacts  = ["source_output"]
       output_artifacts = ["plan_output"]
       configuration = {
@@ -53,7 +51,6 @@ resource "aws_codepipeline" "terraform-common" {
       owner     = "AWS"
       provider  = "Manual"
       version   = "1"
-      run_order = 3
     }
   }
 
@@ -65,7 +62,6 @@ resource "aws_codepipeline" "terraform-common" {
       owner     = "AWS"
       provider  = "CodeBuild"
       version   = "1"
-      run_order = 4
       input_artifacts = [
         "source_output",
         "plan_output"
@@ -135,7 +131,6 @@ resource "aws_codepipeline" "terraform-deployments" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      run_order        = 2
       input_artifacts  = [
         "source_output",
         "source_output_2"
@@ -157,7 +152,6 @@ resource "aws_codepipeline" "terraform-deployments" {
       owner     = "AWS"
       provider  = "Manual"
       version   = "1"
-      run_order = 3
     }
   }
 
@@ -169,7 +163,6 @@ resource "aws_codepipeline" "terraform-deployments" {
       owner     = "AWS"
       provider  = "CodeBuild"
       version   = "1"
-      run_order = 4
       input_artifacts = [
         "source_output",
         "source_output_2",
@@ -238,7 +231,6 @@ resource "aws_codepipeline" "terraform-test-test" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      run_order        = 2
       input_artifacts  = [
         "source_output",
         "source_output_2"
@@ -260,7 +252,6 @@ resource "aws_codepipeline" "terraform-test-test" {
       owner     = "AWS"
       provider  = "Manual"
       version   = "1"
-      run_order = 3
     }
   }
 
@@ -272,7 +263,6 @@ resource "aws_codepipeline" "terraform-test-test" {
       owner     = "AWS"
       provider  = "CodeBuild"
       version   = "1"
-      run_order = 4
       input_artifacts = [
         "source_output",
         "source_output_2",
@@ -293,7 +283,6 @@ resource "aws_codepipeline" "terraform-test-test" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 5
       input_artifacts = ["source_output"]
       configuration = {
         ProjectName = aws_codebuild_project.terraform-test-test.name
