@@ -15,7 +15,6 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
-      run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
@@ -35,7 +34,6 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 2
       input_artifacts = ["source_output"]
       configuration = {
         ProjectName = aws_codebuild_project.tre_deploy_to_ecr.name
@@ -81,7 +79,6 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       owner     = "AWS"
       provider  = "Manual"
       version   = "1"
-      run_order = 1
     }
   }
 
@@ -181,7 +178,6 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
       owner     = "AWS"
       provider  = "Manual"
       version   = "1"
-      run_order = 1
     }
   }
 

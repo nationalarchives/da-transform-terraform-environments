@@ -15,7 +15,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
-      run_order        = 1
       output_artifacts = ["source_output"]
 
       configuration = {
@@ -35,7 +34,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 2
       input_artifacts = ["source_output"]
       configuration = {
         ProjectName = aws_codebuild_project.parser-build.name
@@ -51,7 +49,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 3
       input_artifacts = ["source_output"]
       configuration = {
         ProjectName = aws_codebuild_project.parser_test.name
@@ -67,7 +64,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 5
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_dev.name
@@ -83,7 +79,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 6
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_test.name
@@ -99,7 +94,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 7
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_int.name
@@ -115,7 +109,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 8
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_staging.name
@@ -131,7 +124,6 @@ resource "aws_codepipeline" "parser-deployments" {
       owner           = "AWS"
       provider        = "CodeBuild"
       version         = "1"
-      run_order       = 9
       input_artifacts = ["source_output"]
       configuration = {
         "ProjectName" = aws_codebuild_project.parser_deployment_prod.name
