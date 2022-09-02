@@ -25,8 +25,7 @@ locals {
       name     = "tre-forward-queue"
       protocol = "sqs"
       endpoint = module.common.tre_forward_queue_arn
-      filter_policy = jsonencode({
-      })
+      filter_policy = ""
     }
   ]
 }
