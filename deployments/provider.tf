@@ -5,11 +5,11 @@ provider "aws" {
   }
   default_tags {
     tags = {
-      Environment   = var.environment_name
-      Owner         = "digital-archiving"
+      Environment     = var.environment_name
+      Owner           = "digital-archiving"
       Terraform       = true
       TerraformSource = "https://github.com/nationalarchives/da-transform-terraform-environments"
-      CostCentre     = "56"
+      CostCentre      = "56"
       Role            = "prvt"
     }
   }
@@ -18,7 +18,7 @@ provider "aws" {
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 4.0"
     }
   }
