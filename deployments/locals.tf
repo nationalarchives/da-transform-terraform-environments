@@ -4,7 +4,7 @@ locals {
       name     = "vb-in-sqs-queue"
       protocol = "sqs"
       endpoint = module.validate_bagit.tre_vb_in_queue_arn
-    },
+    }
   ]
 }
 
@@ -22,20 +22,11 @@ locals {
       })
     },
     {
-      name     = "tre-forward-queue"
-      protocol = "sqs"
-      endpoint = module.common.tre_forward_queue_arn
+      name          = "tre-forward-queue"
+      protocol      = "sqs"
+      endpoint      = module.common.tre_forward_queue_arn
       filter_policy = ""
     }
   ]
 }
 
-locals {
-  tre_out_subscriptions = [
-    {
-      name     = "TDR-placeholder"
-      protocol = "email"
-      endpoint = "example@email.com"
-    },
-  ]
-}

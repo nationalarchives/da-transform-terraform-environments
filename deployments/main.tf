@@ -58,7 +58,7 @@ module "common" {
     module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn,
     module.common.tre_forward_lambda_arn
   ]
-  tre_out_subscriptions = local.tre_out_subscriptions
+  tre_out_subscriptions = var.tre_out_subscriptions
 }
 
 # Validate BagIt
