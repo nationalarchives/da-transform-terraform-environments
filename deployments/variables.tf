@@ -140,12 +140,11 @@ variable "tre_in_publishers" {
   type        = list(string)
 }
 
-variable "tre_in_subscribers" {
-  description = "Roles that have permission to subscribe to tre-in topic"
-  type        = list(string)
-}
-
-variable "tre_out_subscribers" {
-  description = "Roles that have permission to subscribe to tre-out topic"
-  type        = list(string)
+variable "tre_out_subscriptions" {
+  description = "List tre-out topic subscriptions"
+  type = list(object({
+    name     = string
+    endpoint = string
+    protocol = string
+  }))
 }
