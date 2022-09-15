@@ -88,5 +88,5 @@ module "dri_preingest_sip_generation" {
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
   dpsg_image_versions               = var.dpsg_image_versions
   dpsg_version                      = var.dpsg_version
-  common_tre_internal_topic_arn          = module.common.common_tre_internal_topic_arn
+  common_tre_internal_topic_arn     = module.common.common_tre_internal_topic_arn
 }
