@@ -50,7 +50,8 @@ module "common" {
   tre_in_publishers    = var.tre_in_publishers
   tre_in_subscriptions = local.tre_in_subscriptions
   tre_internal_publishers = [
-    module.validate_bagit.validate_bagit_role_arn
+    module.validate_bagit.validate_bagit_role_arn,
+    module.dri_preingest_sip_generation.dri_preingest_sip_generation_role_arn
   ]
   tre_internal_subscriptions = local.tre_internal_subscriptions
   tre_out_publishers = [
@@ -87,5 +88,5 @@ module "dri_preingest_sip_generation" {
   common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
   dpsg_image_versions               = var.dpsg_image_versions
   dpsg_version                      = var.dpsg_version
-  common_tre_out_topic_arn          = module.common.common_tre_out_topic_arn
+  common_tre_internal_topic_arn          = module.common.common_tre_internal_topic_arn
 }
