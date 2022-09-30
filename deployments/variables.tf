@@ -97,12 +97,11 @@ variable "vb_version" {
 variable "vb_image_versions" {
   description = "Latest image version for Lambda Functions"
   type = object({
-    tre_vb_trigger              = string
+    tre_sqs_sf_trigger          = string
     tre_vb_validate_bagit       = string
     tre_vb_validate_bagit_files = string
   })
 }
-
 
 variable "dpsg_version" {
   description = "DRI Preingest SIP Generation Step Function version (update if Step Function flow or called Lambda function versions change)"
