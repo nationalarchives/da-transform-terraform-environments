@@ -85,8 +85,9 @@ variable "common_version" {
 variable "common_image_versions" {
   description = "Latest version of Images for Lambda Functions"
   type = object({
-    tre_slack_alerts = string
-    tre_forward      = string
+    tre_slack_alerts     = string
+    tre_forward          = string
+    tre_dlq_slack_alerts = string
   })
 }
 variable "vb_version" {
