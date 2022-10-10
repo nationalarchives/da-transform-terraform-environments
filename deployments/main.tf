@@ -65,28 +65,30 @@ module "common" {
 # Validate BagIt
 
 module "validate_bagit" {
-  source                            = "../../da-transform-terraform-modules/step_functions/validate_bagit"
-  env                               = var.environment_name
-  prefix                            = var.prefix
-  account_id                        = data.aws_caller_identity.aws.account_id
-  tre_data_bucket                   = module.common.common_tre_data_bucket
-  vb_image_versions                 = var.vb_image_versions
-  vb_version                        = var.vb_version
-  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
-  tdr_sqs_retry_url                 = var.tdr_sqs_retry_url
-  tdr_sqs_retry_arn                 = var.tdr_sqs_retry_arn
-  common_tre_internal_topic_arn     = module.common.common_tre_internal_topic_arn
+  source                              = "../../da-transform-terraform-modules/step_functions/validate_bagit"
+  env                                 = var.environment_name
+  prefix                              = var.prefix
+  account_id                          = data.aws_caller_identity.aws.account_id
+  tre_data_bucket                     = module.common.common_tre_data_bucket
+  vb_image_versions                   = var.vb_image_versions
+  vb_version                          = var.vb_version
+  common_tre_slack_alerts_topic_arn   = module.common.common_tre_slack_alerts_topic_arn
+  tdr_sqs_retry_url                   = var.tdr_sqs_retry_url
+  tdr_sqs_retry_arn                   = var.tdr_sqs_retry_arn
+  common_tre_internal_topic_arn       = module.common.common_tre_internal_topic_arn
+  tre_dlq_alerts_lambda_function_name = module.common.tre_dlq_alerts_lambda_function_name
 }
 
 # DRI Preigest SIP Generation
 
 module "dri_preingest_sip_generation" {
-  source                            = "../../da-transform-terraform-modules/step_functions/dri_preingest_sip_generation"
-  env                               = var.environment_name
-  prefix                            = var.prefix
-  account_id                        = data.aws_caller_identity.aws.account_id
-  common_tre_slack_alerts_topic_arn = module.common.common_tre_slack_alerts_topic_arn
-  dpsg_image_versions               = var.dpsg_image_versions
-  dpsg_version                      = var.dpsg_version
-  common_tre_internal_topic_arn     = module.common.common_tre_internal_topic_arn
+  source                              = "../../da-transform-terraform-modules/step_functions/dri_preingest_sip_generation"
+  env                                 = var.environment_name
+  prefix                              = var.prefix
+  account_id                          = data.aws_caller_identity.aws.account_id
+  common_tre_slack_alerts_topic_arn   = module.common.common_tre_slack_alerts_topic_arn
+  dpsg_image_versions                 = var.dpsg_image_versions
+  dpsg_version                        = var.dpsg_version
+  common_tre_internal_topic_arn       = module.common.common_tre_internal_topic_arn
+  tre_dlq_alerts_lambda_function_name = module.common.tre_dlq_alerts_lambda_function_name
 }
