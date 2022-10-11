@@ -140,15 +140,6 @@ variable "tre_in_publishers" {
   type        = list(string)
 }
 
-variable "tre_out_subscriptions" {
-  description = "List tre-out topic subscriptions"
-  type = list(object({
-    name     = string
-    endpoint = string
-    protocol = string
-  }))
-}
-
 variable "tre_out_subscribers" {
   type = list(object({
     sid = string
