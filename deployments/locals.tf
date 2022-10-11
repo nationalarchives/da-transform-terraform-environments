@@ -9,6 +9,10 @@ locals {
 }
 
 locals {
+  tre_out_subscriptions = []
+}
+
+locals {
   tre_internal_subscriptions = [
     {
       name     = "dpsg-in-sqs-queue"
@@ -29,4 +33,5 @@ locals {
     }
   ]
 }
+
 
