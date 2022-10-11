@@ -2,7 +2,6 @@ provider "aws" {
   region = "eu-west-2"
   assume_role {
     role_arn = var.assume_role
-    external_id = "zaizi-tre-f16acc04-50f6-4a71-895f-554eb89c8704"
   }
   default_tags {
     tags = {
