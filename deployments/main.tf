@@ -61,7 +61,6 @@ module "common" {
   ]
   tre_out_subscriptions = local.tre_out_subscriptions
   tre_out_subscribers   = var.tre_out_subscribers
-  tdr_tre_in_publisher  = var.tdr_tre_in_publisher
 }
 
 # Validate BagIt
