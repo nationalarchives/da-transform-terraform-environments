@@ -7,15 +7,6 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "users"
-  region = "eu-west-2"
-  assume_role {
-    role_arn = var.assume_roles.users
-    # external_id = var.assume_role_external_id
-  }
-}
-
-provider "aws" {
   alias  = "nonprod"
   region = "eu-west-2"
   assume_role {

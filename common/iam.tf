@@ -70,7 +70,6 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
     actions = ["sts:AssumeRole"]
     resources = [
       aws_iam_role.mgmt_terraform.arn,
-      aws_iam_role.users_cross_account_terraform.arn,
       aws_iam_role.nonprod_cross_account_terraform.arn,
       aws_iam_role.prod_cross_account_terraform.arn
     ]

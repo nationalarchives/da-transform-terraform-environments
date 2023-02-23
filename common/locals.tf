@@ -1,38 +1,4 @@
-locals {
-  groups = [
-    {
-      name = "DevOps"
-      rolearns = [
-        aws_iam_role.mgmt_cross_account_admin.arn,
-        aws_iam_role.nonprod_cross_account_admin.arn,
-        aws_iam_role.prod_cross_account_admin.arn
-      ]
-    },
-    {
-      name = "Developers"
-      rolearns = [
-        aws_iam_role.mgmt_cross_account_dev.arn,
-        aws_iam_role.nonprod_cross_account_dev.arn,
-        aws_iam_role.prod_cross_account_dev.arn
-      ]
-    },
-    {
-      name = "tna-users"
-      rolearns = [
-        aws_iam_role.nonprod_cross_account_tna_user.arn,
-        aws_iam_role.prod_cross_account_tna_user.arn
-      ]
-    },
-    {
-      name = "security-assessors"
-      rolearns = [
-        aws_iam_role.mgmt_cross_account_security_assessor.arn,
-        aws_iam_role.nonprod_cross_account_security_assessor.arn,
-        aws_iam_role.prod_cross_account_security_assessor.arn
-      ]
-    }
-  ]
-
+locals {  
   environments = {
     dev = {
       rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,
@@ -54,7 +20,6 @@ locals {
 
   terraform_roles = [
     aws_iam_role.mgmt_terraform.arn,
-    aws_iam_role.users_cross_account_terraform.arn,
     aws_iam_role.nonprod_cross_account_terraform.arn,
     aws_iam_role.prod_cross_account_terraform.arn
   ]
