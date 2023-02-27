@@ -1,4 +1,4 @@
-locals {  
+locals {
   environments = {
     dev = {
       rolearn    = aws_iam_role.nonprod_cross_account_terraform.arn,

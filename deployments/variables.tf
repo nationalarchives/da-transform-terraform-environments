@@ -1,6 +1,6 @@
 variable "environment_name" {
   description = "Name of the environment to deploy"
-  type = string
+  type        = string
 
   validation {
     condition     = contains(["dev", "test", "int", "staging", "prod"], var.environment_name)
@@ -10,33 +10,33 @@ variable "environment_name" {
 
 variable "prefix" {
   description = "Transformation Engine prefix"
-  type = string
-  default = "tre"
+  type        = string
+  default     = "tre"
 }
 
 variable "assume_role" {
   description = "role ARNs to be assumed"
-  type = string
+  type        = string
 }
 
 variable "tdr_role_arn" {
   description = "role ARN for TDR to submit to SQS queues"
-  type = string
+  type        = string
 }
 
 variable "tdr_sqs_queue_endpoint" {
   description = "Endpoint of the TDR SQS Queue for the retry message"
-  type = string
+  type        = string
 }
 
 variable "tdr_sqs_queue_arn" {
   description = "ARN of the TDR SQS Queue for the retry message"
-  type = string
+  type        = string
 }
 
 variable "tdr_queue_kms_key" {
   description = "ARN of the KMS Key for TDR SQS Queue "
-  type = string
+  type        = string
 }
 
 variable "editorial_role_arn" {
@@ -46,19 +46,19 @@ variable "editorial_role_arn" {
 
 variable "editorial_sns_sub_arn" {
   description = "ARN of the editorial SNS Subscription role"
-  type = string
+  type        = string
 }
 
 variable "image_versions" {
   description = "Latest image version for Lambda Functions"
   type = object({
-    tre_step_function_trigger = string
+    tre_step_function_trigger     = string
     tre_bagit_checksum_validation = string
     tre_files_checksum_validation = string
-    tre_prepare_parser_input = string
-    tre_editorial_integration = string
-    tre_run_judgment_parser = string
-    tre_slack_alerts = string
+    tre_prepare_parser_input      = string
+    tre_editorial_integration     = string
+    tre_run_judgment_parser       = string
+    tre_slack_alerts              = string
   })
 }
 
@@ -67,15 +67,15 @@ variable "image_versions" {
 
 variable "slack_webhook_url" {
   description = "Webhook URL for tre slack alerts"
-  type = string
+  type        = string
 }
 
 variable "slack_channel" {
   description = "Channel name for the tre slack alerts"
-  type = string
+  type        = string
 }
 
 variable "slack_username" {
   description = "Username for tre slack alerts"
-  type = string
+  type        = string
 }

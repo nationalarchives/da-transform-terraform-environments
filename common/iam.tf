@@ -15,6 +15,11 @@ data "aws_iam_policy_document" "terraform-assume-role-policy" {
       type        = "Service"
       identifiers = ["codebuild.amazonaws.com", "codepipeline.amazonaws.com"]
     }
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/terraform"]
+    }
   }
 }
 

@@ -46,22 +46,22 @@ resource "aws_codepipeline" "terraform-common" {
     name = "Approval"
 
     action {
-      name      = "Approval"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 
   stage {
     name = "Apply"
     action {
-      name      = "Apply"
-      category  = "Build"
-      owner     = "AWS"
-      provider  = "CodeBuild"
-      version   = "1"
+      name     = "Apply"
+      category = "Build"
+      owner    = "AWS"
+      provider = "CodeBuild"
+      version  = "1"
       input_artifacts = [
         "source_output",
         "plan_output"
@@ -127,18 +127,18 @@ resource "aws_codepipeline" "terraform-deployments" {
   stage {
     name = "Plan"
     action {
-      name             = "Plan"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      version          = "1"
-      input_artifacts  = [
+      name     = "Plan"
+      category = "Build"
+      owner    = "AWS"
+      provider = "CodeBuild"
+      version  = "1"
+      input_artifacts = [
         "source_output",
         "source_output_2"
-        ]
+      ]
       output_artifacts = ["plan_output"]
       configuration = {
-        ProjectName = aws_codebuild_project.terraform-deployments-plan[each.key].name
+        ProjectName   = aws_codebuild_project.terraform-deployments-plan[each.key].name
         PrimarySource = "source_output"
       }
     }
@@ -148,22 +148,22 @@ resource "aws_codepipeline" "terraform-deployments" {
     name = "Approval"
 
     action {
-      name      = "Approval"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 
   stage {
     name = "Apply"
     action {
-      name      = "Apply"
-      category  = "Build"
-      owner     = "AWS"
-      provider  = "CodeBuild"
-      version   = "1"
+      name     = "Apply"
+      category = "Build"
+      owner    = "AWS"
+      provider = "CodeBuild"
+      version  = "1"
       input_artifacts = [
         "source_output",
         "source_output_2",
@@ -228,18 +228,18 @@ resource "aws_codepipeline" "terraform-test-test" {
   stage {
     name = "Plan"
     action {
-      name             = "Plan"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      version          = "1"
-      input_artifacts  = [
+      name     = "Plan"
+      category = "Build"
+      owner    = "AWS"
+      provider = "CodeBuild"
+      version  = "1"
+      input_artifacts = [
         "source_output",
         "source_output_2"
       ]
       output_artifacts = ["plan_output"]
       configuration = {
-        ProjectName = aws_codebuild_project.terraform-test-plan.name
+        ProjectName   = aws_codebuild_project.terraform-test-plan.name
         PrimarySource = "source_output"
       }
     }
@@ -249,22 +249,22 @@ resource "aws_codepipeline" "terraform-test-test" {
     name = "Approval"
 
     action {
-      name      = "Approval"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
+      name     = "Approval"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 
   stage {
     name = "Apply"
     action {
-      name      = "Apply"
-      category  = "Build"
-      owner     = "AWS"
-      provider  = "CodeBuild"
-      version   = "1"
+      name     = "Apply"
+      category = "Build"
+      owner    = "AWS"
+      provider = "CodeBuild"
+      version  = "1"
       input_artifacts = [
         "source_output",
         "source_output_2",

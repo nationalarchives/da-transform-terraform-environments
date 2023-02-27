@@ -74,11 +74,11 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
     name = "DeployToTestCheckPoint"
 
     action {
-      name      = "DeployToTestCheckPoint"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
+      name     = "DeployToTestCheckPoint"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 
@@ -173,11 +173,11 @@ resource "aws_codepipeline" "tre_lambda_deployment" {
     name = "DeployToProdCheckPoint"
 
     action {
-      name      = "DeployToProdCheckpoint"
-      category  = "Approval"
-      owner     = "AWS"
-      provider  = "Manual"
-      version   = "1"
+      name     = "DeployToProdCheckpoint"
+      category = "Approval"
+      owner    = "AWS"
+      provider = "Manual"
+      version  = "1"
     }
   }
 
