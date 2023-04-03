@@ -12,8 +12,8 @@ policies:
     actions:
       - type: notify
         slack_template: slack_default
-        violation_desc: "S3 bucket missing public access block"
-        action_desc: "Public access block added to S3 bucket permissions"
+        violation_desc: "S3 bucket with public access"
+        action_desc: "Removed public ACLs at bucket level - objects may still be public"
         to:
           -  {slack_webhook_url}
         transport:

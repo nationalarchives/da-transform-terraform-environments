@@ -14,8 +14,8 @@ policies:
     actions:
       - type: notify
         slack_template: slack_default
-        violation_desc: "S3 bucket missing public access block"
-        action_desc: "Public access block added to S3 bucket permissions"
+        violation_desc: "Unencrypted S3 bucket"
+        action_desc: "Marked S3 bucket for deletion in 3 days"
         to:
           -  {slack_webhook_url}
         transport:
