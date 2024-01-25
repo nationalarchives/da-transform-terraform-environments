@@ -15,10 +15,10 @@ data "aws_iam_policy_document" "terraform-assume-role-policy" {
       type        = "Service"
       identifiers = ["codebuild.amazonaws.com", "codepipeline.amazonaws.com"]
     }
-
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/terraform"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/terraform",
+        "arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AdministratorAccess_bcc0fbcb60597624"]
     }
   }
 }
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "codepipeline_role_policy" {
       "codebuild:BatchGetBuilds",
       "codebuild:StartBuild"
     ]
-    resources = ["arn:aws:codebuild:eu-west-2:454286877087:*"]
+    resources = ["arn:aws:codebuild:eu-west-2:${data.aws_caller_identity.mgmt.account_id}:*"]
   }
 
   statement {
