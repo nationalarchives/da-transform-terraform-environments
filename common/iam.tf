@@ -17,8 +17,14 @@ data "aws_iam_policy_document" "terraform-assume-role-policy" {
     }
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/terraform",
-        "arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AdministratorAccess_bcc0fbcb60597624"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/terraform"]
+    }
+  }
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AdministratorAccess_bcc0fbcb60597624"]
     }
   }
 }
