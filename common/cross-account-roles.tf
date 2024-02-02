@@ -6,7 +6,8 @@ data "aws_iam_policy_document" "tf_assume_role_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_role.mgmt_terraform.arn]
+      identifiers = [aws_iam_role.mgmt_terraform.arn,
+        "arn:aws:iam::${data.aws_caller_identity.mgmt.account_id}:role/aws-reserved/sso.amazonaws.com/eu-west-2/AWSReservedSSO_AdministratorAccess_bcc0fbcb60597624"]
     }
   }
 }
