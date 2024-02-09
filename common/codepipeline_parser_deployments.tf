@@ -18,7 +18,9 @@ resource "aws_codepipeline" "parser-deployments" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        BranchName           = "main"
+        //break the link so V1 pipeline stops being triggered
+        //BranchName           = "main"
+        BranchName           = "run-only-on-push-to-non-existent-branch"
         ConnectionArn        = aws_codestarconnections_connection.terraform-codepipeline.arn
         FullRepositoryId     = "nationalarchives/tna-judgments-parser"
         OutputArtifactFormat = "CODEBUILD_CLONE_REF"
